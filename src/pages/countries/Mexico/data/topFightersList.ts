@@ -1,6 +1,6 @@
 import type { fighterType } from "@/types/fighterType";
 
-import julioCesarImg from "../resources/fighters/julioCesar.avif";
+import julioCesarImg from "../resources/fighters/julioCesar.jpg";
 import caneloAlvarezImg from "../resources/fighters/caneloAlvarez.webp";
 import ricardoLopezImg from "../resources/fighters/ricardoLopez.avif";
 import juanManuelMarquezImg from "../resources/fighters/juanMarquez.webp";
