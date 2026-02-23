@@ -1,4 +1,4 @@
-export interface mainEventType {
+export interface mainEvent {
   id: number;
   idYt: string;
   title: string;
@@ -9,13 +9,4 @@ export interface mainEventType {
   fighterBlue?: string;
   fighterRed?: string;
   thumbnail?: string;
-}
-
-export interface topEventsType {
-  id: number;
-  idYt: string;
-  title: string;
-  tags: string[];
-  thumbnail?: string;
-  type: string;
 }

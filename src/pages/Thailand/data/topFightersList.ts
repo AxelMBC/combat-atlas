@@ -1,4 +1,4 @@
-import type { fighterType } from "@/types/fighterType";
+import type { fighter } from "@/types/fighter.type";
 
 import namsaknoiYudthagarngamtornImg from "../resources/fighters/namsaknoi_yudthagarngamtorn.jpg";
 import suphachaiSaepongImg from "../resources/fighters/suphachai_saepong.jpg";
@@ -6,7 +6,7 @@ import samartPayakaroonImg from "../resources/fighters/samart_payakaroon.webp";
 import dieselnoiChorThanasukarnImg from "../resources/fighters/dieselnoi_chor_thanasukarn.jpeg";
 import apidejSitHirun from "../resources/fighters/apidej_sit-hirun.webp";
 
-export const topFightersData: fighterType[] = [
+export const topFightersData: fighter[] = [
   {
     id: "1",
     name: "Namsaknoi Yudthagarngamtorn",

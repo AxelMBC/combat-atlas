@@ -1,7 +1,7 @@
-import type { fighterType } from "@/types/fighterType";
+import type { fighter } from "@/types/fighter.type";
 
 export interface fighterCardType {
-  boxer: fighterType;
+  boxer: fighter;
   rank: number;
-  onSelect: (fighter: fighterType) => void;
+  onSelect: (fighter: fighter) => void;
 }

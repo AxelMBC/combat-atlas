@@ -1,7 +1,7 @@
-import type { fighterType } from "@/types/fighterType";
+import type { fighter } from "@/types/fighter.type";
 
 export interface topFightersType {
   title: string;
-  topFightersData: fighterType[];
-  onFighterSelect: (fighter: fighterType) => void;
+  topFightersData: fighter[];
+  onFighterSelect: (fighter: fighter) => void;
 }

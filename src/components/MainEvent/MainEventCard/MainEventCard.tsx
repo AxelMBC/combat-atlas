@@ -1,9 +1,9 @@
-import type { mainEventType } from "@/types/fightEventType";
+import type { mainEvent } from "@/types/fightEvent.type";
 
 // MUI
 import { Box, Typography } from "@mui/material";
 
-const MainEventVideo: React.FC<{ video: mainEventType }> = ({ video }) => (
+const MainEventVideo: React.FC<{ video: mainEvent }> = ({ video }) => (
   <Box
     padding={2}
     border="4px solid #000"

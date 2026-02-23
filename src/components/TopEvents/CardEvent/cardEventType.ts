@@ -1,6 +1,6 @@
-import type { mainEventType } from "@/types/fightEventType";
+import type { mainEvent } from "@/types/fightEvent.type";
 
 export interface cardEventType {
-  video: mainEventType;
-  onVideoSelect: (event: mainEventType) => void;
+  video: mainEvent;
+  onVideoSelect: (event: mainEvent) => void;
 }

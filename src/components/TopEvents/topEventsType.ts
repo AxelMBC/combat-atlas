@@ -1,7 +1,7 @@
-import type { mainEventType } from "@/types/fightEventType";
+import type { mainEvent } from "@/types/fightEvent.type";
 
 export interface topEventsType {
   title: string;
-  videos: mainEventType[];
-  onVideoSelect: (event: mainEventType) => void;
+  videos: mainEvent[];
+  onVideoSelect: (event: mainEvent) => void;
 }

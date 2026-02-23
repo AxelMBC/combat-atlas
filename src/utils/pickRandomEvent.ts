@@ -1,6 +1,6 @@
-import type { mainEventType } from "@/types/fightEventType";
+import type { mainEvent } from "@/types/fightEvent.type";
 
-const pickRandomEvent = (eventList: mainEventType[]) => {
+const pickRandomEvent = (eventList: mainEvent[]) => {
   const randomIndex = Math.floor(Math.random() * eventList.length);
   const randomEvent = eventList[randomIndex];
 

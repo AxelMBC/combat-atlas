@@ -1,9 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-// Styles
-import "./CountryPage.scss";
-
 // Types
 import type { CountryPageProps } from "./CountryPage.types";
 

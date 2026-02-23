@@ -1,8 +1,8 @@
-import type { mainEventType } from "@/types/fightEventType";
+import type { mainEvent } from "@/types/fightEvent.type";
 
 export interface MainEventProps {
   loading: boolean;
   error: string | null;
-  mainVideo: mainEventType | null;
+  mainVideo: mainEvent | null;
   fetchMainVideo: () => void;
 }

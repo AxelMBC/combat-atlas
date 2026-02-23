@@ -1,10 +1,10 @@
-import type { mainEventType } from "@/types/fightEventType";
+import type { mainEvent } from "@/types/fightEvent.type";
 
 import { createSlice } from "@reduxjs/toolkit";
 import { topEventsList } from "@/pages/Mexico/data/topEventsList";
 
 interface TopEventsState {
-  topEventsList: mainEventType[];
+  topEventsList: mainEvent[];
 }
 
 const initialState: TopEventsState = {

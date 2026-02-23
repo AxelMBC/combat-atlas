@@ -1,6 +1,6 @@
-import type { mainEventType } from "@/types/fightEventType";
+import type { mainEvent } from "@/types/fightEvent.type";
 
-export const mainEventFights: mainEventType[] = [
+export const mainEventFights: mainEvent[] = [
   {
     id: 0,
     title: "Namsaknoi vs Saenchai",

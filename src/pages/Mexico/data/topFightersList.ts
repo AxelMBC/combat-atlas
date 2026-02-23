@@ -1,4 +1,4 @@
-import type { fighterType } from "@/types/fighterType";
+import type { fighter } from "@/types/fighter.type";
 
 import julioCesarImg from "../resources/fighters/julio_cesar.jpg";
 import caneloAlvarezImg from "../resources/fighters/canelo_alvarez.webp";
@@ -6,7 +6,7 @@ import ricardoLopezImg from "../resources/fighters/ricardo_lopez.avif";
 import juanManuelMarquezImg from "../resources/fighters/juan_marquez.webp";
 import salvadorSanchezImg from "../resources/fighters/salvador_sanchez.jpg";
 
-export const topFightersData: fighterType[] = [
+export const topFightersData: fighter[] = [
   {
     id: "1",
     name: "Julio César Chávez",

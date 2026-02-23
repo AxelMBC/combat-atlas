@@ -1,11 +1,11 @@
-import type { fighterType } from "@/types/fighterType";
+import type { fighter } from "@/types/fighter.type";
 
 import { createSlice } from "@reduxjs/toolkit";
 import { topFightersData } from "@/pages/Mexico/data/topFightersList";
 
 interface FighterState {
-  fightersList: fighterType[];
-  selectedFighter: fighterType | null;
+  fightersList: fighter[];
+  selectedFighter: fighter | null;
 }
 
 const initialState: FighterState = {

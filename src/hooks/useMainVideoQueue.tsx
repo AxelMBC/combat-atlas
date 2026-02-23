@@ -1,15 +1,15 @@
 import { useState, useEffect, useRef } from "react";
-import type { mainEventType } from "../types/fightEventType";
-import type { fighterType } from "../types/fighterType";
+import type { mainEvent } from "../types/fightEvent.type";
+import type { fighter } from "../types/fighter.type";
 import shuffleArray from "../utils/shuffleArray";
 import pickRandomEvent from "../utils/pickRandomEvent";
 import scrollToMainEvent from "../utils/scrollToMainEvent";
 
-export const useMainVideoQueue = (initialEvents: mainEventType[]) => {
-  const [mainVideo, setMainEvent] = useState<mainEventType | null>(null);
+export const useMainVideoQueue = (initialEvents: mainEvent[]) => {
+  const [mainVideo, setMainEvent] = useState<mainEvent | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const mainEventQueue = useRef<mainEventType[]>([]);
+  const mainEventQueue = useRef<mainEvent[]>([]);
 
   useEffect(() => {
     if (initialEvents.length > 0) {
@@ -18,7 +18,7 @@ export const useMainVideoQueue = (initialEvents: mainEventType[]) => {
     }
   }, [initialEvents]);
 
-  const selectSpecificVideo = (video: mainEventType): void => {
+  const selectSpecificVideo = (video: mainEvent): void => {
     setMainEvent(video);
     setError(null);
     scrollToMainEvent();
@@ -45,7 +45,7 @@ export const useMainVideoQueue = (initialEvents: mainEventType[]) => {
     setLoading(false);
   };
 
-  const fetchVideoByFighter = (fighter: fighterType): void => {
+  const fetchVideoByFighter = (fighter: fighter): void => {
     const fighterEvents = mainEventQueue.current
       .map((event, index) => ({ event, index }))
       .filter(({ event }) => event.fighterId === fighter.id);

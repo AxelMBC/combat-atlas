@@ -1,8 +1,7 @@
-
-import type { mainEventType } from "@/types/fightEventType";
+import type { mainEvent } from "@/types/fightEvent.type";
 
 // Knuth Shuffle/Fisher-Yates algorithm
-const shuffleArray = (array: mainEventType[]) => {
+const shuffleArray = (array: mainEvent[]) => {
   const shuffledArray = [...array];
   let currentIndex = shuffledArray.length;
 
