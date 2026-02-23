@@ -1,9 +1,9 @@
-import type { mainEvent } from "@/types/fightEvent.type";
+import type { MainEventCardProps } from "./MainEventCard.types";
 
 // MUI
 import { Box, Typography } from "@mui/material";
 
-const MainEventVideo: React.FC<{ video: mainEvent }> = ({ video }) => (
+const MainEventCard = ({ video }: MainEventCardProps) => (
   <Box
     padding={2}
     border="4px solid #000"
@@ -54,4 +54,4 @@ const MainEventVideo: React.FC<{ video: mainEvent }> = ({ video }) => (
   </Box>
 );
 
-export default MainEventVideo;
+export default MainEventCard;

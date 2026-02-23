@@ -1,11 +1,12 @@
-import { topEventsType } from "./topEventsType";
+import { TopEventsProps } from "./TopEvents.types";
+
 // MUI
 import { Box, Grid, Typography } from "@mui/material";
 
 // Components
 import CardEvent from "./CardEvent";
 
-const TopEvents = ({ title, videos, onVideoSelect }: topEventsType) => {
+const TopEvents = ({ title, videos, onVideoSelect }: TopEventsProps) => {
   return (
     <Box component="section" marginTop={4}>
       <Typography

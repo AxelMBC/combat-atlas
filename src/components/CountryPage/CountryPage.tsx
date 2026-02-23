@@ -1,8 +1,7 @@
+import type { CountryPageProps } from "./CountryPage.types";
+
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
-// Types
-import type { CountryPageProps } from "./CountryPage.types";
 
 // MUI
 import { Box, Container, Button } from "@mui/material";

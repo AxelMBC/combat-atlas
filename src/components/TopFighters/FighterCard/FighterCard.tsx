@@ -1,10 +1,9 @@
-// Types
-import type { fighterCardType } from "./fighterCardType";
+import type { FighterCardProps } from "./fighterCard.types";
 
 // MUI
 import { Box, Typography } from "@mui/material";
 
-const FighterCard = ({ boxer, rank, onSelect }: fighterCardType) => {
+const FighterCard = ({ boxer, rank, onSelect }: FighterCardProps) => {
   return (
     <Box
       onClick={() => onSelect(boxer)}

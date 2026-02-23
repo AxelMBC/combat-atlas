@@ -1,5 +1,4 @@
-// TYPE
-import type { MainEventProps } from "./MainEventType";
+import type { MainEventProps } from "./MainEvent.types";
 
 // MUI
 import { Box, Button, Typography } from "@mui/material";

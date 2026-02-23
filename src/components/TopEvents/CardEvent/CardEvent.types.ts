@@ -1,7 +1,6 @@
 import type { mainEvent } from "@/types/fightEvent.type";
 
-export interface topEventsType {
-  title: string;
-  videos: mainEvent[];
+export interface CardEventProps {
+  video: mainEvent;
   onVideoSelect: (event: mainEvent) => void;
 }

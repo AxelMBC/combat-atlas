@@ -1,5 +1,4 @@
-// TYPES
-import type { topFightersType } from "./topFightersType";
+import type { TopFightersProps } from "./TopFighters.Types";
 
 // MUI
 import { Box, Grid, Typography } from "@mui/material";
@@ -11,7 +10,7 @@ const TopFighters = ({
   title,
   topFightersData,
   onFighterSelect,
-}: topFightersType) => {
+}: TopFightersProps) => {
   return (
     <Box
       paddingBottom={8}
