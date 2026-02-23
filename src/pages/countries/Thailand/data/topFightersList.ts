@@ -4,7 +4,7 @@ import namsaknoiYudthagarngamtornImg from "../resources/fighters/namsaknoiYudtha
 import suphachaiSaepongImg from "../resources/fighters/suphachaiSaepong.jpg";
 import samartPayakaroonImg from "../resources/fighters/samartPayakaroon.webp";
 import dieselnoiChorThanasukarnImg from "../resources/fighters/dieselnoiChorThanasukarn.jpeg";
-import apidejSitHirun from "../resources/fighters/apidejSit-Hirun.jpeg";
+import apidejSitHirun from "../resources/fighters/apidejSit-Hirun.webp";
 
 export const topFightersData: fighterType[] = [
   {
