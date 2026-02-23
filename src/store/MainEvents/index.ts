@@ -1,7 +1,7 @@
 import { mainEventType } from "@/types/fightEventType";
 
 import { createSlice } from "@reduxjs/toolkit";
-import { mainEventFights } from "@/pages/countries/Mexico/data/allEventsList";
+import { mainEventFights } from "@/pages/Mexico/data/allEventsList";
 
 interface MainEventsState {
   mainEventsList: mainEventType[];

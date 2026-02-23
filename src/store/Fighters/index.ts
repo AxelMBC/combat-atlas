@@ -1,7 +1,7 @@
 import type { fighterType } from "@/types/fighterType";
 
 import { createSlice } from "@reduxjs/toolkit";
-import { topFightersData } from "@/pages/countries/Mexico/data/topFightersList";
+import { topFightersData } from "@/pages/Mexico/data/topFightersList";
 
 interface FighterState {
   fightersList: fighterType[];
