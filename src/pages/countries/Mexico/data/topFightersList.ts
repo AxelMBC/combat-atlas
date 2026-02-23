@@ -1,10 +1,10 @@
 import type { fighterType } from "@/types/fighterType";
 
-import julioCesarImg from "../resources/fighters/julioCesar.jpg";
-import caneloAlvarezImg from "../resources/fighters/caneloAlvarez.webp";
-import ricardoLopezImg from "../resources/fighters/ricardoLopez.avif";
-import juanManuelMarquezImg from "../resources/fighters/juanMarquez.webp";
-import salvadorSanchezImg from "../resources/fighters/salvadorSanchez.jpg";
+import julioCesarImg from "../resources/fighters/julio_cesar.jpg";
+import caneloAlvarezImg from "../resources/fighters/canelo_alvarez.webp";
+import ricardoLopezImg from "../resources/fighters/ricardo_lopez.avif";
+import juanManuelMarquezImg from "../resources/fighters/juan_marquez.webp";
+import salvadorSanchezImg from "../resources/fighters/salvador_sanchez.jpg";
 
 export const topFightersData: fighterType[] = [
   {

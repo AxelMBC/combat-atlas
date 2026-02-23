@@ -1,10 +1,10 @@
 import type { fighterType } from "@/types/fighterType";
 
-import namsaknoiYudthagarngamtornImg from "../resources/fighters/namsaknoiYudthagarngamtorn.jpg";
-import suphachaiSaepongImg from "../resources/fighters/suphachaiSaepong.jpg";
-import samartPayakaroonImg from "../resources/fighters/samartPayakaroon.webp";
-import dieselnoiChorThanasukarnImg from "../resources/fighters/dieselnoiChorThanasukarn.jpeg";
-import apidejSitHirun from "../resources/fighters/apidejSit-Hirun.webp";
+import namsaknoiYudthagarngamtornImg from "../resources/fighters/namsaknoi_yudthagarngamtorn.jpg";
+import suphachaiSaepongImg from "../resources/fighters/suphachai_saepong.jpg";
+import samartPayakaroonImg from "../resources/fighters/samart_payakaroon.webp";
+import dieselnoiChorThanasukarnImg from "../resources/fighters/dieselnoi_chor_thanasukarn.jpeg";
+import apidejSitHirun from "../resources/fighters/apidej_sit-hirun.webp";
 
 export const topFightersData: fighterType[] = [
   {
