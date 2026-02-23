@@ -3,6 +3,7 @@ import { selectFightersState } from "@/store/Fighters";
 import { selectMainEventsState } from "@/store/MainEvents";
 
 // Config
+import "@/styles/fonts.scss";
 import { theme } from "./config/mexicoTheme";
 import { mexicoConfig } from "./config/mexico.config";
 
