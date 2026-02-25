@@ -9,10 +9,7 @@ export const thailandConfig: CountryPageConfig = {
   colorPalette: {
     primary: "#0047AB",
     primaryDark: "#002855",
-    primaryLight: "#4D7FBF",
     secondary: "#FFD700",
-    secondaryDark: "#B8860B",
-    background: "#031602",
     white: "#f2f2f2",
     textPrimary: "#031602",
     textSecondary: "#f2f2f2",

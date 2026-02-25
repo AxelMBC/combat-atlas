@@ -5,10 +5,7 @@ import type { mainEvent } from "@/types/fightEvent.type";
 export interface ColorPalette {
   primary: string;
   primaryDark: string;
-  primaryLight: string;
   secondary: string;
-  secondaryDark: string;
-  background: string;
   white?: string;
   error: string;
   textPrimary?: string;

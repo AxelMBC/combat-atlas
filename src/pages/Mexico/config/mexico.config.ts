@@ -9,10 +9,7 @@ export const mexicoConfig: CountryPageConfig = {
   colorPalette: {
     primary: "#ca2626",
     primaryDark: "#780606",
-    primaryLight: "#8a3d3d",
     secondary: "#26c954",
-    secondaryDark: "#3d744d",
-    background: "#031602",
     white: "#f2f2f2",
     textPrimary: "#031602",
     textSecondary: "#f2f2f2",

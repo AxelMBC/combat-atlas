@@ -25,9 +25,6 @@ export const theme = createTheme({
       main: mexicoConfig.colorPalette.primary,
       dark: mexicoConfig.colorPalette.primaryDark,
     },
-    secondary: {
-      main: mexicoConfig.colorPalette.secondary,
-    },
     text: {
       primary: mexicoConfig.colorPalette.textPrimary,
       secondary: mexicoConfig.colorPalette.textSecondary,

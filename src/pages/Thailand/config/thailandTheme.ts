@@ -25,9 +25,6 @@ export const theme = createTheme({
       main: thailandConfig.colorPalette.primary,
       dark: thailandConfig.colorPalette.primaryDark,
     },
-    secondary: {
-      main: thailandConfig.colorPalette.secondary,
-    },
     text: {
       primary: thailandConfig.colorPalette.textPrimary,
       secondary: thailandConfig.colorPalette.textSecondary,
