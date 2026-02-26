@@ -7,7 +7,12 @@ import Map from "react-map-gl/maplibre";
 import { useNavigate } from "react-router-dom";
 
 // MUI
-import { Box, Typography } from "@mui/material";
+import { Box, Button } from "@mui/material";
+
+// Animations
+import { motion } from "framer-motion";
+
+const MotionButton = motion.create(Button);
 
 const WorldMap = () => {
   const navigate = useNavigate();
@@ -122,28 +127,30 @@ const WorldMap = () => {
             alignItems: "center",
             justifyContent: "center",
             textAlign: "center",
-            borderRadius: 1,
-            boxShadow: "0 8px 24px rgba(0,0,0,0.25)",
-            border: "2px solid darkred",
-            background: "linear-gradient(#cc1c2a, #f89a16)",
+            background: "rgba(0,0,0,0.6)",
+            borderRadius: 2,
           }}
         >
-          <Typography
-            variant="button"
+          <MotionButton
             className="fc-white"
-            fontSize="1.25rem"
+            onClick={() => goToCountry(dialog.country)}
+            variant="text"
+            disableRipple
+            whileHover={{ scale: 1.25 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 500 }}
             sx={{
               cursor: "pointer",
               fontWeight: 550,
-              "&:hover": {
-                color: "white",
-                fontSize: "1.7rem",
-              },
+              fontSize: "1.25rem",
+              textTransform: "none",
+              color: "white",
+              padding: 0,
+              minWidth: 0,
             }}
-            onClick={() => goToCountry(dialog.country)}
           >
             {dialog.country}
-          </Typography>
+          </MotionButton>
 
           <Box
             sx={{
