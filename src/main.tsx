@@ -9,8 +9,8 @@ import App from "./App.tsx";
 
 // Pages
 import WorldMap from "./pages/WorldMap";
-import Mexico from "./pages/Mexico/index.tsx";
-import Thailand from "./pages/Thailand/index.tsx";
+import Mexico from "./pages/Mexico";
+import Thailand from "./pages/Thailand";
 
 const router = createBrowserRouter([
   {
