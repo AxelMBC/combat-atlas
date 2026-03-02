@@ -1,17 +1,16 @@
 import type { MainEventProps } from "./MainEvent.types";
 
+import { motion } from "framer-motion";
+
 // MUI
 import { Box, Button, Typography } from "@mui/material";
 
-// Libreria Externa
-import { motion } from "framer-motion";
+// Components
+import MainEventCard from "./MainEventCard";
 
 // Icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiceThree } from "@fortawesome/free-solid-svg-icons";
-
-// Components
-import MainEventCard from "./MainEventCard";
 
 const MotionButton = motion.create(Button);
 

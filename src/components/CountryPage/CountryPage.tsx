@@ -31,7 +31,7 @@ const CountryPage = ({
     error,
     fetchNextVideo,
     fetchVideoByFighter,
-    selectSpecificVideo,
+    onVideoSelect,
   } = useMainVideoQueue(mainEventFights);
 
   useEffect(() => {
@@ -63,12 +63,9 @@ const CountryPage = ({
               position: "fixed",
               top: 20,
               left: 24,
-              zIndex: 2000,
-              fontSize: "0.9rem",
-              fontWeight: 500,
-              textTransform: "none",
               color: "text.primary",
               opacity: 0.7,
+              fontSize: "1.5rem",
               "&:hover": {
                 opacity: 1,
                 backgroundColor: "transparent",
@@ -95,7 +92,7 @@ const CountryPage = ({
           <TopEvents
             title={config.topEventsTitle}
             videos={topEventsList}
-            onVideoSelect={selectSpecificVideo}
+            onVideoSelect={onVideoSelect}
           />
         </Container>
       </Box>

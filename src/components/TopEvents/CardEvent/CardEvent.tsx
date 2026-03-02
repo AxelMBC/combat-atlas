@@ -22,7 +22,6 @@ const CardEvent = ({ video, onVideoSelect }: CardEventProps) => {
         },
       }}
     >
-      {/* Image */}
       <Box overflow="hidden" borderBottom="4px solid #000">
         <Box
           component="img"
@@ -44,13 +43,11 @@ const CardEvent = ({ video, onVideoSelect }: CardEventProps) => {
         />
       </Box>
 
-      {/* Content */}
       <Box mx={2} my={1} display="flex" flexDirection="column" flexGrow={1}>
         <Typography variant="h3" fontSize="1.2rem" mb={1}>
           {video.title}
         </Typography>
 
-        {/* Tags */}
         <Box display="flex" flexWrap="wrap" gap={1} mb={2}>
           {video.tags.map((tag, index) => (
             <Typography
@@ -82,7 +79,6 @@ const CardEvent = ({ video, onVideoSelect }: CardEventProps) => {
           ))}
         </Box>
 
-        {/* View More */}
         <Typography
           variant="button"
           mt="auto"

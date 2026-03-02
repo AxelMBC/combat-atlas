@@ -18,7 +18,7 @@ export const useMainVideoQueue = (initialEvents: mainEvent[]) => {
     }
   }, [initialEvents]);
 
-  const selectSpecificVideo = (video: mainEvent): void => {
+  const onVideoSelect = (video: mainEvent): void => {
     setMainEvent(video);
     setError(null);
     scrollToMainEvent();
@@ -74,6 +74,6 @@ export const useMainVideoQueue = (initialEvents: mainEvent[]) => {
     error,
     fetchNextVideo,
     fetchVideoByFighter,
-    selectSpecificVideo,
+    onVideoSelect,
   };
 };

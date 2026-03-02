@@ -28,7 +28,6 @@ const FighterCard = ({ boxer, rank, onSelect }: FighterCardProps) => {
           transition: "all 0.2s ease",
         }}
       >
-        {/* Rank */}
         <Typography
           variant="h3"
           position="absolute"
@@ -44,7 +43,6 @@ const FighterCard = ({ boxer, rank, onSelect }: FighterCardProps) => {
           </Box>
         </Typography>
 
-        {/* Image */}
         <Box overflow="hidden">
           <Box
             component="img"
@@ -60,7 +58,6 @@ const FighterCard = ({ boxer, rank, onSelect }: FighterCardProps) => {
           />
         </Box>
 
-        {/* Content */}
         <Box p={2.5} borderTop="4px solid #000">
           <Typography
             variant="h3"
