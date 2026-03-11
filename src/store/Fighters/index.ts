@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { fighter } from "@/types/fighter.type";
 import { fetchCountry } from "@/store/country/thunks";
+import { getFighterImage } from "@/pages/Mexico/resources/fighters";
 
 interface FighterState {
   fightersList: fighter[];
@@ -32,7 +33,12 @@ export const fighterSlice = createSlice({
       })
       .addCase(fetchCountry.fulfilled, (state, action) => {
         state.loading = false;
-        state.fightersList = action.payload.topFighters;
+        state.fightersList = action.payload.topFighters.map(
+          (fighter: fighter) => ({
+            ...fighter,
+            image: getFighterImage(fighter.image),
+          })
+        );
       })
       .addCase(fetchCountry.rejected, (state, action) => {
         state.loading = false;
