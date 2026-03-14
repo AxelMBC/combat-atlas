@@ -1,8 +1,8 @@
-// store/country/thunks.ts
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getCountryData } from "@/services/country.service";
 import type { RootState } from "@/store";
-
+import { useSelector } from "react-redux"
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { selectMainEventsState } from "@/store/MainEvents"
+import { getCountryData } from "@/services/country.service";
 const TTL_MS = 30 * 60 * 1000;
 
 interface SessionCache {
@@ -25,7 +25,6 @@ const readCache = (slug: string): SessionCache["data"] | null => {
 
     return cached.data;
   } catch {
-    // sessionStorage bloqueado (modo incógnito restrictivo, safari, etc.)
     return null;
   }
 };
@@ -43,9 +42,9 @@ export const fetchCountry = createAsyncThunk(
   "country/fetchBySlug",
   async (slug: string, { rejectWithValue, getState }) => {
     const state = getState() as RootState;
-    const alreadyLoaded = state.mainEvents.mainEventsList.length > 0;
+    const { mainEventsList } = useSelector(selectMainEventsState)
 
-    if (alreadyLoaded) {
+    if (mainEventsList.length > 0) {
       return {
         allFights: state.mainEvents.mainEventsList,
         topEvents: state.topEvents.topEventsList,
