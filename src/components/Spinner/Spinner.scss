@@ -1,0 +1,101 @@
+@use "@/styles/all/variables" as *;
+
+$sizes: (
+  small: 32px,
+  medium: 56px,
+  large: 80px,
+);
+
+.spinner-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: $bg;
+  gap: 20px;
+  z-index: 9999;
+}
+
+.spinner-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+
+  @each $name, $size in $sizes {
+    &--#{$name} {
+      --bar-height: #{calc($size / 5)};
+      --bar-width: #{$size};
+    }
+  }
+}
+
+.spinner__bar {
+  display: block;
+  height: var(--bar-height);
+  background-color: $red;
+  border: 3px solid $black;
+  box-shadow: 2px 2px 0 $black;
+  transform-origin: left center;
+  animation: bar-pulse 1.1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+
+  &:nth-child(1) {
+    width: var(--bar-width);
+    animation-delay: 0s;
+  }
+  &:nth-child(2) {
+    width: calc(var(--bar-width) * 0.65);
+    animation-delay: 0.18s;
+  }
+  &:nth-child(3) {
+    width: calc(var(--bar-width) * 0.35);
+    animation-delay: 0.36s;
+  }
+}
+
+.spinner__label {
+  font-family: "Georgia", serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $black;
+  user-select: none;
+}
+
+@keyframes bar-pulse {
+  0%,
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scaleX(0.45);
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner__bar {
+    animation: bar-fade 1.4s ease-in-out infinite;
+  }
+
+  @keyframes bar-fade {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+}
