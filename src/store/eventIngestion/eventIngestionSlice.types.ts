@@ -3,7 +3,7 @@ import type { Fighter } from "@/types/fighter.types";
 export interface EventFormData {
   country: string;
   idYt: string;
-  startTime: number;
+  startTime: string;
   title: string;
   description: string;
   tags: string[];

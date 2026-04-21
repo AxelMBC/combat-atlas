@@ -1,5 +1,8 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { EventFormData, EventIngestionState } from "./eventIngestionSlice.types";
+import type {
+  EventFormData,
+  EventIngestionState,
+} from "./eventIngestionSlice.types";
 import type { RootState } from "@/store";
 
 import { createSlice } from "@reduxjs/toolkit";
@@ -8,7 +11,7 @@ import { fetchFightersByCountry, submitEvent } from "./thunks";
 const initialForm: EventFormData = {
   country: "",
   idYt: "",
-  startTime: 0,
+  startTime: "0",
   title: "",
   description: "",
   tags: [],
@@ -35,13 +38,19 @@ export const eventIngestionSlice = createSlice({
   reducers: {
     updateField: (
       state,
-      action: PayloadAction<{ field: keyof EventFormData; value: EventFormData[keyof EventFormData] }>
+      action: PayloadAction<{
+        field: keyof EventFormData;
+        value: EventFormData[keyof EventFormData];
+      }>
     ) => {
       const { field, value } = action.payload;
       (state.form[field] as EventFormData[typeof field]) = value;
     },
     addTag: (state, action: PayloadAction<string>) => {
-      if (state.form.tags.length < 10 && !state.form.tags.includes(action.payload)) {
+      if (
+        state.form.tags.length < 10 &&
+        !state.form.tags.includes(action.payload)
+      ) {
         state.form.tags.push(action.payload);
       }
     },

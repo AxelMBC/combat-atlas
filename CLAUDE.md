@@ -24,11 +24,10 @@ React 19 + TypeScript + Vite SPA. UI is mostly in Spanish. The app visualizes co
 **Country routing pattern (`src/pages/countries/`)** — Countries are not hard-coded in the router. `registry.ts` lists `{ slug, loader }` entries with dynamic `import()` loaders, and `CountryRouter.tsx` looks up the slug, lazy-loads the matching page (cached in a module-level `Map`), and wraps it in `Suspense` + `ErrorBoundary`. **To add a new country: add a folder under `src/pages/<Country>` and append a registry entry — do not touch the router.**
 
 **State (`src/store/`)** — Redux Toolkit, single `country` slice. `thunks.ts` exposes `fetchCountry(slug)` which:
+
 1. Checks `sessionStorage` (`country_<slug>` key) with a 30-minute TTL before hitting the network.
 2. Calls `getCountryData(slug)` from `src/services/country.service.ts`.
 3. Writes back to the cache on success.
-
-Note: `redux-saga` is a dependency but no sagas are wired up — state flows through thunks today.
 
 **Services (`src/services/`)** — `api.ts` is a shared Axios instance (10s timeout, `VITE_API_URL` base). All backend calls should go through it; country data previously lived in local files but was removed in favor of the backend (see commit `d83f3e9`).
 

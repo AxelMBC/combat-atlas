@@ -19,7 +19,10 @@ import {
   selectSubmitStatus,
   updateField,
 } from "@/store/eventIngestion/eventIngestionSlice";
-import { fetchFightersByCountry, submitEvent } from "@/store/eventIngestion/thunks";
+import {
+  fetchFightersByCountry,
+  submitEvent,
+} from "@/store/eventIngestion/thunks";
 import type { Fighter } from "@/types/fighter.types";
 import {
   COUNTRY_OPTIONS,
@@ -37,7 +40,7 @@ const validate = (form: ReturnType<typeof selectEventForm>): FieldErrors => {
   if (!form.country) errors.country = "El país es requerido.";
   if (!YT_ID_REGEX.test(form.idYt))
     errors.idYt = "El ID de YouTube debe tener exactamente 11 caracteres.";
-  if (form.startTime < VALIDATION_RULES.startTime.min)
+  if (Number(form.startTime) < VALIDATION_RULES.startTime.min)
     errors.startTime = "El tiempo de inicio debe ser ≥ 0.";
   if (
     form.title.length < VALIDATION_RULES.title.min ||
@@ -59,7 +62,8 @@ const EventForm = () => {
   const form = useAppSelector(selectEventForm);
   const fighters = useAppSelector(selectAvailableFighters);
   const loadingFighters = useAppSelector(selectLoadingFighters);
-  const { submitting, submitSuccess, submitError } = useAppSelector(selectSubmitStatus);
+  const { submitting, submitSuccess, submitError } =
+    useAppSelector(selectSubmitStatus);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
   useEffect(() => {
@@ -95,10 +99,15 @@ const EventForm = () => {
     dispatch(clearSubmitStatus());
   };
 
-  const handleFighterChange = (corner: "Red" | "Blue") => (fighter: Fighter | null) => {
-    dispatch(updateField({ field: `fighter${corner}`, value: fighter?.name ?? "" }));
-    dispatch(updateField({ field: `fighter${corner}Id`, value: fighter?._id ?? "" }));
-  };
+  const handleFighterChange =
+    (corner: "Red" | "Blue") => (fighter: Fighter | null) => {
+      dispatch(
+        updateField({ field: `fighter${corner}`, value: fighter?.name ?? "" })
+      );
+      dispatch(
+        updateField({ field: `fighter${corner}Id`, value: fighter?._id ?? "" })
+      );
+    };
 
   return (
     <Box component="form" onSubmit={handleSubmit} noValidate>
@@ -133,8 +142,14 @@ const EventForm = () => {
           fullWidth
           size="small"
           inputProps={{ maxLength: 11 }}
-          error={!!fieldErrors.idYt || (form.idYt.length > 0 && !YT_ID_REGEX.test(form.idYt))}
-          helperText={fieldErrors.idYt ?? "11 caracteres del ID del video (ej: dQw4w9WgXcQ)"}
+          error={
+            !!fieldErrors.idYt ||
+            (form.idYt.length > 0 && !YT_ID_REGEX.test(form.idYt))
+          }
+          helperText={
+            fieldErrors.idYt ??
+            "11 caracteres del ID del video (ej: dQw4w9WgXcQ)"
+          }
         />
 
         <TextField
@@ -143,7 +158,10 @@ const EventForm = () => {
           value={form.startTime}
           onChange={(e) =>
             dispatch(
-              updateField({ field: "startTime", value: Math.max(0, Number(e.target.value)) })
+              updateField({
+                field: "startTime",
+                value: String(Math.max(0, Number(e.target.value))),
+              })
             )
           }
           required
@@ -170,16 +188,22 @@ const EventForm = () => {
           inputProps={{ minLength: 3, maxLength: 200 }}
           error={
             !!fieldErrors.title ||
-            (form.title.length > 0 && form.title.length < VALIDATION_RULES.title.min)
+            (form.title.length > 0 &&
+              form.title.length < VALIDATION_RULES.title.min)
           }
-          helperText={fieldErrors.title ?? `${form.title.length}/${VALIDATION_RULES.title.max}`}
+          helperText={
+            fieldErrors.title ??
+            `${form.title.length}/${VALIDATION_RULES.title.max}`
+          }
         />
 
         <TextField
           label="Descripción"
           value={form.description}
           onChange={(e) =>
-            dispatch(updateField({ field: "description", value: e.target.value }))
+            dispatch(
+              updateField({ field: "description", value: e.target.value })
+            )
           }
           required
           fullWidth
@@ -266,7 +290,11 @@ const EventForm = () => {
           type="submit"
           variant="contained"
           disabled={submitting}
-          startIcon={submitting ? <CircularProgress size={16} color="inherit" /> : undefined}
+          startIcon={
+            submitting ? (
+              <CircularProgress size={16} color="inherit" />
+            ) : undefined
+          }
         >
           {submitting ? "Enviando..." : "Enviar Evento"}
         </Button>
