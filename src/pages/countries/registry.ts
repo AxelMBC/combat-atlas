@@ -8,4 +8,5 @@ export interface CountryEntry {
 export const countryRegistry: CountryEntry[] = [
   { slug: "mexico", loader: () => import("@/pages/Mexico") },
   { slug: "thailand", loader: () => import("@/pages/Thailand") },
+  { slug: "united-states", loader: () => import("@/pages/UnitedStates") },
 ];
