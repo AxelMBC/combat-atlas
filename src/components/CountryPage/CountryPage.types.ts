@@ -22,9 +22,7 @@ export interface CountryPageConfig {
   topEventsTitle: string;
   colorPalette: ColorPalette;
   maxWidth: string;
-  bodyFont?: string;
-  titleFont?: string;
-  buttonFont?: string;
+  headerTitleFont?: string;
 }
 
 export interface CountryPageProps {

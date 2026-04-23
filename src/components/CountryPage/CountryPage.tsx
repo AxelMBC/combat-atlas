@@ -75,7 +75,10 @@ const CountryPage = ({
           >
             ← Mapa Mundial
           </Button>
-          <TitleCountry title={config.headerTitle} />
+          <TitleCountry
+            title={config.headerTitle}
+            headerTitleFont={config.headerTitleFont}
+          />
 
           <MainEvent
             loading={loading}

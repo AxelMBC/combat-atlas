@@ -18,7 +18,4 @@ export const countryConfig: CountryPageConfig = {
     black: "#000000",
   },
   maxWidth: "1120px",
-  titleFont: "Anton, sans-serif",
-  bodyFont: '"Merriweather", serif',
-  buttonFont: "Anton, sans-serif",
 };

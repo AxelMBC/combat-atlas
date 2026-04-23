@@ -18,7 +18,4 @@ export const unitedStatesConfig: CountryPageConfig = {
     black: "#000",
   },
   maxWidth: "1120px",
-  titleFont: '"Oswald", sans-serif',
-  bodyFont: '"Source Serif 4", serif',
-  buttonFont: '"Oswald", sans-serif',
 };

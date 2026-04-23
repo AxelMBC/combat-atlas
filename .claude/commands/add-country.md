@@ -1,5 +1,5 @@
 ---
-description: Scaffold a new country page, pick a fitting palette + fonts via web research, and register the route
+description: Scaffold a new country page, pick a fitting palette via web research, and register the route
 argument-hint: <CountryName> <MartialArt>
 ---
 
@@ -19,17 +19,15 @@ From `$1` derive three forms and use them consistently:
 
 If the slug already exists in `src/pages/countries/registry.ts`, stop and tell the user — do not overwrite.
 
-## Step 1 — Research palette + fonts
+## Step 1 — Research palette
 
 Use `WebSearch` (and `WebFetch` if needed) to find things **specifically tied to $2 as practiced in $1**, not just the country in general. Pick:
 
 1. **Color palette (3–4 colors)** — draw from the visual identity of the sport in that country: fighter attire, ring/arena aesthetics, regional tradition, iconic promotions. Examples of the right mindset: Japan + Karate → sumi black, bone-white gi, red hinomaru; Thailand + Muay Thai → gold mongkhon, deep blue, temple red; Brazil + Jiu-Jitsu → academy blue/black/white belt gradient with a warm accent; USA + Boxing → vintage ring-canvas cream, bold red, navy. Avoid just copying the flag.
-2. **Two fonts** that pair well and match that sport's aesthetic in that country:
-   - a **display/title font** — bold, condensed, or high-impact (Anton, Oswald, Bebas Neue, Archivo Black, Bungee, Staatliches, or a culturally specific display face)
-   - a **body font** — readable serif or humanist sans (Merriweather, Noto Serif, Lora, Source Serif, IBM Plex)
-   - Both MUST be available on Google Fonts so the CDN import works.
 
-Briefly tell the user what you picked and why (2–3 sentences) before scaffolding.
+Fonts are fixed project-wide (Anton for titles/buttons, Merriweather for body) and live in `src/styles/theme/createCountryTheme.ts`. Do **not** add per-country font properties to the config. The only escape hatch is the optional `headerTitleFont` field — set it only if the country needs a distinct display face for its `<h1>` (the `.header-title` element). If you use it, the font must be available on Google Fonts.
+
+Briefly tell the user what palette you picked and why (2–3 sentences) before scaffolding.
 
 ## Step 2 — Generate the Spanish copy
 
@@ -78,9 +76,9 @@ export const <camel>Config: CountryPageConfig = {
     black: "#000",
   },
   maxWidth: "1120px",
-  titleFont: '"<Display Font>", sans-serif',
-  bodyFont: '"<Body Font>", serif',
-  buttonFont: '"<Display Font>", sans-serif',
+  // Optional — only set if this country needs a custom font for the
+  // .header-title element. Otherwise it inherits Anton from the shared theme.
+  // headerTitleFont: '"<Display Font>", sans-serif',
 };
 ```
 
@@ -89,32 +87,10 @@ export const <camel>Config: CountryPageConfig = {
 Mirror `mexicoTheme.ts` exactly, swapping the import and variable names:
 
 ```ts
-import { createTheme } from "@mui/material/styles";
+import { createCountryTheme } from "@/styles/theme/createCountryTheme";
 import { <camel>Config } from "./<camel>.config";
 
-export const theme = createTheme({
-  typography: {
-    fontFamily: <camel>Config.bodyFont,
-    h1: { fontFamily: <camel>Config.titleFont },
-    h2: { fontFamily: <camel>Config.titleFont },
-    h3: { fontFamily: <camel>Config.titleFont },
-    body1: { fontFamily: <camel>Config.bodyFont },
-    button: { fontFamily: <camel>Config.buttonFont },
-  },
-  palette: {
-    primary: {
-      main: <camel>Config.colorPalette.primary,
-      dark: <camel>Config.colorPalette.primaryDark,
-    },
-    text: {
-      primary: <camel>Config.colorPalette.textPrimary,
-      secondary: <camel>Config.colorPalette.textSecondary,
-    },
-    background: { default: <camel>Config.colorPalette.white },
-    info: { main: <camel>Config.colorPalette.info },
-    common: { black: <camel>Config.colorPalette.black },
-  },
-});
+export const theme = createCountryTheme(<camel>Config);
 ```
 
 ### `src/pages/<Pascal>/<Pascal>.tsx`
@@ -193,9 +169,11 @@ Edit `src/pages/countries/registry.ts` and append a new entry to `countryRegistr
 
 Do **not** modify `CountryRouter.tsx` or the main router — the registry is the only touchpoint (CLAUDE.md confirms this).
 
-## Step 5 — Load the Google Fonts
+## Step 5 — Load fonts (only if a custom `headerTitleFont` is set)
 
-The project only ships `Anton` locally (`src/styles/fonts/default.scss`) — any new font must be pulled from the Google Fonts CDN. Add a `<link rel="stylesheet" ...>` tag for the two chosen fonts to `index.html` inside `<head>`, using `display=swap`. Skip any font that's already linked.
+The project ships `Anton` locally (`src/styles/fonts/default.scss`) and loads `Merriweather` from the Google Fonts CDN in `index.html`. Both are wired into the shared theme via `src/styles/theme/createCountryTheme.ts` and apply automatically to every country.
+
+You only need to touch `index.html` if this country sets a custom `headerTitleFont`. In that case add a `<link rel="stylesheet" ...>` tag for that font inside `<head>`, using `display=swap`, and skip any font that's already linked. If `headerTitleFont` is unset, do nothing here.
 
 ## Step 6 — Verify
 

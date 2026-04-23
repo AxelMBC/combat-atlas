@@ -18,7 +18,4 @@ export const thailandConfig: CountryPageConfig = {
     black: "#000",
   },
   maxWidth: "1120px",
-  titleFont: "Anton, sans-serif",
-  bodyFont: '"Merriweather", serif',
-  buttonFont: "Anton, sans-serif",
 };

@@ -1,42 +1,4 @@
-import { createTheme } from "@mui/material/styles";
+import { createCountryTheme } from "@/styles/theme/createCountryTheme";
 import { thailandConfig } from "./thailand.config";
 
-export const theme = createTheme({
-  typography: {
-    fontFamily: thailandConfig.bodyFont,
-    h1: {
-      fontFamily: thailandConfig.titleFont,
-    },
-    h2: {
-      fontFamily: thailandConfig.titleFont,
-    },
-    h3: {
-      fontFamily: thailandConfig.titleFont,
-    },
-    body1: {
-      fontFamily: thailandConfig.bodyFont,
-    },
-    button: {
-      fontFamily: thailandConfig.buttonFont,
-    },
-  },
-  palette: {
-    primary: {
-      main: thailandConfig.colorPalette.primary,
-      dark: thailandConfig.colorPalette.primaryDark,
-    },
-    text: {
-      primary: thailandConfig.colorPalette.textPrimary,
-      secondary: thailandConfig.colorPalette.textSecondary,
-    },
-    background: {
-      default: thailandConfig.colorPalette.white,
-    },
-    info: {
-      main: thailandConfig.colorPalette.info,
-    },
-    common: {
-      black: thailandConfig.colorPalette.black,
-    },
-  },
-});
+export const theme = createCountryTheme(thailandConfig);

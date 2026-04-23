@@ -1,6 +1,12 @@
 import { Box, Typography } from "@mui/material";
 
-const TitleCountry = ({ title }: { title: string }) => {
+const TitleCountry = ({
+  title,
+  headerTitleFont,
+}: {
+  title: string;
+  headerTitleFont?: string;
+}) => {
   return (
     <>
       <Box id="target-scroll" className="header-title" textAlign="center">
@@ -16,6 +22,7 @@ const TitleCountry = ({ title }: { title: string }) => {
               xs: "3rem",
               md: "6rem",
             },
+            ...(headerTitleFont && { fontFamily: headerTitleFont }),
           }}
         >
           {title}

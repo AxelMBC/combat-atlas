@@ -1,5 +1,11 @@
 {
   "permissions": {
-    "allow": ["Bash(yarn build:*)", "Bash(yarn lint:*)", "Bash(find:*)"]
+    "allow": [
+      "Bash(yarn build:*)",
+      "Bash(yarn lint:*)",
+      "Bash(find:*)",
+      "Bash(xargs grep *)",
+      "Bash(xargs cat *)"
+    ]
   }
 }
