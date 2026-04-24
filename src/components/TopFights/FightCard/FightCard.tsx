@@ -4,6 +4,8 @@ import type { CardEventProps } from "./FightCard.types";
 // MUI
 import { Box, Typography } from "@mui/material";
 
+const FALLBACK_THUMBNAIL = "/placeholders/no-video-placeholder.png";
+
 const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
   return (
     <Box
@@ -26,8 +28,11 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
       <Box overflow="hidden" borderBottom="4px solid #000">
         <Box
           component="img"
-          src={video.thumbnail}
+          src={video.thumbnail || FALLBACK_THUMBNAIL}
           alt={video.title}
+          onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+            e.currentTarget.src = FALLBACK_THUMBNAIL;
+          }}
           sx={{
             width: "100%",
             height: 192,

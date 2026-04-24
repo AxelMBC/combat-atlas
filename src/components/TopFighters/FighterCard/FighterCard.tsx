@@ -114,7 +114,7 @@ const FighterCard = memo(
               src={boxer.image}
               alt={boxer.name}
               onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-                e.currentTarget.src = "/NotFoundFighter.png";
+                e.currentTarget.src = "/placeholders/no-fighter-placeholder.png";
                 e.currentTarget.style.objectFit = "contain";
               }}
               sx={{
@@ -167,18 +167,6 @@ const FighterCard = memo(
 
             <Typography sx={{ variant: "body1", color: "info.main", mt: 0.5 }}>
               RÉCORD: {boxer.record}
-            </Typography>
-
-            <Typography
-              variant="body1"
-              sx={{
-                color: "primary",
-                mt: 0.5,
-                fontWeight: 700,
-                textTransform: "uppercase",
-              }}
-            >
-              {boxer.nickName}
             </Typography>
           </Box>
         </Box>
