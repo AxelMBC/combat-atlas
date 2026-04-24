@@ -107,6 +107,10 @@ const FighterCard = memo(
               component="img"
               src={boxer.image}
               alt={boxer.name}
+              onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                e.currentTarget.src = "/NotFoundFighter.png";
+                e.currentTarget.style.objectFit = "contain";
+              }}
               sx={{
                 objectFit: "cover",
                 filter: {
