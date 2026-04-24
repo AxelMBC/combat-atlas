@@ -16,6 +16,9 @@ const FighterCard = memo(
           cursor: disabled ? "not-allowed" : "pointer",
           opacity: disabled ? 0.55 : 1,
           transition: "opacity 0.3s ease",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
           "&:hover img": {
             filter: {
               lg: disabled ? "grayscale(100%)" : "grayscale(0%)",
@@ -29,6 +32,9 @@ const FighterCard = memo(
             boxShadow: `10px 10px 0 ${theme.palette.common.black}`,
             bgcolor: "#fff",
             position: "relative",
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
           })}
         >
           <Typography
@@ -148,7 +154,7 @@ const FighterCard = memo(
             )}
           </Box>
 
-          <Box p={2.5} borderTop="4px solid #000">
+          <Box p={2.5} borderTop="4px solid #000" sx={{ flex: 1 }}>
             <Typography
               variant="h3"
               sx={{
