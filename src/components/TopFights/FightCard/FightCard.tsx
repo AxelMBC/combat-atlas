@@ -6,7 +6,14 @@ import { Box, Typography } from "@mui/material";
 
 const FALLBACK_THUMBNAIL = "/placeholders/no-video-placeholder.png";
 
+const youtubeThumbnail = (idYt: string) =>
+  `https://i.ytimg.com/vi/${idYt}/hq720.jpg`;
+
 const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
+  const thumbnailSrc =
+    video.thumbnail ||
+    (video.idYt ? youtubeThumbnail(video.idYt) : FALLBACK_THUMBNAIL);
+
   return (
     <Box
       onClick={() => onVideoSelect(video)}
@@ -28,10 +35,21 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
       <Box overflow="hidden" borderBottom="4px solid #000">
         <Box
           component="img"
-          src={video.thumbnail || FALLBACK_THUMBNAIL}
+          src={thumbnailSrc}
           alt={video.title}
           onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-            e.currentTarget.src = FALLBACK_THUMBNAIL;
+            if (!e.currentTarget.src.endsWith(FALLBACK_THUMBNAIL)) {
+              e.currentTarget.src = FALLBACK_THUMBNAIL;
+            }
+          }}
+          onLoad={(e: React.SyntheticEvent<HTMLImageElement>) => {
+            const img = e.currentTarget;
+            if (
+              img.src.includes("i.ytimg.com") &&
+              img.naturalWidth <= 120
+            ) {
+              img.src = FALLBACK_THUMBNAIL;
+            }
           }}
           sx={{
             width: "100%",
