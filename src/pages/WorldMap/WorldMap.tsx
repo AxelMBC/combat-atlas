@@ -12,6 +12,9 @@ import { Box, Button } from "@mui/material";
 // Animations
 import { motion } from "framer-motion";
 
+// Components
+import MapFallback from "@/components/MapFallback";
+
 const MotionButton = motion.create(Button);
 
 const WorldMap = () => {
@@ -28,6 +31,8 @@ const WorldMap = () => {
 
   const mapRef = useRef<MapRef | null>(null);
   const dialogTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const [mapError, setMapError] = useState(false);
 
   const [dialog, setDialog] = useState({
     show: false,
@@ -96,6 +101,10 @@ const WorldMap = () => {
     };
   }, []);
 
+  if (mapError) {
+    return <MapFallback />;
+  }
+
   return (
     <Box
       sx={{
@@ -120,6 +129,10 @@ const WorldMap = () => {
           display: "block",
         }}
         onClick={handleClick}
+        onError={(event) => {
+          console.error("[WorldMap] map error", event.error);
+          setMapError(true);
+        }}
       />
 
       {dialog.show && (

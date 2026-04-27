@@ -1,0 +1,117 @@
+@use "@/styles/all/variables" as *;
+
+.map-fallback {
+  min-height: 100vh;
+  background-color: $bg;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.map-fallback__code {
+  font-family: "Georgia", serif;
+  font-size: 6rem;
+  font-weight: 700;
+  line-height: 1;
+  color: $red;
+  text-shadow: 4px 4px 0 $black;
+  user-select: none;
+
+  @media (max-width: 600px) {
+    font-size: 4rem;
+  }
+}
+
+.map-fallback__title {
+  font-family: "Georgia", serif;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: $black;
+
+  @media (max-width: 600px) {
+    font-size: 1.6rem;
+  }
+}
+
+.map-fallback__message {
+  font-family: "Georgia", serif;
+  font-size: 1rem;
+  color: $black;
+  opacity: 0.7;
+  max-width: 480px;
+}
+
+.map-fallback__list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  max-width: 720px;
+}
+
+.map-fallback__country {
+  display: inline-block;
+  font-family: "Georgia", serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: $black;
+  background-color: $bg;
+  border: 3px solid $black;
+  box-shadow: 4px 4px 0 $black;
+  padding: 14px 24px;
+  min-width: 180px;
+  transition:
+    transform 0.1s,
+    box-shadow 0.1s,
+    background-color 0.1s,
+    color 0.1s;
+
+  &:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 $black;
+    background-color: $red;
+    color: $bg;
+  }
+
+  &:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+  }
+}
+
+.map-fallback__button {
+  font-family: "Georgia", serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $bg;
+  background-color: $red;
+  border: 3px solid $black;
+  box-shadow: 4px 4px 0 $black;
+  padding: 12px 32px;
+  cursor: pointer;
+  transition:
+    transform 0.1s,
+    box-shadow 0.1s;
+
+  &:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 $black;
+  }
+
+  &:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+  }
+}

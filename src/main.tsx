@@ -15,6 +15,7 @@ import EventIngestionPage from "./pages/EventIngestion/EventIngestionPage";
 // Components
 import ErrorBoundary from "./components/ErrorBoundary";
 import NotFound from "./components/NotFound";
+import MapFallback from "./components/MapFallback";
 
 const router = createBrowserRouter([
   {
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: (
-          <ErrorBoundary fallback={<NotFound message="Error al cargar el mapa" />}>
+          <ErrorBoundary fallback={<MapFallback />}>
             <WorldMap />
           </ErrorBoundary>
         ),
