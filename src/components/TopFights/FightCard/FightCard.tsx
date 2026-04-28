@@ -94,34 +94,33 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
             mb: 2,
           }}
         >
-          {video.tags.map((tag, index) => (
-            <Typography
-              key={index}
-              variant="body1"
-              sx={{
-                px: 1,
-                py: 0.5,
-                fontSize: "0.75rem",
-                fontWeight: 400,
-                border: "2px solid #000",
-                boxShadow: "1px 1px 0 #000",
-                color:
-                  index % 3 === 0
-                    ? "text.secondary"
-                    : index % 3 === 1
-                      ? "text.primary"
-                      : "text.secondary",
-                bgcolor:
-                  index % 3 === 0
-                    ? "primary.main"
-                    : index % 3 === 1
-                      ? "#fff"
-                      : "secondary.dark",
-              }}
-            >
-              {tag}
-            </Typography>
-          ))}
+          {video.tags.map((tag, index) => {
+            const tagStyles = [
+              { color: "text.secondary", bgcolor: "primary.main" },
+              { color: "text.primary", bgcolor: "#fff" },
+              { color: "common.white", bgcolor: "secondary.main" },
+            ] as const;
+            const { color, bgcolor } = tagStyles[index % 3];
+
+            return (
+              <Typography
+                key={index}
+                variant="body1"
+                sx={{
+                  px: 1,
+                  py: 0.5,
+                  fontSize: "0.75rem",
+                  fontWeight: 400,
+                  border: "2px solid #000",
+                  boxShadow: "1px 1px 0 #000",
+                  color,
+                  bgcolor,
+                }}
+              >
+                {tag}
+              </Typography>
+            );
+          })}
         </Box>
 
         <Typography

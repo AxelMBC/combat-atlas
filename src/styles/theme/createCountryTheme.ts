@@ -19,6 +19,9 @@ export const createCountryTheme = (config: CountryPageConfig): Theme =>
         main: config.colorPalette.primary,
         dark: config.colorPalette.primaryDark,
       },
+      secondary: {
+        main: config.colorPalette.secondary,
+      },
       text: {
         primary: config.colorPalette.textPrimary,
         secondary: config.colorPalette.textSecondary,
