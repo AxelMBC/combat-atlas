@@ -157,7 +157,7 @@ const WorldMap = () => {
         >
           <MotionButton
             className="fc-white"
-            onClick={() => goToCountry(dialog.country.toLowerCase())}
+            onClick={() => goToCountry(dialog.country.toLowerCase().replace(/\s+/g, '-'))}
             variant="text"
             disableRipple
             whileHover={{ scale: 1.25 }}

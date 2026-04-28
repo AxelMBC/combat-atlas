@@ -11,4 +11,5 @@ export interface MainEvent {
   fighterRed?: string;
   fighterRedId?: string;
   thumbnail?: string;
+  type?: string;
 }

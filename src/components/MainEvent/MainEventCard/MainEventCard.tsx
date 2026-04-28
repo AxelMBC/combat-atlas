@@ -45,7 +45,7 @@ const MainEventCard = ({ video }: MainEventCardProps) => (
         variant="h2"
         sx={{ fontSize: { xs: "1.5rem", md: "2.25rem" } }}
       >
-        {video.title}
+        {video.title} | {video.type}
       </Typography>
 
       <Box sx={{ marginTop: 1 }}>
