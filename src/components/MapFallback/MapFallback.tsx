@@ -11,13 +11,15 @@ const MapFallback = ({ onRetry, canSoftRetry = false }: MapFallbackProps) => {
       onRetry();
       return;
     }
-    // Last-resort path: either a soft remount already failed, or the caller
-    // never offered one (e.g., a render-time crash). Full reload reinitializes everything.
     window.location.reload();
   };
 
   return (
-    <div className="map-fallback" role="status" aria-label="No se pudo cargar el mapa">
+    <div
+      className="map-fallback"
+      role="status"
+      aria-label="No se pudo cargar el mapa"
+    >
       <span className="map-fallback__code" aria-hidden="true">
         :(
       </span>
