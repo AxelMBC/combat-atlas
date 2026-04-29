@@ -29,10 +29,10 @@ import {
   VALIDATION_RULES,
   YT_ID_REGEX,
 } from "@/pages/EventIngestion/eventIngestion.config";
-import FormSection from "../FormSection/FormSection";
-import VideoPreview from "../VideoPreview/VideoPreview";
-import TagsInput from "../TagsInput/TagsInput";
-import FighterSelector from "../FighterSelector/FighterSelector";
+import FormSection from "@/pages/EventIngestion/components/FormSection/FormSection";
+import VideoPreview from "@/pages/EventIngestion/components/VideoPreview/VideoPreview";
+import TagsInput from "@/pages/EventIngestion/components/TagsInput/TagsInput";
+import FighterSelector from "@/pages/EventIngestion/components/FighterSelector/FighterSelector";
 import type { FieldErrors } from "./EventForm.types";
 import validateEventForm from "@/utils/validateEventForm";
 
