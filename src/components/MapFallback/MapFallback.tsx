@@ -1,9 +1,18 @@
+// Intentionally avoids MUI/Emotion: this is the fallback UI shown when the rest
+// of the app's rendering stack may be broken, so it must render with no runtime deps.
 import { Link } from "react-router-dom";
 import { countryRegistry } from "@/pages/countries/registry";
+import type { MapFallbackProps } from "./MapFallback.types";
 import "./MapFallback.scss";
 
-const MapFallback = () => {
+const MapFallback = ({ onRetry, canSoftRetry = false }: MapFallbackProps) => {
   const handleRetry = () => {
+    if (canSoftRetry && onRetry) {
+      onRetry();
+      return;
+    }
+    // Last-resort path: either a soft remount already failed, or the caller
+    // never offered one (e.g., a render-time crash). Full reload reinitializes everything.
     window.location.reload();
   };
 

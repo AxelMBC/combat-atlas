@@ -5,6 +5,7 @@ import type { CardEventProps } from "./FightCard.types";
 import { Box, Typography } from "@mui/material";
 
 const FALLBACK_THUMBNAIL = "/placeholders/no-video-placeholder.png";
+const YOUTUBE_MISSING_THUMBNAIL_WIDTH = 120;
 
 const youtubeThumbnail = (idYt: string) =>
   `https://i.ytimg.com/vi/${idYt}/hq720.jpg`;
@@ -46,7 +47,7 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
             const img = e.currentTarget;
             if (
               img.src.includes("i.ytimg.com") &&
-              img.naturalWidth <= 120
+              img.naturalWidth <= YOUTUBE_MISSING_THUMBNAIL_WIDTH
             ) {
               img.src = FALLBACK_THUMBNAIL;
             }
@@ -126,7 +127,7 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
         <Typography
           variant="button"
           sx={{
-            color: "primary",
+            color: "primary.main",
 
             transition: "gap 300ms ease",
             "&:hover": {

@@ -33,6 +33,14 @@ const WorldMap = () => {
   const dialogTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const [mapError, setMapError] = useState(false);
+  const [mapRetryKey, setMapRetryKey] = useState(0);
+  const [softRetryUsed, setSoftRetryUsed] = useState(false);
+
+  const handleMapRetry = useCallback(() => {
+    setMapError(false);
+    setMapRetryKey((k) => k + 1);
+    setSoftRetryUsed(true);
+  }, []);
 
   const [dialog, setDialog] = useState({
     show: false,
@@ -91,6 +99,7 @@ const WorldMap = () => {
       if (dialogTimerRef.current) clearTimeout(dialogTimerRef.current);
       dialogTimerRef.current = setTimeout(() => {
         setDialog((prev) => ({ ...prev, show: false }));
+        dialogTimerRef.current = null;
       }, 3000);
     }
   };
@@ -102,7 +111,7 @@ const WorldMap = () => {
   }, []);
 
   if (mapError) {
-    return <MapFallback />;
+    return <MapFallback onRetry={handleMapRetry} canSoftRetry={!softRetryUsed} />;
   }
 
   return (
@@ -114,6 +123,7 @@ const WorldMap = () => {
       }}
     >
       <Map
+        key={mapRetryKey}
         mapStyle={`https://api.maptiler.com/maps/0197251e-f92a-7cb9-98e8-774bde6e5d8e/style.json?key=${import.meta.env.VITE_MAPTILER_KEY}`}
         ref={mapRef}
         minZoom={2}
