@@ -3,7 +3,10 @@ import { useEffect } from "react";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchCountry } from "@/store/country/thunks";
-import { resetCountryData, selectCountryState } from "@/store/country/countrySlice";
+import {
+  resetCountryData,
+  selectCountryState,
+} from "@/store/country/countrySlice";
 
 import "@/styles/fonts/default.scss";
 
@@ -13,6 +16,7 @@ import { unitedStatesConfig } from "./config/unitedStates.config";
 import CountryPage from "@/components/CountryPage";
 import ErrorFallback from "@/components/ErrorFallback";
 import Spinner from "@/components/Spinner";
+import { getFighterImage } from "./resources";
 
 const UnitedStates = () => {
   const dispatch = useAppDispatch();
@@ -21,7 +25,7 @@ const UnitedStates = () => {
 
   const fightersList = fighters.map((fighter: Fighter) => ({
     ...fighter,
-    image: fighter.image ?? "/placeholder.webp",
+    image: getFighterImage(fighter.image),
   }));
 
   useEffect(() => {
