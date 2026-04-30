@@ -105,7 +105,7 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
 
             return (
               <Typography
-                key={index}
+                key={tag}
                 variant="body1"
                 sx={{
                   px: 1,

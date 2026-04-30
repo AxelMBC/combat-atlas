@@ -15,7 +15,7 @@ import EventIngestionPage from "./pages/EventIngestion/EventIngestionPage";
 // Components
 import ErrorBoundary from "./components/ErrorBoundary";
 import NotFound from "./components/NotFound";
-import MapFallback from "./components/MapFallback";
+import MapFallback from "@/components/MapFallback";
 
 const router = createBrowserRouter([
   {

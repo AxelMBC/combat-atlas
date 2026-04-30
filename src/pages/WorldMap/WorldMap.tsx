@@ -17,6 +17,8 @@ import MapFallback from "@/components/MapFallback";
 
 const MotionButton = motion.create(Button);
 
+const NON_COUNTRY_LAYERS = new Set(["Water", "Country labels", "Ocean labels"]);
+
 const WorldMap = () => {
   const navigate = useNavigate();
 
@@ -81,9 +83,7 @@ const WorldMap = () => {
 
     if (
       features.length > 0 &&
-      features[0].layer.id !== "Water" &&
-      features[0].layer.id !== "Country labels" &&
-      features[0].layer.id !== "Ocean labels"
+      !NON_COUNTRY_LAYERS.has(features[0].layer.id)
     ) {
       const countryName = features[0].layer.id;
 

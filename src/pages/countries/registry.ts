@@ -1,10 +1,4 @@
-import type { ComponentType } from "react";
-
-export interface CountryEntry {
-  slug: string;
-  name: string;
-  loader: () => Promise<{ default: ComponentType }>;
-}
+import type { CountryEntry } from "./registry.types";
 
 export const countryRegistry: CountryEntry[] = [
   { slug: "mexico", name: "México", loader: () => import("@/pages/Mexico") },

@@ -17,7 +17,7 @@ const MapFallback = ({ onRetry, canSoftRetry = false }: MapFallbackProps) => {
   return (
     <div
       className="map-fallback"
-      role="status"
+      role="alert"
       aria-label="No se pudo cargar el mapa"
     >
       <span className="map-fallback__code" aria-hidden="true">
