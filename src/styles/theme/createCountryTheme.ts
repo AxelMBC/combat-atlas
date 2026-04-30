@@ -1,5 +1,5 @@
 import { createTheme, type Theme } from "@mui/material/styles";
-import type { CountryPageConfig } from "@/components/CountryPage/CountryPage.types";
+import type { CountryPageConfig } from "@/pages/countries/components/CountryPage/CountryPage.types";
 
 const TITLE_FONT = "Anton, sans-serif";
 const BODY_FONT = '"Merriweather", serif';

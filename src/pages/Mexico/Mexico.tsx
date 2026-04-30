@@ -13,7 +13,7 @@ import "@/styles/fonts/default.scss";
 import { theme } from "./config/mexicoTheme";
 import { mexicoConfig } from "./config/mexico.config";
 
-import CountryPage from "@/components/CountryPage";
+import CountryPage from "@/pages/countries/components/CountryPage";
 import ErrorFallback from "@/components/ErrorFallback";
 import Spinner from "@/components/Spinner";
 

@@ -13,7 +13,7 @@ import "@/styles/fonts/default.scss";
 import { theme } from "./config/thailandTheme";
 import { thailandConfig } from "./config/thailand.config";
 
-import CountryPage from "@/components/CountryPage";
+import CountryPage from "@/pages/countries/components/CountryPage";
 import ErrorFallback from "@/components/ErrorFallback";
 import Spinner from "@/components/Spinner";
 

@@ -9,7 +9,7 @@ import { countryConfig } from "./config/country.config";
 import { theme } from "./config/countryTheme";
 
 // Components
-import CountryPage from "@/components/CountryPage/CountryPage";
+import CountryPage from "@/pages/countries/components/CountryPage/CountryPage";
 
 const CountryTemplate = () => {
   return (

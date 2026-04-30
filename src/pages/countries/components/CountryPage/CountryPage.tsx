@@ -8,10 +8,10 @@ import { Box, Container, Button } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 
 // Components
-import TitleCountry from "@/components/TitleCountry";
-import TopFighters from "@/components/TopFighters";
-import MainEvent from "@/components/MainEvent";
-import TopFights from "@/components/TopFights";
+import TitleCountry from "@/pages/countries/components/TitleCountry";
+import TopFighters from "@/pages/countries/components/TopFighters";
+import MainEvent from "@/pages/countries/components/MainEvent";
+import TopFights from "@/pages/countries/components/TopFights";
 
 // Hooks
 import { useMainVideoQueue } from "@/hooks/useMainVideoQueue";

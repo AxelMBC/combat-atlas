@@ -1,4 +1,4 @@
-import type { CountryPageConfig } from "@/components/CountryPage/CountryPage.types";
+import type { CountryPageConfig } from "@/pages/countries/components/CountryPage/CountryPage.types";
 
 export const thailandConfig: CountryPageConfig = {
   countryName: "Thailand",
