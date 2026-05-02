@@ -1,3 +1,5 @@
+import type { TranslationKey } from "@/i18n";
+
 export interface NotFoundProps {
-  message?: string;
+  messageKey?: TranslationKey;
 }

@@ -3,21 +3,21 @@ import type { CountryEntry } from "./registry.types";
 export const countryRegistry: CountryEntry[] = [
   {
     slug: "mexico",
-    name: "México",
+    nameKey: "country.mexico.name",
     mapLayerId: "Mexico",
     accentColor: "#fb1c08",
     loader: () => import("@/pages/Mexico"),
   },
   {
     slug: "thailand",
-    name: "Tailandia",
+    nameKey: "country.thailand.name",
     mapLayerId: "Thailand",
     accentColor: "#f59e08",
     loader: () => import("@/pages/Thailand"),
   },
   {
     slug: "united-states",
-    name: "Estados Unidos",
+    nameKey: "country.unitedStates.name",
     mapLayerId: "United States",
     accentColor: "#3a40fb",
     loader: () => import("@/pages/UnitedStates"),

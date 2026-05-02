@@ -1,8 +1,9 @@
 import type { ComponentType } from "react";
+import type { TranslationKey } from "@/i18n";
 
 export interface CountryEntry {
   slug: string;
-  name: string;
+  nameKey: TranslationKey;
   mapLayerId: string;
   accentColor?: string;
   loader: () => Promise<{ default: ComponentType }>;

@@ -33,17 +33,22 @@ import FormSection from "@/pages/EventIngestion/components/FormSection/FormSecti
 import VideoPreview from "@/pages/EventIngestion/components/VideoPreview/VideoPreview";
 import TagsInput from "@/pages/EventIngestion/components/TagsInput/TagsInput";
 import FighterSelector from "@/pages/EventIngestion/components/FighterSelector/FighterSelector";
-import type { FieldErrors } from "./EventForm.types";
+import type { FieldError, FieldErrors } from "./EventForm.types";
 import validateEventForm from "@/utils/validateEventForm";
+import { useTranslation } from "@/i18n";
 
 const EventForm = () => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
   const form = useAppSelector(selectEventForm);
   const fighters = useAppSelector(selectAvailableFighters);
   const loadingFighters = useAppSelector(selectLoadingFighters);
   const { submitting, submitSuccess, submitError } =
     useAppSelector(selectSubmitStatus);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+
+  const errorText = (err?: FieldError): string | undefined =>
+    err ? t(err.key, err.params) : undefined;
 
   useEffect(() => {
     if (form.country) {
@@ -90,10 +95,10 @@ const EventForm = () => {
 
   return (
     <Box component="form" onSubmit={handleSubmit} noValidate>
-      <FormSection title="País y Video">
+      <FormSection title={t("eventForm.section.countryVideo")}>
         <TextField
           select
-          label="País"
+          label={t("eventForm.field.country")}
           value={form.country}
           onChange={(e) =>
             dispatch(updateField({ field: "country", value: e.target.value }))
@@ -102,17 +107,17 @@ const EventForm = () => {
           fullWidth
           size="small"
           error={!!fieldErrors.country}
-          helperText={fieldErrors.country}
+          helperText={errorText(fieldErrors.country)}
         >
           {COUNTRY_OPTIONS.map((opt) => (
             <MenuItem key={opt.slug} value={opt.slug}>
-              {opt.label}
+              {t(opt.labelKey)}
             </MenuItem>
           ))}
         </TextField>
 
         <TextField
-          label="ID de YouTube"
+          label={t("eventForm.field.youtubeId")}
           value={form.idYt}
           onChange={(e) =>
             dispatch(updateField({ field: "idYt", value: e.target.value }))
@@ -126,13 +131,12 @@ const EventForm = () => {
             (form.idYt.length > 0 && !YT_ID_REGEX.test(form.idYt))
           }
           helperText={
-            fieldErrors.idYt ??
-            "11 caracteres del ID del video (ej: dQw4w9WgXcQ)"
+            errorText(fieldErrors.idYt) ?? t("eventForm.help.youtubeIdFormat")
           }
         />
 
         <TextField
-          label="Tiempo de inicio (segundos)"
+          label={t("eventForm.field.startTime")}
           type="number"
           value={form.startTime}
           onChange={(e) =>
@@ -148,15 +152,15 @@ const EventForm = () => {
           size="small"
           inputProps={{ min: 0 }}
           error={!!fieldErrors.startTime}
-          helperText={fieldErrors.startTime}
+          helperText={errorText(fieldErrors.startTime)}
         />
 
         <VideoPreview idYt={form.idYt} startTime={form.startTime} />
       </FormSection>
 
-      <FormSection title="Información del Evento">
+      <FormSection title={t("eventForm.section.eventInfo")}>
         <TextField
-          label="Título"
+          label={t("eventForm.field.title")}
           value={form.title}
           onChange={(e) =>
             dispatch(updateField({ field: "title", value: e.target.value }))
@@ -171,13 +175,13 @@ const EventForm = () => {
               form.title.length < VALIDATION_RULES.title.min)
           }
           helperText={
-            fieldErrors.title ??
+            errorText(fieldErrors.title) ??
             `${form.title.length}/${VALIDATION_RULES.title.max}`
           }
         />
 
         <TextField
-          label="Descripción"
+          label={t("eventForm.field.description")}
           value={form.description}
           onChange={(e) =>
             dispatch(
@@ -196,7 +200,7 @@ const EventForm = () => {
               form.description.length < VALIDATION_RULES.description.min)
           }
           helperText={
-            fieldErrors.description ??
+            errorText(fieldErrors.description) ??
             `${form.description.length}/${VALIDATION_RULES.description.max}`
           }
         />
@@ -209,16 +213,16 @@ const EventForm = () => {
         />
       </FormSection>
 
-      <FormSection title="Peleadores">
+      <FormSection title={t("eventForm.section.fighters")}>
         <TextField
-          label="ID del peleador principal (opcional)"
+          label={t("eventForm.field.mainFighterId")}
           value={form.fighterId}
           onChange={(e) =>
             dispatch(updateField({ field: "fighterId", value: e.target.value }))
           }
           fullWidth
           size="small"
-          helperText="ID interno del peleador destacado en esta pelea"
+          helperText={t("eventForm.help.mainFighterIdInfo")}
         />
 
         <FighterSelector
@@ -240,7 +244,7 @@ const EventForm = () => {
         {loadingFighters && (
           <Box display="flex" alignItems="center" gap={1}>
             <CircularProgress size={16} />
-            <span>Cargando peleadores...</span>
+            <span>{t("eventForm.loading.fighters")}</span>
           </Box>
         )}
       </FormSection>
@@ -248,22 +252,22 @@ const EventForm = () => {
       <FeedbackModal
         open={submitSuccess}
         variant="success"
-        title="Evento creado exitosamente"
+        title={t("eventForm.success.title")}
         onClose={handleSuccessClose}
       />
 
       <FeedbackModal
         open={!!submitError}
         variant="error"
-        title="Error al crear el evento"
+        title={t("eventForm.error.title")}
         message={submitError ?? undefined}
-        confirmLabel="Cerrar"
+        confirmLabel={t("common.close")}
         onClose={handleErrorClose}
       />
 
       <Box display="flex" gap={2} justifyContent="flex-end">
         <Button variant="outlined" onClick={handleReset} disabled={submitting}>
-          Limpiar
+          {t("eventForm.button.clear")}
         </Button>
         <Button
           type="submit"
@@ -275,7 +279,9 @@ const EventForm = () => {
             ) : undefined
           }
         >
-          {submitting ? "Enviando..." : "Enviar Evento"}
+          {submitting
+            ? t("eventForm.button.submitting")
+            : t("eventForm.button.submit")}
         </Button>
       </Box>
     </Box>

@@ -2,14 +2,16 @@ import { Box, Chip, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 import { countryRegistry } from "@/pages/countries/registry";
+import { useTranslation } from "@/i18n";
 
 const CountryChipBar = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <Box
       component="nav"
-      aria-label="Países disponibles"
+      aria-label={t("worldMap.availableCountriesAria")}
       sx={{
         flex: "0 0 auto",
         width: "100%",
@@ -32,14 +34,14 @@ const CountryChipBar = () => {
           flexShrink: 0,
         }}
       >
-        Explora un país:
+        {t("worldMap.explorePrompt")}
       </Typography>
 
       <Box sx={{ display: "flex", gap: 1, flexWrap: "nowrap" }}>
-        {countryRegistry.map(({ slug, name, accentColor }) => (
+        {countryRegistry.map(({ slug, nameKey, accentColor }) => (
           <Chip
             key={slug}
-            label={name}
+            label={t(nameKey)}
             clickable
             onClick={() => navigate(`/${slug}`)}
             icon={

@@ -4,11 +4,14 @@ import type { Fighter } from "@/types/fighter.types";
 import shuffleArray from "@/utils/shuffleArray";
 import pickRandomEvent from "@/utils/pickRandomEvent";
 import scrollToMainEvent from "@/utils/scrollToMainEvent";
+import { useTranslation } from "@/i18n";
+import type { TranslationKey } from "@/i18n";
 
 export const useMainVideoQueue = (initialEvents: MainEvent[]) => {
+  const { t } = useTranslation();
   const [mainVideo, setMainEvent] = useState<MainEvent | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [errorKey, setErrorKey] = useState<TranslationKey | null>(null);
   const [mainEventQueue, setMainEventQueue] = useState<MainEvent[]>([]);
   const prevEventsRef = useRef<string>("");
   const initializedRef = useRef<boolean>(false);
@@ -17,7 +20,7 @@ export const useMainVideoQueue = (initialEvents: MainEvent[]) => {
     setLoading(true);
 
     if (queue.length === 0) {
-      setError("No hay más videos disponibles.");
+      setErrorKey("error.noMoreVideos");
       setMainEvent(null);
       setLoading(false);
       return;
@@ -30,7 +33,7 @@ export const useMainVideoQueue = (initialEvents: MainEvent[]) => {
 
     setMainEvent(randomEvent);
     scrollToMainEvent();
-    setError(null);
+    setErrorKey(null);
     setLoading(false);
   }, []);
 
@@ -61,9 +64,9 @@ export const useMainVideoQueue = (initialEvents: MainEvent[]) => {
 
         setMainEvent(randomEvent);
         scrollToMainEvent();
-        setError(null);
+        setErrorKey(null);
       } else {
-        setError("No se encontró un evento principal para el peleador seleccionado.");
+        setErrorKey("error.noFighterEvent");
         setMainEvent(null);
       }
     },
@@ -72,7 +75,7 @@ export const useMainVideoQueue = (initialEvents: MainEvent[]) => {
 
   const onVideoSelect = useCallback((video: MainEvent) => {
     setMainEvent(video);
-    setError(null);
+    setErrorKey(null);
     scrollToMainEvent();
   }, []);
 
@@ -101,6 +104,8 @@ export const useMainVideoQueue = (initialEvents: MainEvent[]) => {
     const shuffled = shuffleArray([...initialEvents]);
     pickAndConsume(shuffled);
   }, [initialEvents, pickAndConsume]);
+
+  const error = errorKey ? t(errorKey) : null;
 
   return {
     mainVideo,

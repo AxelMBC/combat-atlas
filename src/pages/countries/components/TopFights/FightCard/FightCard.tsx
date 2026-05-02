@@ -4,6 +4,9 @@ import type { CardEventProps } from "./FightCard.types";
 // MUI
 import { Box, Typography } from "@mui/material";
 
+// i18n
+import { useTranslation } from "@/i18n";
+
 const FALLBACK_THUMBNAIL = "/placeholders/no-video-placeholder.png";
 const YOUTUBE_MISSING_THUMBNAIL_WIDTH = 120;
 
@@ -11,6 +14,7 @@ const youtubeThumbnail = (idYt: string) =>
   `https://i.ytimg.com/vi/${idYt}/hq720.jpg`;
 
 const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
+  const { t } = useTranslation();
   const thumbnailSrc =
     video.thumbnail ||
     (video.idYt ? youtubeThumbnail(video.idYt) : FALLBACK_THUMBNAIL);
@@ -141,7 +145,7 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
             gap: 1,
           }}
         >
-          Ver Pelea
+          {t("fightCard.watchFight")}
           <Box
             component="span"
             sx={{

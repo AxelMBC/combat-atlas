@@ -15,6 +15,7 @@ import TopFights from "@/pages/countries/components/TopFights";
 
 // Hooks
 import { useMainVideoQueue } from "@/hooks/useMainVideoQueue";
+import { useTranslation } from "@/i18n";
 
 const CountryPage = ({
   config,
@@ -24,6 +25,7 @@ const CountryPage = ({
   theme,
 }: CountryPageProps) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const {
     mainVideo,
@@ -73,10 +75,10 @@ const CountryPage = ({
               },
             }}
           >
-            ← Mapa Mundial
+            {t("nav.backToWorldMap")}
           </Button>
           <TitleCountry
-            title={config.headerTitle}
+            title={t(config.headerTitleKey)}
             headerTitleFont={config.headerTitleFont}
           />
 
@@ -88,14 +90,14 @@ const CountryPage = ({
           />
 
           <TopFighters
-            title={config.topFightersTitle}
+            title={t(config.topFightersTitleKey)}
             topFightersData={topFightersData}
             remainingByFighter={remainingByFighter}
             onFighterSelect={fetchVideoByFighter}
           />
 
           <TopFights
-            title={config.topEventsTitle}
+            title={t(config.topEventsTitleKey)}
             videos={topEventsList}
             onVideoSelect={onVideoSelect}
           />

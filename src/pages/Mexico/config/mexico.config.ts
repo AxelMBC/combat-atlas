@@ -3,9 +3,9 @@ import type { CountryPageConfig } from "@/pages/countries/components/CountryPage
 export const mexicoConfig: CountryPageConfig = {
   countryName: "Mexico",
   themeClassName: "mexico-theme",
-  headerTitle: "Boxeo al Estilo Mexicano",
-  topFightersTitle: "Ídolos de México",
-  topEventsTitle: "Peleas Históricas",
+  headerTitleKey: "country.mexico.headerTitle",
+  topFightersTitleKey: "country.mexico.topFightersTitle",
+  topEventsTitleKey: "country.mexico.topEventsTitle",
   colorPalette: {
     primary: "#ca2626",
     primaryDark: "#780606",

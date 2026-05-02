@@ -2,10 +2,13 @@
 // of the app's rendering stack may be broken, so it must render with no runtime deps.
 import { Link } from "react-router-dom";
 import { countryRegistry } from "@/pages/countries/registry";
+import { useTranslation } from "@/i18n";
 import type { MapFallbackProps } from "./MapFallback.types";
 import "./MapFallback.scss";
 
 const MapFallback = ({ onRetry, canSoftRetry = false }: MapFallbackProps) => {
+  const { t } = useTranslation();
+
   const handleRetry = () => {
     if (canSoftRetry && onRetry) {
       onRetry();
@@ -18,30 +21,28 @@ const MapFallback = ({ onRetry, canSoftRetry = false }: MapFallbackProps) => {
     <div
       className="map-fallback"
       role="alert"
-      aria-label="No se pudo cargar el mapa"
+      aria-label={t("mapFallback.aria")}
     >
       <span className="map-fallback__code" aria-hidden="true">
         :(
       </span>
 
-      <h1 className="map-fallback__title">No pudimos cargar el mapa</h1>
+      <h1 className="map-fallback__title">{t("mapFallback.title")}</h1>
 
-      <p className="map-fallback__message">
-        Mientras tanto, puedes explorar los países disponibles en Combat Atlas.
-      </p>
+      <p className="map-fallback__message">{t("mapFallback.message")}</p>
 
       <ul className="map-fallback__list">
-        {countryRegistry.map(({ slug, name }) => (
+        {countryRegistry.map(({ slug, nameKey }) => (
           <li key={slug}>
             <Link to={`/${slug}`} className="map-fallback__country">
-              {name}
+              {t(nameKey)}
             </Link>
           </li>
         ))}
       </ul>
 
       <button className="map-fallback__button" onClick={handleRetry}>
-        Reintentar
+        {t("common.retry")}
       </button>
     </div>
   );

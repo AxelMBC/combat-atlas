@@ -19,6 +19,10 @@ import CountryChipBar from "./CountryChipBar";
 // Data
 import { countryRegistry } from "@/pages/countries/registry";
 
+// i18n
+import { useTranslation } from "@/i18n";
+import type { TranslationKey } from "@/i18n";
+
 const MotionButton = motion.create(Button);
 
 const PULSE_PERIOD_MS = 1600;
@@ -27,6 +31,7 @@ const PULSE_MAX = 1.0;
 
 const WorldMap = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const layerIdToEntry = useMemo<
     Record<string, (typeof countryRegistry)[number]>
@@ -59,9 +64,17 @@ const WorldMap = () => {
     setSoftRetryUsed(true);
   }, []);
 
-  const [dialog, setDialog] = useState({
+  const [dialog, setDialog] = useState<{
+    show: boolean;
+    nameKey: TranslationKey | null;
+    slug: string;
+    lng: number;
+    lat: number;
+    x: number;
+    y: number;
+  }>({
     show: false,
-    country: "",
+    nameKey: null,
     slug: "",
     lng: 0,
     lat: 0,
@@ -70,7 +83,7 @@ const WorldMap = () => {
   });
 
   const [hover, setHover] = useState<{
-    name: string;
+    nameKey: TranslationKey;
     x: number;
     y: number;
   } | null>(null);
@@ -108,7 +121,7 @@ const WorldMap = () => {
     map.getCanvas().style.cursor = entry ? "pointer" : "";
 
     if (entry) {
-      setHover({ name: entry.name, x: event.point.x, y: event.point.y });
+      setHover({ nameKey: entry.nameKey, x: event.point.x, y: event.point.y });
     } else {
       setHover((prev) => (prev ? null : prev));
     }
@@ -139,7 +152,7 @@ const WorldMap = () => {
 
       setDialog({
         show: true,
-        country: entry.name,
+        nameKey: entry.nameKey,
         slug: entry.slug,
         lng: event.lngLat.lng,
         lat: event.lngLat.lat,
@@ -261,7 +274,7 @@ const WorldMap = () => {
               whiteSpace: "nowrap",
             }}
           >
-            {hover.name}
+            {t(hover.nameKey)}
           </Box>
         )}
 
@@ -303,7 +316,7 @@ const WorldMap = () => {
                 minWidth: 0,
               }}
             >
-              {dialog.country}
+              {dialog.nameKey ? t(dialog.nameKey) : ""}
             </MotionButton>
 
             <Box

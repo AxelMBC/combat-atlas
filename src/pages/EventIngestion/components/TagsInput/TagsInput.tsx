@@ -1,9 +1,11 @@
 import { type KeyboardEvent, useState } from "react";
 import { Box, Chip, TextField, Typography } from "@mui/material";
 import { VALIDATION_RULES } from "@/pages/EventIngestion/eventIngestion.config";
+import { useTranslation } from "@/i18n";
 import type { TagsInputProps } from "./TagsInput.types";
 
 const TagsInput = ({ tags, onAdd, onRemove, error }: TagsInputProps) => {
+  const { t } = useTranslation();
   const [inputValue, setInputValue] = useState("");
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -19,19 +21,22 @@ const TagsInput = ({ tags, onAdd, onRemove, error }: TagsInputProps) => {
 
   const atMax = tags.length >= VALIDATION_RULES.tags.max;
 
+  const helperText = error
+    ? t(error.key, error.params)
+    : atMax
+      ? t("eventForm.help.tagsMaxReached", { max: VALIDATION_RULES.tags.max })
+      : t("eventForm.help.tagsAddInstruction");
+
   return (
     <Box display="flex" flexDirection="column" gap={1}>
       <TextField
-        label="Etiquetas"
+        label={t("eventForm.field.tags")}
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={handleKeyDown}
         disabled={atMax}
         error={!!error}
-        helperText={
-          error ??
-          (atMax ? "Límite de 10 etiquetas alcanzado" : "Presioná Enter para agregar")
-        }
+        helperText={helperText}
         fullWidth
         size="small"
       />

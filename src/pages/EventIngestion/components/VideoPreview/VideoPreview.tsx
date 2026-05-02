@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { YT_ID_REGEX } from "@/pages/EventIngestion/eventIngestion.config";
+import { useTranslation } from "@/i18n";
 import type { VideoPreviewProps } from "./VideoPreview.types";
 
 const VideoPreview = ({ idYt, startTime }: VideoPreviewProps) => {
+  const { t } = useTranslation();
   const [debouncedId, setDebouncedId] = useState(idYt);
 
   useEffect(() => {
@@ -41,8 +43,8 @@ const VideoPreview = ({ idYt, startTime }: VideoPreviewProps) => {
       ) : (
         <Typography color="grey.500" variant="body2">
           {debouncedId.length > 0
-            ? "ID de YouTube inválido (debe tener 11 caracteres)"
-            : "Ingresá el ID del video para previsualizar"}
+            ? t("videoPreview.invalidId")
+            : t("videoPreview.promptForId")}
         </Typography>
       )}
     </Box>

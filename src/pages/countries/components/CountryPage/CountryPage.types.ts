@@ -1,6 +1,7 @@
 import type { Theme } from "@mui/material/styles";
 import type { Fighter } from "@/types/fighter.types";
 import type { MainEvent } from "@/types/fightEvent.types";
+import type { TranslationKey } from "@/i18n";
 
 export interface ColorPalette {
   primary: string;
@@ -17,9 +18,9 @@ export interface ColorPalette {
 export interface CountryPageConfig {
   countryName: string;
   themeClassName: string;
-  headerTitle: string;
-  topFightersTitle: string;
-  topEventsTitle: string;
+  headerTitleKey: TranslationKey;
+  topFightersTitleKey: TranslationKey;
+  topEventsTitleKey: TranslationKey;
   colorPalette: ColorPalette;
   maxWidth: string;
   headerTitleFont?: string;

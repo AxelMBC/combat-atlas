@@ -3,9 +3,9 @@ import type { CountryPageConfig } from "@/pages/countries/components/CountryPage
 export const thailandConfig: CountryPageConfig = {
   countryName: "Thailand",
   themeClassName: "thailand-theme",
-  headerTitle: "Armas Thailandesas",
-  topFightersTitle: "Leyendas Historicas",
-  topEventsTitle: "Las guerras de Thailandia",
+  headerTitleKey: "country.thailand.headerTitle",
+  topFightersTitleKey: "country.thailand.topFightersTitle",
+  topEventsTitleKey: "country.thailand.topEventsTitle",
   colorPalette: {
     primary: "#0047AB",
     primaryDark: "#002855",

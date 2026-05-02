@@ -1,3 +1,4 @@
+import { useTranslation } from "@/i18n";
 import type { SpinnerProps } from "./Spinner.types";
 import "./Spinner.scss";
 
@@ -6,6 +7,8 @@ const Spinner = ({
   label,
   fullscreen = true,
 }: SpinnerProps) => {
+  const { t } = useTranslation();
+
   const bars = (
     <span className={`spinner spinner--${size}`} aria-hidden="true">
       <span className="spinner__bar" />
@@ -29,7 +32,7 @@ const Spinner = ({
     <div
       className={fullscreen ? "spinner-overlay" : "spinner-wrapper"}
       role="status"
-      aria-label={label ?? "Cargando…"}
+      aria-label={label ?? t("common.loadingEllipsis")}
     >
       {content}
     </div>

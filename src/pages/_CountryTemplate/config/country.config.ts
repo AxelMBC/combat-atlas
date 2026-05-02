@@ -1,11 +1,13 @@
 import type { CountryPageConfig } from "@/pages/countries/components/CountryPage/CountryPage.types";
+import type { TranslationKey } from "@/i18n";
 
+// Add matching entries to src/i18n/locales/{es,en}.ts and replace the casts.
 export const countryConfig: CountryPageConfig = {
   countryName: "YourCountry",
   themeClassName: "yourcountry-theme",
-  headerTitle: "Your Header Title",
-  topFightersTitle: "Top Fighters Title",
-  topEventsTitle: "Top Events Title",
+  headerTitleKey: "country.yourCountry.headerTitle" as TranslationKey,
+  topFightersTitleKey: "country.yourCountry.topFightersTitle" as TranslationKey,
+  topEventsTitleKey: "country.yourCountry.topEventsTitle" as TranslationKey,
   colorPalette: {
     primary: "#000000",
     primaryDark: "#000000",

@@ -5,6 +5,9 @@ import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { store } from "./store";
 
+// i18n
+import { LanguageProvider } from "@/i18n";
+
 import App from "./App.tsx";
 
 // Pages
@@ -39,7 +42,7 @@ const router = createBrowserRouter([
       {
         path: "admin/fights/new",
         element: (
-          <ErrorBoundary fallback={<NotFound message="Error al cargar el formulario" />}>
+          <ErrorBoundary fallback={<NotFound messageKey="error.formLoad" />}>
             <EventIngestionPage />
           </ErrorBoundary>
         ),
@@ -58,4 +61,8 @@ if (!rootElement) {
 }
 
 const root = createRoot(rootElement);
-root.render(<RouterProvider router={router} />);
+root.render(
+  <LanguageProvider>
+    <RouterProvider router={router} />
+  </LanguageProvider>
+);

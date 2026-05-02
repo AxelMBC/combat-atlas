@@ -9,6 +9,9 @@ import { Box, Button, Typography } from "@mui/material";
 // Components
 import MainEventCard from "./MainEventCard";
 
+// i18n
+import { useTranslation } from "@/i18n";
+
 // Icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiceThree } from "@fortawesome/free-solid-svg-icons";
@@ -17,6 +20,7 @@ const MotionButton = motion.create(Button);
 
 const MainEvent = memo(
   ({ loading, error, mainVideo, fetchMainVideo }: MainEventProps) => {
+    const { t } = useTranslation();
     return (
       <Box
         component="section"
@@ -34,7 +38,7 @@ const MainEvent = memo(
               fontSize: "1.5rem",
             }}
           >
-            BUSCANDO COMBATE...
+            {t("mainEvent.searching")}
           </Typography>
         )}
 
@@ -75,7 +79,7 @@ const MainEvent = memo(
               <Box component="span" marginRight={1}>
                 <FontAwesomeIcon icon={faDiceThree} />
               </Box>
-              Otro Combate
+              {t("mainEvent.anotherFight")}
             </MotionButton>
           </Box>
         )}

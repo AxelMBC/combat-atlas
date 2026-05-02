@@ -5,11 +5,13 @@ import { countryRegistry } from "./registry";
 import Spinner from "@/components/Spinner";
 import NotFound from "@/components/NotFound";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import { useTranslation } from "@/i18n";
 
 const componentCache = new Map<string, LazyExoticComponent<ComponentType>>();
 
 const CountryRouter = () => {
   const { countrySlug } = useParams<{ countrySlug: string }>();
+  const { t } = useTranslation();
 
   const LazyCountry = useMemo(() => {
     const entry = countryRegistry.find((c) => c.slug === countrySlug);
@@ -26,12 +28,8 @@ const CountryRouter = () => {
   }
 
   return (
-    <ErrorBoundary
-      fallback={
-        <NotFound message="Ocurrió un error al cargar el país. Inténtalo de nuevo." />
-      }
-    >
-      <Suspense fallback={<Spinner label="CARGANDO" />}>
+    <ErrorBoundary fallback={<NotFound messageKey="error.countryLoad" />}>
+      <Suspense fallback={<Spinner label={t("common.loading")} />}>
         <LazyCountry />
       </Suspense>
     </ErrorBoundary>

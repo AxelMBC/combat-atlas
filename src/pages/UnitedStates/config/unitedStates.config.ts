@@ -3,9 +3,9 @@ import type { CountryPageConfig } from "@/pages/countries/components/CountryPage
 export const unitedStatesConfig: CountryPageConfig = {
   countryName: "UnitedStates",
   themeClassName: "united-states-theme",
-  headerTitle: "Lucha con Garra Americana",
-  topFightersTitle: "Leyendas del Tapete",
-  topEventsTitle: "Duelos Olímpicos",
+  headerTitleKey: "country.unitedStates.headerTitle",
+  topFightersTitleKey: "country.unitedStates.topFightersTitle",
+  topEventsTitleKey: "country.unitedStates.topEventsTitle",
   colorPalette: {
     primary: "#bf0a30",
     primaryDark: "#7a0414",

@@ -3,6 +3,7 @@ import { Box, Button, Modal, Typography } from "@mui/material";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { useTranslation } from "@/i18n";
 import type {
   FeedbackModalProps,
   FeedbackVariant,
@@ -35,11 +36,13 @@ const FeedbackModal = ({
   variant,
   title,
   message,
-  confirmLabel = "Aceptar",
+  confirmLabel,
   onClose,
 }: FeedbackModalProps) => {
   const [shouldRender, setShouldRender] = useState(open);
   const shouldReduceMotion = useReducedMotion();
+  const { t } = useTranslation();
+  const resolvedConfirmLabel = confirmLabel ?? t("common.accept");
 
   useEffect(() => {
     if (open) setShouldRender(true);
@@ -222,7 +225,7 @@ const FeedbackModal = ({
                         "&:hover": { bgcolor: styles.buttonBgHover },
                       }}
                     >
-                      {confirmLabel}
+                      {resolvedConfirmLabel}
                     </Button>
                   </Box>
                 </Box>

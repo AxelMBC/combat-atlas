@@ -1,4 +1,6 @@
 import { Autocomplete, Box, TextField, Typography } from "@mui/material";
+import { useTranslation } from "@/i18n";
+import type { TranslationKey } from "@/i18n";
 import type { Corner, FighterSelectorProps } from "./FighterSelector.types";
 
 const CORNER_COLORS: Record<Corner, string> = {
@@ -6,9 +8,9 @@ const CORNER_COLORS: Record<Corner, string> = {
   blue: "#1565c0",
 };
 
-const CORNER_LABELS: Record<Corner, string> = {
-  red: "Esquina Roja",
-  blue: "Esquina Azul",
+const CORNER_LABEL_KEYS: Record<Corner, TranslationKey> = {
+  red: "eventForm.field.redCorner",
+  blue: "eventForm.field.blueCorner",
 };
 
 const FighterSelector = ({
@@ -18,6 +20,7 @@ const FighterSelector = ({
   onChange,
   disabled = false,
 }: FighterSelectorProps) => {
+  const { t } = useTranslation();
   const selected = fighters.find((f) => f._id === selectedId) ?? null;
 
   return (
@@ -43,7 +46,7 @@ const FighterSelector = ({
       renderInput={(params) => (
         <TextField
           {...params}
-          label={CORNER_LABELS[corner]}
+          label={t(CORNER_LABEL_KEYS[corner])}
           InputProps={{
             ...params.InputProps,
             startAdornment: (

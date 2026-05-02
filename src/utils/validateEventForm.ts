@@ -4,23 +4,38 @@ import { VALIDATION_RULES, YT_ID_REGEX } from "@/pages/EventIngestion/eventInges
 
 const validateEventForm = (form: EventFormData): FieldErrors => {
   const errors: FieldErrors = {};
-  if (!form.country) errors.country = "El país es requerido.";
+  if (!form.country) errors.country = { key: "validation.countryRequired" };
   if (!YT_ID_REGEX.test(form.idYt))
-    errors.idYt = "El ID de YouTube debe tener exactamente 11 caracteres.";
+    errors.idYt = { key: "validation.youtubeIdInvalid" };
   if (Number(form.startTime) < VALIDATION_RULES.startTime.min)
-    errors.startTime = "El tiempo de inicio debe ser ≥ 0.";
+    errors.startTime = { key: "validation.startTimeInvalid" };
   if (
     form.title.length < VALIDATION_RULES.title.min ||
     form.title.length > VALIDATION_RULES.title.max
   )
-    errors.title = `El título debe tener entre ${VALIDATION_RULES.title.min} y ${VALIDATION_RULES.title.max} caracteres.`;
+    errors.title = {
+      key: "validation.titleLength",
+      params: {
+        min: VALIDATION_RULES.title.min,
+        max: VALIDATION_RULES.title.max,
+      },
+    };
   if (
     form.description.length < VALIDATION_RULES.description.min ||
     form.description.length > VALIDATION_RULES.description.max
   )
-    errors.description = `La descripción debe tener entre ${VALIDATION_RULES.description.min} y ${VALIDATION_RULES.description.max} caracteres.`;
+    errors.description = {
+      key: "validation.descriptionLength",
+      params: {
+        min: VALIDATION_RULES.description.min,
+        max: VALIDATION_RULES.description.max,
+      },
+    };
   if (form.tags.length > VALIDATION_RULES.tags.max)
-    errors.tags = `Máximo ${VALIDATION_RULES.tags.max} etiquetas.`;
+    errors.tags = {
+      key: "validation.tagsMax",
+      params: { max: VALIDATION_RULES.tags.max },
+    };
   return errors;
 };
 

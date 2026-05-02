@@ -4,8 +4,12 @@ import type { FighterCardProps } from "./FighterCard.types";
 // MUI
 import { Box, Typography } from "@mui/material";
 
+// i18n
+import { useTranslation } from "@/i18n";
+
 const FighterCard = memo(
   ({ boxer, rank, remaining, onSelect }: FighterCardProps) => {
+    const { t } = useTranslation();
     const disabled = remaining <= 0;
 
     return (
@@ -84,7 +88,7 @@ const FighterCard = memo(
                   letterSpacing: 1,
                 }}
               >
-                Sin peleas
+                {t("fighter.noFights")}
               </Box>
             ) : (
               <>
@@ -102,7 +106,9 @@ const FighterCard = memo(
                     letterSpacing: 0.5,
                   }}
                 >
-                  {remaining === 1 ? "pelea" : "peleas"}
+                  {remaining === 1
+                    ? t("fighter.fights.one")
+                    : t("fighter.fights.other")}
                 </Box>
               </>
             )}
@@ -149,7 +155,7 @@ const FighterCard = memo(
                   whiteSpace: "nowrap",
                 })}
               >
-                Agotado
+                {t("fighter.exhausted")}
               </Box>
             )}
           </Box>
@@ -166,7 +172,7 @@ const FighterCard = memo(
             </Typography>
 
             <Typography sx={{ variant: "body1", color: "info.main", mt: 0.5 }}>
-              RÉCORD: {boxer.record}
+              {t("fighter.recordLabel")} {boxer.record}
             </Typography>
           </Box>
         </Box>

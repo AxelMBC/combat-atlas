@@ -2,6 +2,7 @@ import type { ErrorFallbackProps } from "./ErrorFallback.types";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Typography } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
+import { useTranslation } from "@/i18n";
 
 const ErrorFallback = ({
   theme,
@@ -10,6 +11,7 @@ const ErrorFallback = ({
   onRetry,
 }: ErrorFallbackProps) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <ThemeProvider theme={theme}>
@@ -40,7 +42,7 @@ const ErrorFallback = ({
             color: "text.primary",
           }}
         >
-          {title ? title : "Error de conexión"}
+          {title ? title : t("errorFallback.defaultTitle")}
         </Typography>
 
         <Typography
@@ -52,8 +54,7 @@ const ErrorFallback = ({
             fontSize: "1rem",
           }}
         >
-          {message ??
-            "No pudimos cargar la información. Revisa tu conexión e inténtalo de nuevo."}
+          {message ?? t("errorFallback.defaultMessage")}
         </Typography>
 
         <Box
@@ -72,7 +73,7 @@ const ErrorFallback = ({
               onClick={onRetry}
               sx={{ fontFamily: "inherit", px: 4, py: 1.2, borderRadius: 0 }}
             >
-              Reintentar
+              {t("common.retry")}
             </Button>
           )}
           <Button
@@ -81,7 +82,7 @@ const ErrorFallback = ({
             onClick={() => navigate("/")}
             sx={{ fontFamily: "inherit", px: 4, py: 1.2, borderRadius: 0 }}
           >
-            ← Mapa Mundial
+            {t("nav.backToWorldMap")}
           </Button>
         </Box>
       </Box>
