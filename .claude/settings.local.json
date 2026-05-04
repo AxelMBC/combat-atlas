@@ -6,7 +6,33 @@
       "Bash(find:*)",
       "Bash(xargs grep *)",
       "Bash(xargs cat *)",
-      "Bash(gh repo *)"
+      "Bash(gh repo *)",
+      "Bash(node ./.claude/claudeHooks/prettier_hook.cjs)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ./.claude/claudeHooks/prettier_hook.cjs",
+            "statusMessage": "Formatting with Prettier..."
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Read|Grep",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ./.claude/claudeHooks/read_hook.cjs"
+          }
+        ]
+      }
     ]
   }
 }
