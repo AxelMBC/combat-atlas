@@ -1,21 +1,20 @@
-import type { CountryPageProps } from "./CountryPage.types";
+import type { CountryPageProps } from './CountryPage.types';
 
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // MUI
-import { Box, Container, Button } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
+import { Box, Container, Button } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 
 // Components
-import TitleCountry from "@/pages/countries/components/TitleCountry";
-import TopFighters from "@/pages/countries/components/TopFighters";
-import MainEvent from "@/pages/countries/components/MainEvent";
-import TopFights from "@/pages/countries/components/TopFights";
+import TopFighters from '@/pages/countries/components/TopFighters';
+import MainEvent from '@/pages/countries/components/MainEvent';
+import TopFights from '@/pages/countries/components/TopFights';
 
 // Hooks
-import { useMainVideoQueue } from "@/hooks/useMainVideoQueue";
-import { useTranslation } from "@/i18n";
+import { useMainVideoQueue } from '@/hooks/useMainVideoQueue';
+import { useTranslation } from '@/i18n';
 
 const CountryPage = ({
   config,
@@ -46,7 +45,7 @@ const CountryPage = ({
       <Box
         sx={{
           pb: 8,
-          backgroundColor: "background.default",
+          backgroundColor: 'background.default',
         }}
       >
         <Container
@@ -60,29 +59,25 @@ const CountryPage = ({
           }}
         >
           <Button
-            onClick={() => navigate("/")}
+            onClick={() => navigate('/')}
             variant="text"
             sx={{
-              position: "fixed",
+              position: 'fixed',
               top: 20,
               left: 24,
-              color: "text.primary",
+              color: 'text.primary',
               opacity: 0.7,
-              fontSize: "1.5rem",
-              "&:hover": {
+              fontSize: '1.5rem',
+              '&:hover': {
                 opacity: 1,
-                backgroundColor: "transparent",
+                backgroundColor: 'transparent',
               },
             }}
           >
-            {t("nav.backToWorldMap")}
+            {t('nav.backToWorldMap')}
           </Button>
-          <TitleCountry
-            title={t(config.headerTitleKey)}
-            headerTitleFont={config.headerTitleFont}
-          />
-
           <MainEvent
+            config={config}
             loading={loading}
             error={error}
             mainVideo={mainVideo}

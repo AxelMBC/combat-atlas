@@ -6,8 +6,7 @@
       "Bash(find:*)",
       "Bash(xargs grep *)",
       "Bash(xargs cat *)",
-      "Bash(gh repo *)",
-      "Bash(node ./.claude/claudeHooks/prettier_hook.cjs)"
+      "Bash(gh repo *)"
     ]
   },
   "hooks": {
