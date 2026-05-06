@@ -1,36 +1,34 @@
-import { memo } from "react";
-import type { TopFightersProps } from "./TopFighters.types";
+import { memo } from 'react';
+import type { TopFightersProps } from './TopFighters.types';
 
 // MUI
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from '@mui/material';
 
 // Components
-import FighterCard from "./FighterCard";
+import FighterCard from './FighterCard';
 
 const TopFighters = memo(
-  ({
-    title,
-    topFightersData,
-    remainingByFighter,
-    onFighterSelect,
-  }: TopFightersProps) => {
+  ({ title, topFightersData, remainingByFighter, onFighterSelect }: TopFightersProps) => {
     const getRemaining = (id: string) => remainingByFighter[id] ?? 0;
 
     return (
       <Box
         className="section-spacing"
-        sx={{ paddingBottom: 8, marginTop: 4, borderBottom: "8px solid #000" }}
+        sx={{ paddingBottom: 8, marginTop: 4, borderBottom: '8px solid #000' }}
       >
         <Typography
           marginBottom={2}
           variant="h3"
           sx={{
-            marginBottom: 2,
-            variant: "h3",
-            color: "primary.dark",
-            textAlign: "center",
-            textTransform: "uppercase",
-            fontSize: { xs: "1.5rem", md: "6rem" },
+            fontFamily: 'Anton, sans-serif',
+            fontWeight: 400,
+            fontSize: { xs: '2.5rem', md: '6rem' },
+            lineHeight: 1,
+            color: 'primary.dark',
+            textTransform: 'uppercase',
+            letterSpacing: '0.01em',
+            textAlign: 'center',
+            marginTop: { xs: 2, md: 6 },
           }}
         >
           {title}
@@ -42,6 +40,7 @@ const TopFighters = memo(
               <FighterCard
                 boxer={topFightersData[0]}
                 rank={1}
+                variant="feature"
                 remaining={getRemaining(topFightersData[0]._id)}
                 onSelect={onFighterSelect}
               />
@@ -53,6 +52,7 @@ const TopFighters = memo(
               <FighterCard
                 boxer={topFightersData[1]}
                 rank={2}
+                variant="compact"
                 remaining={getRemaining(topFightersData[1]._id)}
                 onSelect={onFighterSelect}
               />
@@ -64,6 +64,7 @@ const TopFighters = memo(
               <FighterCard
                 boxer={b}
                 rank={i + 3}
+                variant="compact"
                 remaining={getRemaining(b._id)}
                 onSelect={onFighterSelect}
               />
@@ -72,7 +73,7 @@ const TopFighters = memo(
         </Grid>
       </Box>
     );
-  }
+  },
 );
 
 export default TopFighters;

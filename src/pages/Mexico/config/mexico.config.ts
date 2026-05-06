@@ -11,7 +11,7 @@ export const mexicoConfig: CountryPageConfig = {
     primary: '#ca2626',
     primaryDark: '#780606',
     secondary: '#26c954',
-    white: '#f2f2f2',
+    white: '#f5f1e8',
     textPrimary: '#031602',
     textSecondary: '#f2f2f2',
     error: '#d40000',

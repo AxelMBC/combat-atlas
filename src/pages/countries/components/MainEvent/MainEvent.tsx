@@ -20,11 +20,13 @@ const MainEvent = memo(({ config, loading, error, mainVideo, fetchMainVideo }: M
 
   return (
     <Box
+      id="target-scroll"
       component="section"
       className="section-spacing"
       sx={{
         borderBottom: '8px solid #000',
         marginTop: 1,
+        scrollMarginTop: 16,
       }}
     >
       <Box
@@ -84,11 +86,12 @@ const MainEvent = memo(({ config, loading, error, mainVideo, fetchMainVideo }: M
           sx={{
             fontFamily: 'Anton, sans-serif',
             fontWeight: 400,
-            fontSize: { xs: '2.5rem', md: '4.5rem' },
+            fontSize: { xs: '2.5rem', md: '6rem' },
             lineHeight: 1,
             color: 'primary.dark',
             textTransform: 'uppercase',
             letterSpacing: '0.01em',
+            textAlign: 'center',
           }}
         >
           {t(config.headerTitleKey)}.

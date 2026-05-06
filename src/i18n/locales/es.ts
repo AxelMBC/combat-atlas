@@ -61,6 +61,10 @@ const es = {
   'fighter.recordLabel': 'RÉCORD:',
   'fighter.fights.one': 'pelea',
   'fighter.fights.other': 'peleas',
+  'fighter.koLabel': 'KO',
+  'fighter.activeLabel': 'ACTIVO',
+  'fighter.fightsTotalLabel': 'PELEAS',
+  'fighter.profileCta': 'PERFIL',
 
   'fightCard.watchFight': 'Ver Pelea',
 
