@@ -1,11 +1,11 @@
-import { memo } from "react";
-import { TopEventsProps } from "./TopFights.types";
+import { memo } from 'react';
+import { TopEventsProps } from './TopFights.types';
 
 // MUI
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from '@mui/material';
 
 // Components
-import FightCard from "./FightCard";
+import FightCard from './FightCard';
 
 const TopFights = memo(({ title, videos, onVideoSelect }: TopEventsProps) => {
   return (
@@ -13,11 +13,11 @@ const TopFights = memo(({ title, videos, onVideoSelect }: TopEventsProps) => {
       <Typography
         variant="h1"
         sx={{
-          color: "primary.dark",
-          textAlign: "center",
-          textTransform: "uppercase",
+          color: 'primary.dark',
+          textAlign: 'center',
+          textTransform: 'uppercase',
           marginBottom: 5,
-          fontSize: { xs: "3rem", md: "6rem" },
+          fontSize: { xs: '3rem', md: '6rem' },
         }}
       >
         {title}
@@ -27,10 +27,10 @@ const TopFights = memo(({ title, videos, onVideoSelect }: TopEventsProps) => {
         {videos.map(
           (video) =>
             video.idYt && (
-              <Grid key={video.idYt} size={{ xs: 12, sm: 6, lg: 4 }}>
+              <Grid key={video.idYt} size={{ xs: 12, sm: 6, lg: 4 }} sx={{ display: 'flex' }}>
                 <FightCard video={video} onVideoSelect={onVideoSelect} />
               </Grid>
-            )
+            ),
         )}
       </Grid>
     </Box>

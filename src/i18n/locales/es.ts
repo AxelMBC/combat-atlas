@@ -67,6 +67,7 @@ const es = {
   'fighter.profileCta': 'PERFIL',
 
   'fightCard.watchFight': 'Ver Pelea',
+  'fightCard.round': 'Round',
 
   'eventForm.pageTitle': 'Nuevo Evento de Pelea',
   'eventForm.pageDescription': 'Completá el formulario para ingresar un nuevo evento al sistema.',

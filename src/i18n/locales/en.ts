@@ -70,6 +70,7 @@ const en: Record<TranslationKey, string> = {
   'fighter.profileCta': 'PROFILE',
 
   'fightCard.watchFight': 'Watch Fight',
+  'fightCard.round': 'Round',
 
   'eventForm.pageTitle': 'New Fight Event',
   'eventForm.pageDescription': 'Fill out the form to add a new event to the system.',
