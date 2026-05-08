@@ -28,7 +28,7 @@ const splitFightersFromTitle = (title: string): [string, string] | null => {
 const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
   const { t } = useTranslation();
 
-  const fallback = useMemo(() => resolveFallback(video.title), [video.title]);
+  const fallback = useMemo(() => resolveFallback(), []);
 
   const year = video.year ?? fallback?.year;
   const dateLabel = video.dateLabel ?? fallback?.dateLabel;
