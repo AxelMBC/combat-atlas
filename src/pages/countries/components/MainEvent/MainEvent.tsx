@@ -4,16 +4,20 @@ import type { MainEventProps } from './MainEvent.types';
 // MUI
 import { Box, Typography } from '@mui/material';
 
+// Redux
+import { useSelector } from 'react-redux';
+import { selectCountryState } from '@/store/country/countrySlice';
+
 // Components
 import MainEventCard from './MainEventCard';
 
 // i18n
 import { useTranslation } from '@/i18n';
 
-const DUMMY_FIGHT_COUNT = 128;
 const DUMMY_LAST_UPDATE = '01 May 2026';
 
 const MainEvent = memo(({ config, loading, error, mainVideo, fetchMainVideo }: MainEventProps) => {
+  const { mainEvents } = useSelector(selectCountryState);
   const { t } = useTranslation();
 
   const countryLabel = config.countryNameKey ? t(config.countryNameKey) : config.countryName;
@@ -62,11 +66,14 @@ const MainEvent = memo(({ config, loading, error, mainVideo, fetchMainVideo }: M
         >
           <Box component="span">·</Box>
           <Box component="span">
-            {DUMMY_FIGHT_COUNT} {t('mainEvent.fightsCount')}
+            {/* TODO: update with country-specific fight count */}
+            {mainEvents && mainEvents.length} {t('mainEvent.fightsCount')}
           </Box>
           <Box component="span">·</Box>
+
           <Box component="span">{t('mainEvent.lastUpdate')}</Box>
           <Box component="span">·</Box>
+          {/* TODO: update with actual last update date */}
           <Box component="span">{DUMMY_LAST_UPDATE}</Box>
         </Box>
       </Box>
