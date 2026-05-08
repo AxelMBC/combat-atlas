@@ -50,13 +50,18 @@ const MainEventCard = ({ video, onAnotherFight }: MainEventCardProps) => {
             position: 'relative',
             bgcolor: 'common.black',
             aspectRatio: '16 / 9',
+            overflow: 'hidden',
+            '&:hover .yt-iframe': {
+              pointerEvents: 'auto',
+            },
           }}
         >
           <Box
             allowFullScreen
             component="iframe"
             id="main-event-video"
-            src={`https://www.youtube.com/embed/${video.idYt}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&playsinline=1&disablekb=1${
+            className="yt-iframe"
+            src={`https://www.youtube.com/embed/${video.idYt}?autoplay=1&mute=1&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3&fs=0&cc_load_policy=0${
               video.startTime ? `&start=${video.startTime}` : ''
             }`}
             title={video.title}
@@ -67,6 +72,9 @@ const MainEventCard = ({ video, onAnotherFight }: MainEventCardProps) => {
               width: '100%',
               height: '100%',
               border: '0',
+              transform: 'scaleY(1.08)',
+              transformOrigin: 'bottom center',
+              pointerEvents: 'none',
             }}
           />
         </Box>

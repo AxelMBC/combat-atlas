@@ -1,5 +1,5 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getCountryData } from "@/services/country.service";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { getCountryData } from '@/services/country.service';
 
 const TTL_MS = 30 * 60 * 1000;
 
@@ -8,7 +8,7 @@ interface SessionCache {
   fetchedAt: number;
 }
 
-const readCache = (slug: string): SessionCache["data"] | null => {
+const readCache = (slug: string): SessionCache['data'] | null => {
   try {
     const raw = sessionStorage.getItem(`country_${slug}`);
     if (!raw) return null;
@@ -27,7 +27,7 @@ const readCache = (slug: string): SessionCache["data"] | null => {
   }
 };
 
-const writeCache = (slug: string, data: SessionCache["data"]): void => {
+const writeCache = (slug: string, data: SessionCache['data']): void => {
   try {
     const payload: SessionCache = { data, fetchedAt: Date.now() };
     sessionStorage.setItem(`country_${slug}`, JSON.stringify(payload));
@@ -37,19 +37,19 @@ const writeCache = (slug: string, data: SessionCache["data"]): void => {
 };
 
 export const fetchCountry = createAsyncThunk(
-  "country/fetchBySlug",
+  'country/fetchBySlug',
   async (slug: string, { rejectWithValue }) => {
     const cached = readCache(slug);
     if (cached) return cached;
 
     try {
       const data = await getCountryData(slug);
+      console.log('data: ', data);
       writeCache(slug, data);
       return data;
     } catch (error: unknown) {
-      const message =
-        error instanceof Error ? error.message : "Error fetching country data";
+      const message = error instanceof Error ? error.message : 'Error fetching country data';
       return rejectWithValue(message);
     }
-  }
+  },
 );

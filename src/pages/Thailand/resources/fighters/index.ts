@@ -1,8 +1,8 @@
-import namsaknoiYudthagarngamtornImg from "./namsaknoi_yudthagarngamtorn.jpg";
-import saenchai from "./saenchai.jpg";
-import samartPayakaroonImg from "./samart_payakaroon.webp";
-import dieselnoiChorThanasukarnImg from "./dieselnoi_chor_thanasukarn.jpeg";
-import apidejSitHirunImg from "./apidej_sit_hirun.jpg";
+import namsaknoiYudthagarngamtornImg from './namsaknoi_yudthagarngamtorn.jpg';
+import saenchai from './saenchai.jpg';
+import samartPayakaroonImg from './samart_payakaroon.jpg';
+import dieselnoiChorThanasukarnImg from './dieselnoi_chor_thanasukarn.jpeg';
+import apidejSitHirunImg from './apidej_sit_hirun.jpg';
 
 const fighterImages: Record<string, string> = {
   namsaknoi_yudthagarngamtorn: namsaknoiYudthagarngamtornImg,
@@ -13,4 +13,4 @@ const fighterImages: Record<string, string> = {
 };
 
 export const getFighterImage = (filename: string): string =>
-  fighterImages[filename] ?? "/placeholder.webp";
+  fighterImages[filename] ?? '/placeholder.webp';
