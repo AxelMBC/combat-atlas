@@ -62,12 +62,15 @@ const CountryPage = ({
             onClick={() => navigate('/')}
             variant="text"
             sx={{
-              position: 'fixed',
-              top: 20,
-              left: 24,
+              position: { xs: 'static', sm: 'fixed' },
+              top: { sm: 20 },
+              left: { sm: 24 },
+              alignSelf: { xs: 'flex-start', sm: 'auto' },
+              pl: { xs: 0, sm: 1 },
+              mb: { xs: 1, sm: 0 },
               color: 'text.primary',
               opacity: 0.7,
-              fontSize: '1.5rem',
+              fontSize: { xs: '1rem', sm: '1.5rem' },
               '&:hover': {
                 opacity: 1,
                 backgroundColor: 'transparent',
