@@ -10,6 +10,13 @@ export interface FightVenue {
   country: string;
 }
 
+export interface FightDivision {
+  text: {
+    en: string;
+    es: string;
+  };
+}
+
 export interface MainEvent {
   id: number;
   idYt: string;
@@ -26,8 +33,10 @@ export interface MainEvent {
   type?: string;
   year?: string;
   dateLabel?: string;
+  location?: string;
   venue?: FightVenue;
   organization?: string;
   weightClass?: string;
+  divisionId?: FightDivision;
   decision?: FightDecision;
 }

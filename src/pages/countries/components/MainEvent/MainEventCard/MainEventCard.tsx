@@ -17,14 +17,16 @@ const MotionButton = motion.create(Button);
 const FALLBACK_TAGS = ['DESTACADO', 'SPARRING', 'SÚPER MEDIANO', 'SESIÓN COMPLETA'];
 
 const MainEventCard = ({ video, onAnotherFight }: MainEventCardProps) => {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   const tags = video.tags && video.tags.length > 0 ? video.tags : FALLBACK_TAGS;
 
+  const divisionLabel = video.divisionId?.text?.[language] ?? '—';
+
   const stats = [
-    { label: t('mainEvent.division'), value: 'S. Mediano' },
-    { label: t('mainEvent.venue'), value: 'San Diego' },
-    { label: t('mainEvent.year'), value: '2022' },
+    { label: t('mainEvent.division'), value: divisionLabel },
+    { label: t('mainEvent.venue'), value: video.location ?? '—' },
+    { label: t('mainEvent.year'), value: video.year ?? '—' },
   ];
 
   return (
