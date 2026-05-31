@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import type { MainEvent } from "@/types/fightEvent.types";
-import type { Fighter } from "@/types/fighter.types";
-import shuffleArray from "@/utils/shuffleArray";
-import pickRandomEvent from "@/utils/pickRandomEvent";
-import scrollToMainEvent from "@/utils/scrollToMainEvent";
-import { useTranslation } from "@/i18n";
-import type { TranslationKey } from "@/i18n";
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import type { MainEvent } from '@/types/fightEvent.types';
+import type { Fighter } from '@/types/fighter.types';
+import shuffleArray from '@/utils/shuffleArray';
+import pickRandomEvent from '@/utils/pickRandomEvent';
+import scrollToMainEvent from '@/utils/scrollToMainEvent';
+import { useTranslation } from '@/i18n';
+import type { TranslationKey } from '@/i18n';
 
 export const useMainVideoQueue = (initialEvents: MainEvent[]) => {
   const { t } = useTranslation();
@@ -13,14 +13,14 @@ export const useMainVideoQueue = (initialEvents: MainEvent[]) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [errorKey, setErrorKey] = useState<TranslationKey | null>(null);
   const [mainEventQueue, setMainEventQueue] = useState<MainEvent[]>([]);
-  const prevEventsRef = useRef<string>("");
+  const prevEventsRef = useRef<string>('');
   const initializedRef = useRef<boolean>(false);
 
   const pickAndConsume = useCallback((queue: MainEvent[]) => {
     setLoading(true);
 
     if (queue.length === 0) {
-      setErrorKey("error.noMoreVideos");
+      setErrorKey('error.noMoreVideos');
       setMainEvent(null);
       setLoading(false);
       return;
@@ -46,15 +46,11 @@ export const useMainVideoQueue = (initialEvents: MainEvent[]) => {
       const fighterEvents = mainEventQueue
         .map((event, index) => ({ event, index }))
         .filter(
-          ({ event }) =>
-            event.fighterBlueId === fighter._id ||
-            event.fighterRedId === fighter._id
+          ({ event }) => event.fighterBlueId === fighter._id || event.fighterRedId === fighter._id,
         );
 
       if (fighterEvents.length > 0) {
-        const randomIndexInFighterEvents = Math.floor(
-          Math.random() * fighterEvents.length
-        );
+        const randomIndexInFighterEvents = Math.floor(Math.random() * fighterEvents.length);
         const { event: randomEvent, index: originalIndex } =
           fighterEvents[randomIndexInFighterEvents];
 
@@ -66,11 +62,11 @@ export const useMainVideoQueue = (initialEvents: MainEvent[]) => {
         scrollToMainEvent();
         setErrorKey(null);
       } else {
-        setErrorKey("error.noFighterEvent");
+        setErrorKey('error.noFighterEvent');
         setMainEvent(null);
       }
     },
-    [mainEventQueue]
+    [mainEventQueue],
   );
 
   const onVideoSelect = useCallback((video: MainEvent) => {
@@ -78,6 +74,11 @@ export const useMainVideoQueue = (initialEvents: MainEvent[]) => {
     setErrorKey(null);
     scrollToMainEvent();
   }, []);
+
+  const remainingCount = useMemo(
+    () => mainEventQueue.length + (mainVideo ? 1 : 0),
+    [mainEventQueue, mainVideo],
+  );
 
   const remainingByFighter = useMemo(() => {
     const counts: Record<string, number> = {};
@@ -115,5 +116,6 @@ export const useMainVideoQueue = (initialEvents: MainEvent[]) => {
     fetchVideoByFighter,
     onVideoSelect,
     remainingByFighter,
+    remainingCount,
   };
 };

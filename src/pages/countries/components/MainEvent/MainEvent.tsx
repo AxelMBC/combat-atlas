@@ -4,10 +4,6 @@ import type { MainEventProps } from './MainEvent.types';
 // MUI
 import { Box, Typography } from '@mui/material';
 
-// Redux
-import { useSelector } from 'react-redux';
-import { selectCountryState } from '@/store/country/countrySlice';
-
 // Components
 import MainEventCard from './MainEventCard';
 
@@ -16,130 +12,130 @@ import { useTranslation } from '@/i18n';
 
 const DUMMY_LAST_UPDATE = '01 May 2026';
 
-const MainEvent = memo(({ config, loading, error, mainVideo, fetchMainVideo }: MainEventProps) => {
-  const { mainEvents } = useSelector(selectCountryState);
-  const { t } = useTranslation();
+const MainEvent = memo(
+  ({ config, loading, error, mainVideo, fetchMainVideo, remainingCount }: MainEventProps) => {
+    const { t } = useTranslation();
 
-  const countryLabel = config.countryNameKey ? t(config.countryNameKey) : config.countryName;
+    const countryLabel = config.countryNameKey ? t(config.countryNameKey) : config.countryName;
 
-  return (
-    <Box
-      id="target-scroll"
-      component="section"
-      className="section-spacing"
-      sx={{
-        borderBottom: '8px solid #000',
-        marginTop: 1,
-        scrollMarginTop: 16,
-      }}
-    >
+    return (
       <Box
+        id="target-scroll"
+        component="section"
+        className="section-spacing"
         sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: 1,
-          fontFamily: '"Merriweather", serif',
-          fontSize: '0.85rem',
-          letterSpacing: '0.05em',
-          color: 'info.main',
-          pb: 1,
-          borderBottom: '1px solid',
-          borderColor: 'info.main',
+          borderBottom: '8px solid #000',
+          marginTop: 1,
+          scrollMarginTop: 16,
         }}
       >
-        <Box sx={{ textTransform: 'uppercase', display: 'flex', gap: 0.75 }}>
-          <Box component="span">ATLAS</Box>
-          <Box component="span">/</Box>
-          <Box component="span" sx={{ color: 'text.primary', fontWeight: 700 }}>
-            {countryLabel}
-          </Box>
-        </Box>
         <Box
           sx={{
             display: 'flex',
+            justifyContent: 'space-between',
             alignItems: 'center',
-            gap: 1,
             flexWrap: 'wrap',
+            gap: 1,
+            fontFamily: '"Merriweather", serif',
+            fontSize: '0.85rem',
+            letterSpacing: '0.05em',
+            color: 'info.main',
+            pb: 1,
+            borderBottom: '1px solid',
+            borderColor: 'info.main',
           }}
         >
-          <Box component="span">·</Box>
-          <Box component="span">
-            {/* TODO: update with country-specific fight count */}
-            {mainEvents && mainEvents.length} {t('mainEvent.fightsCount')}
+          <Box sx={{ textTransform: 'uppercase', display: 'flex', gap: 0.75 }}>
+            <Box component="span">ATLAS</Box>
+            <Box component="span">/</Box>
+            <Box component="span" sx={{ color: 'text.primary', fontWeight: 700 }}>
+              {countryLabel}
+            </Box>
           </Box>
-          <Box component="span">·</Box>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1,
+              flexWrap: 'wrap',
+            }}
+          >
+            <Box component="span">·</Box>
+            <Box component="span">
+              {remainingCount} {t('mainEvent.fightsCount')}
+            </Box>
+            <Box component="span">·</Box>
 
-          <Box component="span">{t('mainEvent.lastUpdate')}</Box>
-          <Box component="span">·</Box>
-          {/* TODO: update with actual last update date */}
-          <Box component="span">{DUMMY_LAST_UPDATE}</Box>
+            <Box component="span">{t('mainEvent.lastUpdate')}</Box>
+            <Box component="span">·</Box>
+            {/* TODO: update with actual last update date */}
+            <Box component="span">{DUMMY_LAST_UPDATE}</Box>
+          </Box>
         </Box>
+
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'baseline',
+            justifyContent: 'space-between',
+            gap: 2,
+            mt: 4,
+            mb: 3,
+          }}
+        >
+          <Typography
+            variant="h1"
+            sx={{
+              fontFamily: 'Anton, sans-serif',
+              fontWeight: 400,
+              fontSize: { xs: '2.5rem', md: '6rem' },
+              lineHeight: 1,
+              color: 'primary.dark',
+              textTransform: 'uppercase',
+              letterSpacing: '0.01em',
+              textAlign: 'center',
+            }}
+          >
+            {t(config.headerTitleKey)}.
+          </Typography>
+        </Box>
+
+        {loading && (
+          <Typography
+            variant="h1"
+            sx={{
+              fontFamily: 'Anton, sans-serif',
+              textAlign: 'center',
+              fontSize: '1.5rem',
+              color: 'text.primary',
+              p: 4,
+            }}
+          >
+            {t('mainEvent.searching')}
+          </Typography>
+        )}
+
+        {error && (
+          <Typography
+            sx={{
+              fontFamily: 'Anton, sans-serif',
+              textAlign: 'center',
+              fontWeight: 'bold',
+              fontSize: '1.5rem',
+              color: 'text.primary',
+              p: 4,
+            }}
+          >
+            {error}
+          </Typography>
+        )}
+
+        {!loading && !error && mainVideo && (
+          <MainEventCard video={mainVideo} onAnotherFight={fetchMainVideo} />
+        )}
       </Box>
-
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'baseline',
-          justifyContent: 'space-between',
-          gap: 2,
-          mt: 4,
-          mb: 3,
-        }}
-      >
-        <Typography
-          variant="h1"
-          sx={{
-            fontFamily: 'Anton, sans-serif',
-            fontWeight: 400,
-            fontSize: { xs: '2.5rem', md: '6rem' },
-            lineHeight: 1,
-            color: 'primary.dark',
-            textTransform: 'uppercase',
-            letterSpacing: '0.01em',
-            textAlign: 'center',
-          }}
-        >
-          {t(config.headerTitleKey)}.
-        </Typography>
-      </Box>
-
-      {loading && (
-        <Typography
-          variant="h1"
-          sx={{
-            fontFamily: 'Anton, sans-serif',
-            textAlign: 'center',
-            fontSize: '1.5rem',
-            color: 'text.primary',
-            p: 4,
-          }}
-        >
-          {t('mainEvent.searching')}
-        </Typography>
-      )}
-
-      {error && (
-        <Typography
-          sx={{
-            fontFamily: 'Anton, sans-serif',
-            textAlign: 'center',
-            fontWeight: 'bold',
-            fontSize: '1.5rem',
-            color: 'text.primary',
-            p: 4,
-          }}
-        >
-          {error}
-        </Typography>
-      )}
-
-      {!loading && !error && mainVideo && (
-        <MainEventCard video={mainVideo} onAnotherFight={fetchMainVideo} />
-      )}
-    </Box>
-  );
-});
+    );
+  },
+);
 
 export default MainEvent;

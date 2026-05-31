@@ -7,4 +7,5 @@ export interface MainEventProps {
   error: string | null;
   mainVideo: MainEvent | null;
   fetchMainVideo: () => void;
+  remainingCount: number;
 }

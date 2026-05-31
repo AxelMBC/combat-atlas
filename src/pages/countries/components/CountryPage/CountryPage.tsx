@@ -34,6 +34,7 @@ const CountryPage = ({
     fetchVideoByFighter,
     onVideoSelect,
     remainingByFighter,
+    remainingCount,
   } = useMainVideoQueue(mainEventFights);
 
   useEffect(() => {
@@ -85,6 +86,7 @@ const CountryPage = ({
             error={error}
             mainVideo={mainVideo}
             fetchMainVideo={fetchNextVideo}
+            remainingCount={remainingCount}
           />
 
           <TopFighters
