@@ -6,6 +6,7 @@ const en: Record<TranslationKey, string> = {
   'common.retry': 'Retry',
   'common.accept': 'Accept',
   'common.close': 'Close',
+  'common.notAvailable': 'N/A',
 
   'nav.backToWorldMap': '← World Map',
 

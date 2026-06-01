@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import type { FighterCardProps } from './FighterCard.types';
 
 // MUI
@@ -7,9 +7,6 @@ import { Box, Typography } from '@mui/material';
 // i18n
 import { useTranslation } from '@/i18n';
 
-// Mock data helper
-import { getFighterCardMock } from './fighterCardMock';
-
 const CARD_BG = '#f5f1e8';
 
 const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: FighterCardProps) => {
@@ -17,10 +14,7 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
   const disabled = remaining <= 0;
   const isFeature = variant === 'feature';
 
-  const mock = useMemo(
-    () => getFighterCardMock(boxer._id, boxer.record),
-    [boxer._id, boxer.record],
-  );
+  const na = t('common.notAvailable');
 
   const rankLabel = rank.toString().padStart(2, '0');
 
@@ -130,10 +124,13 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
   );
 
   const stats = [
-    { label: t('fighter.recordLabel').replace(':', ''), value: boxer.record },
-    { label: t('fighter.koLabel'), value: String(mock.ko) },
-    { label: t('fighter.activeLabel'), value: mock.yearsActive },
-    { label: t('fighter.fightsTotalLabel'), value: String(mock.fightsTotal) },
+    { label: t('fighter.recordLabel').replace(':', ''), value: boxer.record || na },
+    { label: t('fighter.koLabel'), value: boxer.kos != null ? String(boxer.kos) : na },
+    { label: t('fighter.activeLabel'), value: boxer.activePeriod || na },
+    {
+      label: t('fighter.fightsTotalLabel'),
+      value: boxer.totalFights != null ? String(boxer.totalFights) : na,
+    },
   ];
 
   const statsBlock = (size: 'sm' | 'lg') => {
@@ -324,7 +321,7 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
               mt: 1.5,
             }}
           >
-            {mock.city}
+            {boxer.cityState || na}
           </Typography>
 
           <Box
@@ -417,7 +414,7 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
             color: 'info.main',
           }}
         >
-          {mock.city}
+          {boxer.cityState || na}
         </Typography>
       </Box>
 

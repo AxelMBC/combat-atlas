@@ -4,6 +4,7 @@ const es = {
   'common.retry': 'Reintentar',
   'common.accept': 'Aceptar',
   'common.close': 'Cerrar',
+  'common.notAvailable': 'N/D',
 
   'nav.backToWorldMap': '← Mapa Mundial',
 

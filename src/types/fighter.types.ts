@@ -5,4 +5,8 @@ export interface Fighter {
   nickName: string;
   image: string;
   fightsCounter: number;
+  cityState?: string;
+  activePeriod?: string;
+  kos?: number;
+  totalFights?: number;
 }
