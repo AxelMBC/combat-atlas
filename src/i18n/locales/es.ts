@@ -64,6 +64,7 @@ const es = {
   'fighter.fights.other': 'peleas',
   'fighter.koLabel': 'KO',
   'fighter.activeLabel': 'ACTIVO',
+  'fighter.activeSince': 'Desde',
   'fighter.fightsTotalLabel': 'PELEAS',
   'fighter.profileCta': 'PERFIL',
 

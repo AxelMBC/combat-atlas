@@ -67,6 +67,7 @@ const en: Record<TranslationKey, string> = {
   'fighter.fights.other': 'fights',
   'fighter.koLabel': 'KO',
   'fighter.activeLabel': 'ACTIVE',
+  'fighter.activeSince': 'Since',
   'fighter.fightsTotalLabel': 'FIGHTS',
   'fighter.profileCta': 'PROFILE',
 

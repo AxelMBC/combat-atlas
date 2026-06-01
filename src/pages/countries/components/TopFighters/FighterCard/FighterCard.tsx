@@ -18,6 +18,16 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
 
   const rankLabel = rank.toString().padStart(2, '0');
 
+  const formatActivePeriod = (period?: string) => {
+    if (!period) return na;
+    const trimmed = period.trim();
+    if (trimmed.endsWith('-')) {
+      const start = trimmed.slice(0, -1).trim();
+      return `${t('fighter.activeSince')} ${start}`;
+    }
+    return period;
+  };
+
   const cornerBadge = (
     <Box
       sx={(theme) => ({
@@ -126,7 +136,7 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
   const stats = [
     { label: t('fighter.recordLabel').replace(':', ''), value: boxer.record || na },
     { label: t('fighter.koLabel'), value: boxer.kos != null ? String(boxer.kos) : na },
-    { label: t('fighter.activeLabel'), value: boxer.activePeriod || na },
+    { label: t('fighter.activeLabel'), value: formatActivePeriod(boxer.activePeriod) },
     {
       label: t('fighter.fightsTotalLabel'),
       value: boxer.totalFights != null ? String(boxer.totalFights) : na,
