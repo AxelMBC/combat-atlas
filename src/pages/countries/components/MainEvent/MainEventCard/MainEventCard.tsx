@@ -12,6 +12,8 @@ import { useTranslation } from '@/i18n';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
 
+import { resolveLocalizedString, resolveLocalizedTags } from '@/utils/resolveLocalizedField';
+
 const MotionButton = motion.create(Button);
 
 const FALLBACK_TAGS = ['DESTACADO', 'SPARRING', 'SÚPER MEDIANO', 'SESIÓN COMPLETA'];
@@ -19,7 +21,9 @@ const FALLBACK_TAGS = ['DESTACADO', 'SPARRING', 'SÚPER MEDIANO', 'SESIÓN COMPL
 const MainEventCard = ({ video, onAnotherFight }: MainEventCardProps) => {
   const { t, language } = useTranslation();
 
-  const tags = video.tags && video.tags.length > 0 ? video.tags : FALLBACK_TAGS;
+  const resolvedTags = resolveLocalizedTags(video.tags, language);
+  const tags = resolvedTags.length > 0 ? resolvedTags : FALLBACK_TAGS;
+  const description = resolveLocalizedString(video.description, language, t('common.notAvailable'));
 
   const divisionLabel = video.divisionId?.text?.[language] ?? '—';
 
@@ -144,7 +148,7 @@ const MainEventCard = ({ video, onAnotherFight }: MainEventCardProps) => {
               lineHeight: 1.5,
             }}
           >
-            {video.description}
+            {description}
           </Typography>
         </Box>
 

@@ -17,12 +17,15 @@ export interface FightDivision {
   };
 }
 
+export type LocalizedString = string | { sp: string; en: string } | null;
+export type LocalizedTags = string[] | { sp: string[]; en: string[] };
+
 export interface MainEvent {
   id: number;
   idYt: string;
   title: string;
-  description: string;
-  tags: string[] | [];
+  description: LocalizedString;
+  tags: LocalizedTags;
   startTime: string;
   fighterId?: string;
   fighterBlue?: string;

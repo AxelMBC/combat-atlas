@@ -14,6 +14,8 @@ import { useTranslation } from '@/i18n';
 // Fallback dummy data
 import { resolveFallback } from './FightCard.fallbacks';
 
+import { resolveLocalizedTags } from '@/utils/resolveLocalizedField';
+
 const FALLBACK_THUMBNAIL = '/placeholders/no-video-placeholder.png';
 const YOUTUBE_MISSING_THUMBNAIL_WIDTH = 120;
 
@@ -26,9 +28,11 @@ const splitFightersFromTitle = (title: string): [string, string] | null => {
 };
 
 const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   const fallback = useMemo(() => resolveFallback(), []);
+
+  const resolvedTags = resolveLocalizedTags(video.tags, language);
 
   const year = video.year ?? fallback?.year;
   const dateLabel = video.dateLabel ?? fallback?.dateLabel;
@@ -213,7 +217,7 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
           </Box>
         )}
 
-        {video.tags.length > 0 && (
+        {resolvedTags.length > 0 && (
           <Box
             sx={{
               display: 'flex',
@@ -221,7 +225,7 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
               gap: 0.75,
             }}
           >
-            {video.tags.map((tag, index) => {
+            {resolvedTags.map((tag, index) => {
               const tagStyles = [
                 { color: 'common.white', bgcolor: 'primary.main' },
                 { color: 'text.primary', bgcolor: '#fff' },
