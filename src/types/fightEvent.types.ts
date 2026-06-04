@@ -17,8 +17,8 @@ export interface FightDivision {
   };
 }
 
-export type LocalizedString = string | { sp: string; en: string } | null;
-export type LocalizedTags = string[] | { sp: string[]; en: string[] };
+export type LocalizedString = string | { es: string; en: string } | null;
+export type LocalizedTags = string[] | { es: string[]; en: string[] };
 
 export interface MainEvent {
   id: number;
