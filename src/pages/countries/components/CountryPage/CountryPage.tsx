@@ -1,6 +1,6 @@
 import type { CountryPageProps } from './CountryPage.types';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // MUI
@@ -40,9 +40,22 @@ const CountryPage = ({
     remainingCount,
   } = useMainVideoQueue(mainEventFights);
 
+  const [overHero, setOverHero] = useState(fullscreenEnabled);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    if (!fullscreenEnabled) {
+      setOverHero(false);
+      return;
+    }
+    const onScroll = () => setOverHero(window.scrollY < window.innerHeight * 0.5);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [fullscreenEnabled]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -71,14 +84,22 @@ const CountryPage = ({
               left: { sm: 24 },
               zIndex: { sm: 1300 },
               alignSelf: { xs: 'flex-start', sm: 'auto' },
-              pl: { xs: 0, sm: 1 },
+              minWidth: 0,
+              px: 0,
+              py: 0,
               mb: { xs: 1, sm: 0 },
-              color: 'text.primary',
-              opacity: 0.7,
-              fontSize: { xs: '1rem', sm: '1.5rem' },
+              fontFamily: 'Anton, sans-serif',
+              fontWeight: 400,
+              textTransform: 'uppercase',
+              letterSpacing: '0.14em',
+              lineHeight: 1,
+              fontSize: { xs: '0.95rem', sm: '1.15rem' },
+              color: overHero ? 'common.white' : 'text.primary',
+              textShadow: overHero ? '0 1px 8px rgba(0, 0, 0, 0.55)' : 'none',
+              transition: 'color 0.3s ease, transform 0.25s ease, text-shadow 0.3s ease',
               '&:hover': {
-                opacity: 1,
                 backgroundColor: 'transparent',
+                transform: 'translateX(-4px)',
               },
             }}
           >

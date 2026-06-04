@@ -36,6 +36,8 @@ const MainVideoStage = ({ video, placeholderRef }: MainVideoStageProps) => {
   const hintRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<number | null>(null);
 
+  const handleHintClick = () => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+
   useEffect(() => {
     const update = () => {
       frameRef.current = null;
@@ -129,6 +131,16 @@ const MainVideoStage = ({ video, placeholderRef }: MainVideoStageProps) => {
 
       <Box
         ref={hintRef}
+        role="button"
+        tabIndex={0}
+        aria-label={t('mainEvent.scrollHint')}
+        onClick={handleHintClick}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            handleHintClick();
+          }
+        }}
         sx={{
           position: 'absolute',
           bottom: { xs: 24, md: 40 },
@@ -139,7 +151,8 @@ const MainVideoStage = ({ video, placeholderRef }: MainVideoStageProps) => {
           alignItems: 'center',
           gap: 1,
           color: 'common.white',
-          pointerEvents: 'none',
+          pointerEvents: 'auto',
+          cursor: 'pointer',
           textShadow: '0 2px 8px rgba(0, 0, 0, 0.6)',
         }}
       >
