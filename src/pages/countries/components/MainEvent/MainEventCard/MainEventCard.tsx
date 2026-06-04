@@ -113,10 +113,10 @@ const MainEventCard = ({ video, onAnotherFight, placeholderRef }: MainEventCardP
               <Box
                 key={`${tag}-${idx}`}
                 sx={{
-                  px: 1.5,
-                  py: 0.5,
+                  px: { xs: 1, sm: 1.25, md: 1.5 },
+                  py: { xs: 0.25, sm: 0.4, md: 0.5 },
                   fontFamily: 'Anton, sans-serif',
-                  fontSize: '0.85rem',
+                  fontSize: { xs: '0.65rem', sm: '0.75rem', md: '0.85rem' },
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
                   border: '2px solid',
@@ -135,7 +135,7 @@ const MainEventCard = ({ video, onAnotherFight, placeholderRef }: MainEventCardP
             sx={{
               fontFamily: 'Anton, sans-serif',
               fontWeight: 700,
-              fontSize: { xs: '1.75rem', md: '2.5rem' },
+              fontSize: { xs: '1.4rem', sm: '1.9rem', md: '2.5rem' },
               lineHeight: 1,
               color: 'text.primary',
             }}
@@ -200,7 +200,7 @@ const MainEventCard = ({ video, onAnotherFight, placeholderRef }: MainEventCardP
                 <Typography
                   sx={{
                     fontFamily: 'Anton, sans-serif',
-                    fontSize: '1.4rem',
+                    fontSize: { xs: '1.1rem', sm: '1.25rem', md: '1.4rem' },
                     color: 'text.primary',
                     lineHeight: 1.1,
                   }}

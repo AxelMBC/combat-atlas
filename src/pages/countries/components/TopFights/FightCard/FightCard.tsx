@@ -238,9 +238,9 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
                   key={tag}
                   component="span"
                   sx={{
-                    px: 1,
+                    px: { xs: 0.75, md: 1 },
                     py: 0.25,
-                    fontSize: '0.7rem',
+                    fontSize: { xs: '0.6rem', md: '0.7rem' },
                     fontWeight: 600,
                     letterSpacing: 0.5,
                     textTransform: 'uppercase',

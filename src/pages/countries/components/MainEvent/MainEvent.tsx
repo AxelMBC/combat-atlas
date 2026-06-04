@@ -42,7 +42,7 @@ const MainEvent = memo(
             flexWrap: 'wrap',
             gap: 1,
             fontFamily: '"Merriweather", serif',
-            fontSize: '0.85rem',
+            fontSize: { xs: '0.75rem', sm: '0.85rem', md: '1.05rem' },
             letterSpacing: '0.05em',
             color: 'info.main',
             pb: 1,
