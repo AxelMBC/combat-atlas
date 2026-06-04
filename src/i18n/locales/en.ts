@@ -51,6 +51,7 @@ const en: Record<TranslationKey, string> = {
     'In the meantime, you can explore the countries available in Combat Atlas.',
   'mapFallback.aria': 'Unable to load the map',
 
+  'mainEvent.scrollHint': 'Scroll to explore',
   'mainEvent.searching': 'SEARCHING FOR FIGHT...',
   'mainEvent.anotherFight': 'Another Fight',
   'mainEvent.fightsCount': 'fights',

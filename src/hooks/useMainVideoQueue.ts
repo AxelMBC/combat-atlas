@@ -16,7 +16,7 @@ export const useMainVideoQueue = (initialEvents: MainEvent[]) => {
   const prevEventsRef = useRef<string>('');
   const initializedRef = useRef<boolean>(false);
 
-  const pickAndConsume = useCallback((queue: MainEvent[]) => {
+  const pickAndConsume = useCallback((queue: MainEvent[], scroll = true) => {
     setLoading(true);
 
     if (queue.length === 0) {
@@ -32,7 +32,7 @@ export const useMainVideoQueue = (initialEvents: MainEvent[]) => {
     setMainEventQueue(next);
 
     setMainEvent(randomEvent);
-    scrollToMainEvent();
+    if (scroll) scrollToMainEvent();
     setErrorKey(null);
     setLoading(false);
   }, []);
@@ -101,9 +101,12 @@ export const useMainVideoQueue = (initialEvents: MainEvent[]) => {
     if (serialized === prevEventsRef.current) return;
 
     prevEventsRef.current = serialized;
+    // Skip auto-scroll on the very first pick so the page opens at the top
+    // (fullscreen MainVideoStage); only re-picks should scroll to the card.
+    const isFirstPick = !initializedRef.current;
     initializedRef.current = true;
     const shuffled = shuffleArray([...initialEvents]);
-    pickAndConsume(shuffled);
+    pickAndConsume(shuffled, !isFirstPick);
   }, [initialEvents, pickAndConsume]);
 
   const error = errorKey ? t(errorKey) : null;

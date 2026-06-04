@@ -48,6 +48,7 @@ const es = {
   'mapFallback.message': 'Mientras tanto, puedes explorar los países disponibles en Combat Atlas.',
   'mapFallback.aria': 'No se pudo cargar el mapa',
 
+  'mainEvent.scrollHint': 'Desliza para explorar',
   'mainEvent.searching': 'BUSCANDO COMBATE...',
   'mainEvent.anotherFight': 'Otro Combate',
   'mainEvent.fightsCount': 'combates',

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 // MUI
 import { Box, Container, Button } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
+import { useReducedMotion } from 'framer-motion';
 
 // Components
 import TopFighters from '@/pages/countries/components/TopFighters';
@@ -25,6 +26,8 @@ const CountryPage = ({
 }: CountryPageProps) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const reduceMotion = useReducedMotion();
+  const fullscreenEnabled = !reduceMotion;
 
   const {
     mainVideo,
@@ -66,6 +69,7 @@ const CountryPage = ({
               position: { xs: 'static', sm: 'fixed' },
               top: { sm: 20 },
               left: { sm: 24 },
+              zIndex: { sm: 1300 },
               alignSelf: { xs: 'flex-start', sm: 'auto' },
               pl: { xs: 0, sm: 1 },
               mb: { xs: 1, sm: 0 },
@@ -80,6 +84,9 @@ const CountryPage = ({
           >
             {t('nav.backToWorldMap')}
           </Button>
+
+          {fullscreenEnabled && <Box aria-hidden sx={{ height: '100vh' }} />}
+
           <MainEvent
             config={config}
             loading={loading}

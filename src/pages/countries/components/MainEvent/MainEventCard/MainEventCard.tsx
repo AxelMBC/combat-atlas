@@ -18,7 +18,7 @@ const MotionButton = motion.create(Button);
 
 const FALLBACK_TAGS = ['DESTACADO', 'SPARRING', 'SÚPER MEDIANO', 'SESIÓN COMPLETA'];
 
-const MainEventCard = ({ video, onAnotherFight }: MainEventCardProps) => {
+const MainEventCard = ({ video, onAnotherFight, placeholderRef }: MainEventCardProps) => {
   const { t, language } = useTranslation();
 
   const resolvedTags = resolveLocalizedTags(video.tags, language);
@@ -51,38 +51,43 @@ const MainEventCard = ({ video, onAnotherFight }: MainEventCardProps) => {
         }}
       >
         <Box
+          ref={placeholderRef}
           sx={{
             width: '100%',
             position: 'relative',
             bgcolor: 'common.black',
             aspectRatio: '16 / 9',
             overflow: 'hidden',
-            '&:hover .yt-iframe': {
-              pointerEvents: 'auto',
-            },
+            ...(!placeholderRef && {
+              '&:hover .yt-iframe': {
+                pointerEvents: 'auto',
+              },
+            }),
           }}
         >
-          <Box
-            allowFullScreen
-            component="iframe"
-            id="main-event-video"
-            className="yt-iframe"
-            src={`https://www.youtube.com/embed/${video.idYt}?autoplay=1&mute=1&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3&fs=0&cc_load_policy=0${
-              video.startTime ? `&start=${video.startTime}` : ''
-            }`}
-            title={video.title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media;"
-            sx={{
-              inset: 0,
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              border: '0',
-              transform: 'scaleY(1.08)',
-              transformOrigin: 'bottom center',
-              pointerEvents: 'none',
-            }}
-          />
+          {!placeholderRef && (
+            <Box
+              allowFullScreen
+              component="iframe"
+              id="main-event-video"
+              className="yt-iframe"
+              src={`https://www.youtube.com/embed/${video.idYt}?autoplay=1&mute=1&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3&fs=0&cc_load_policy=0${
+                video.startTime ? `&start=${video.startTime}` : ''
+              }`}
+              title={video.title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media;"
+              sx={{
+                inset: 0,
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                border: '0',
+                transform: 'scaleY(1.08)',
+                transformOrigin: 'bottom center',
+                pointerEvents: 'none',
+              }}
+            />
+          )}
         </Box>
       </Box>
 

@@ -1,11 +1,13 @@
-import { memo } from 'react';
+import { memo, useRef } from 'react';
 import type { MainEventProps } from './MainEvent.types';
 
 // MUI
 import { Box, Typography } from '@mui/material';
+import { useReducedMotion } from 'framer-motion';
 
 // Components
 import MainEventCard from './MainEventCard';
+import MainVideoStage from './MainVideoStage';
 
 // i18n
 import { useTranslation } from '@/i18n';
@@ -15,6 +17,9 @@ const DUMMY_LAST_UPDATE = '01 May 2026';
 const MainEvent = memo(
   ({ config, loading, error, mainVideo, fetchMainVideo, remainingCount }: MainEventProps) => {
     const { t } = useTranslation();
+    const reduceMotion = useReducedMotion();
+    const placeholderRef = useRef<HTMLDivElement>(null);
+    const fullscreenEnabled = !reduceMotion;
 
     const countryLabel = config.countryNameKey ? t(config.countryNameKey) : config.countryName;
 
@@ -131,7 +136,16 @@ const MainEvent = memo(
         )}
 
         {!loading && !error && mainVideo && (
-          <MainEventCard video={mainVideo} onAnotherFight={fetchMainVideo} />
+          <>
+            <MainEventCard
+              video={mainVideo}
+              onAnotherFight={fetchMainVideo}
+              placeholderRef={fullscreenEnabled ? placeholderRef : undefined}
+            />
+            {fullscreenEnabled && (
+              <MainVideoStage video={mainVideo} placeholderRef={placeholderRef} />
+            )}
+          </>
         )}
       </Box>
     );
