@@ -79,15 +79,13 @@ const CountryPage = ({
             onClick={() => navigate('/')}
             variant="text"
             sx={{
-              position: { xs: 'static', sm: 'fixed' },
-              top: { sm: 20 },
-              left: { sm: 24 },
-              zIndex: { sm: 1300 },
-              alignSelf: { xs: 'flex-start', sm: 'auto' },
+              position: 'fixed',
+              top: { xs: 12, sm: 20 },
+              left: { xs: 12, sm: 24 },
+              zIndex: 1300,
               minWidth: 0,
               px: 0,
               py: 0,
-              mb: { xs: 1, sm: 0 },
               fontFamily: 'Anton, sans-serif',
               fontWeight: 400,
               textTransform: 'uppercase',

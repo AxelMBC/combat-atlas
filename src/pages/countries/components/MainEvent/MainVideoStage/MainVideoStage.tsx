@@ -55,23 +55,38 @@ const MainVideoStage = ({ video, placeholderRef }: MainVideoStageProps) => {
         ? placeholder.getBoundingClientRect()
         : ({ top: 0, left: 0, width: fullW, height: fullH } as DOMRect);
 
+      // Cover-size the iframe to its frame at 16:9 so the video fills the frame
+      // (no letterbox) in both the fullscreen and collapsed states.
+      const coverIframe = (width: number, height: number) => {
+        let coverW = width;
+        let coverH = width / ASPECT_RATIO;
+        if (coverH < height) {
+          coverH = height;
+          coverW = height * ASPECT_RATIO;
+        }
+        iframe.style.width = `${coverW}px`;
+        iframe.style.height = `${coverH}px`;
+      };
+
+      if (progress >= 1 && placeholder) {
+        stage.style.position = 'absolute';
+        stage.style.top = `${rect.top + window.scrollY}px`;
+        stage.style.left = `${rect.left + window.scrollX}px`;
+        stage.style.width = `${rect.width}px`;
+        stage.style.height = `${rect.height}px`;
+        coverIframe(rect.width, rect.height);
+        if (hintRef.current) hintRef.current.style.opacity = '0';
+        return;
+      }
+
+      stage.style.position = 'fixed';
       const width = lerp(fullW, rect.width, progress);
       const height = lerp(fullH, rect.height, progress);
       stage.style.top = `${lerp(0, rect.top, progress)}px`;
       stage.style.left = `${lerp(0, rect.left, progress)}px`;
       stage.style.width = `${width}px`;
       stage.style.height = `${height}px`;
-
-      // Cover-size the iframe to its frame at 16:9 so the video fills the frame
-      // (no letterbox) in both the fullscreen and collapsed states.
-      let coverW = width;
-      let coverH = width / ASPECT_RATIO;
-      if (coverH < height) {
-        coverH = height;
-        coverW = height * ASPECT_RATIO;
-      }
-      iframe.style.width = `${coverW}px`;
-      iframe.style.height = `${coverH}px`;
+      coverIframe(width, height);
 
       if (hintRef.current) {
         hintRef.current.style.opacity = String(1 - progress);
