@@ -26,6 +26,16 @@ const REVEAL_DELAY_MS = 4500;
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 const lerp = (from: number, to: number, t: number) => from + (to - from) * t;
 
+const styleIframe = (iframe: HTMLIFrameElement, title: string) => {
+  iframe.title = title;
+  iframe.style.position = 'absolute';
+  iframe.style.top = '50%';
+  iframe.style.left = '50%';
+  iframe.style.border = '0';
+  iframe.style.transform = 'translate(-50%, -50%) scaleY(1.08)';
+  iframe.style.pointerEvents = 'none';
+};
+
 const bob = keyframes`
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(6px); }
@@ -34,14 +44,19 @@ const bob = keyframes`
 const MainVideoStage = ({ video, placeholderRef, onReady }: MainVideoStageProps) => {
   const { t } = useTranslation();
   const stageRef = useRef<HTMLDivElement>(null);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const mountRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const hintRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<number | null>(null);
   const playerRef = useRef<YTPlayer | null>(null);
   const dockedRef = useRef(false);
+  const loadedIdRef = useRef<string | null>(null);
   const onReadyRef = useRef(onReady);
   onReadyRef.current = onReady;
+  const videoRef = useRef(video);
+  videoRef.current = video;
 
+  const [ready, setReady] = useState(false);
   const [docked, setDocked] = useState(false);
   const [playing, setPlaying] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
@@ -68,16 +83,44 @@ const MainVideoStage = ({ video, placeholderRef, onReady }: MainVideoStageProps)
     const fallback = window.setTimeout(reveal, 8000);
 
     loadYouTubeIframeApi().then((YT) => {
-      if (cancelled || !iframeRef.current) return;
-      playerRef.current = new YT.Player(iframeRef.current, {
+      if (cancelled || !mountRef.current) return;
+
+      const host = document.createElement('div');
+      mountRef.current.appendChild(host);
+
+      const current = videoRef.current;
+      loadedIdRef.current = current.idYt;
+
+      playerRef.current = new YT.Player(host, {
+        videoId: current.idYt,
+        playerVars: {
+          autoplay: 1,
+          mute: 1,
+          modestbranding: 1,
+          rel: 0,
+          playsinline: 1,
+          iv_load_policy: 3,
+          fs: 0,
+          cc_load_policy: 0,
+          controls: 0,
+          enablejsapi: 1,
+          origin: window.location.origin,
+          start: Number(current.startTime) || 0,
+        },
         events: {
           onReady: (event) => {
+            if (cancelled) return;
+            iframeRef.current = event.target.getIframe();
+            styleIframe(iframeRef.current, videoRef.current.title);
             setDuration(event.target.getDuration());
+            setReady(true);
             event.target.playVideo();
           },
           onStateChange: (event) => {
-            if (event.data === YT.PlayerState.PLAYING && revealTimer === undefined) {
-              revealTimer = window.setTimeout(reveal, REVEAL_DELAY_MS);
+            if (event.data === YT.PlayerState.PLAYING) {
+              setDuration(event.target.getDuration());
+              if (revealTimer === undefined)
+                revealTimer = window.setTimeout(reveal, REVEAL_DELAY_MS);
             }
             setPlaying(event.data !== YT.PlayerState.PAUSED && event.data !== YT.PlayerState.ENDED);
           },
@@ -89,10 +132,25 @@ const MainVideoStage = ({ video, placeholderRef, onReady }: MainVideoStageProps)
       cancelled = true;
       window.clearTimeout(fallback);
       if (revealTimer !== undefined) window.clearTimeout(revealTimer);
-      playerRef.current?.destroy();
+      try {
+        playerRef.current?.destroy();
+      } catch {
+        /* iframe already detached */
+      }
       playerRef.current = null;
+      iframeRef.current = null;
     };
-  }, [video.idYt]);
+  }, []);
+
+  useEffect(() => {
+    const player = playerRef.current;
+    if (!player || !ready) return;
+    if (loadedIdRef.current === video.idYt) return;
+
+    loadedIdRef.current = video.idYt;
+    if (iframeRef.current) iframeRef.current.title = video.title;
+    player.loadVideoById({ videoId: video.idYt, startSeconds: Number(video.startTime) || 0 });
+  }, [ready, video.idYt, video.startTime, video.title]);
 
   useEffect(() => {
     if (!docked) return;
@@ -134,8 +192,6 @@ const MainVideoStage = ({ video, placeholderRef, onReady }: MainVideoStageProps)
         setDocked(isDocked);
       }
 
-      // Cover-size the iframe to its frame at 16:9 so the video fills the frame
-      // (no letterbox) in both the fullscreen and collapsed states.
       const coverIframe = (width: number, height: number) => {
         let coverW = width;
         let coverH = width / ASPECT_RATIO;
@@ -192,7 +248,7 @@ const MainVideoStage = ({ video, placeholderRef, onReady }: MainVideoStageProps)
         window.cancelAnimationFrame(frameRef.current);
       }
     };
-  }, [placeholderRef, video.idYt]);
+  }, [placeholderRef, ready]);
 
   return (
     <Box
@@ -209,23 +265,7 @@ const MainVideoStage = ({ video, placeholderRef, onReady }: MainVideoStageProps)
         zIndex: 1200,
       }}
     >
-      <Box
-        component="iframe"
-        ref={iframeRef}
-        src={`https://www.youtube.com/embed/${video.idYt}?autoplay=1&mute=1&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3&fs=0&cc_load_policy=0&controls=0&enablejsapi=1&origin=${window.location.origin}${
-          video.startTime ? `&start=${video.startTime}` : ''
-        }`}
-        title={video.title}
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media;"
-        sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          border: 0,
-          transform: 'translate(-50%, -50%) scaleY(1.08)',
-          pointerEvents: 'none',
-        }}
-      />
+      <Box ref={mountRef} sx={{ position: 'absolute', inset: 0, pointerEvents: 'none' }} />
 
       {!playing && (
         <Box
