@@ -1,6 +1,7 @@
 import type { MainVideoStageProps } from './MainVideoStage.types';
+import type { YTPlayer } from '@/types/youtube.types';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // MUI
 import { Box, Typography } from '@mui/material';
@@ -11,9 +12,16 @@ import { useTranslation } from '@/i18n';
 
 // Icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faPlay } from '@fortawesome/free-solid-svg-icons';
+
+// Components
+import MainVideoControls from './MainVideoControls';
+
+// Utils
+import { loadYouTubeIframeApi } from '@/utils/youtubeIframeApi';
 
 const ASPECT_RATIO = 16 / 9;
+const REVEAL_DELAY_MS = 4500;
 
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 const lerp = (from: number, to: number, t: number) => from + (to - from) * t;
@@ -23,20 +31,85 @@ const bob = keyframes`
   50% { transform: translateY(6px); }
 `;
 
-/**
- * Single persistent YouTube iframe rendered in a fixed-position "stage" that
- * interpolates between fullscreen (scrollY 0) and the in-card placeholder rect
- * (scrollY >= viewport height), driven by scroll. Keeping one iframe avoids any
- * reload as the video collapses into / expands out of the card.
- */
-const MainVideoStage = ({ video, placeholderRef }: MainVideoStageProps) => {
+const MainVideoStage = ({ video, placeholderRef, onReady }: MainVideoStageProps) => {
   const { t } = useTranslation();
   const stageRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const hintRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<number | null>(null);
+  const playerRef = useRef<YTPlayer | null>(null);
+  const dockedRef = useRef(false);
+  const onReadyRef = useRef(onReady);
+  onReadyRef.current = onReady;
+
+  const [docked, setDocked] = useState(false);
+  const [playing, setPlaying] = useState(true);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
 
   const handleHintClick = () => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+
+  const handleTogglePlay = () => {
+    const player = playerRef.current;
+    if (!player) return;
+    if (playing) player.pauseVideo();
+    else player.playVideo();
+  };
+
+  const handleSeek = (seconds: number) => {
+    playerRef.current?.seekTo(seconds, true);
+    setCurrentTime(seconds);
+  };
+
+  useEffect(() => {
+    let cancelled = false;
+    let revealTimer: number | undefined;
+    const reveal = () => onReadyRef.current();
+    const fallback = window.setTimeout(reveal, 8000);
+
+    loadYouTubeIframeApi().then((YT) => {
+      if (cancelled || !iframeRef.current) return;
+      playerRef.current = new YT.Player(iframeRef.current, {
+        events: {
+          onReady: (event) => {
+            setDuration(event.target.getDuration());
+            event.target.playVideo();
+          },
+          onStateChange: (event) => {
+            if (event.data === YT.PlayerState.PLAYING && revealTimer === undefined) {
+              revealTimer = window.setTimeout(reveal, REVEAL_DELAY_MS);
+            }
+            setPlaying(event.data !== YT.PlayerState.PAUSED && event.data !== YT.PlayerState.ENDED);
+          },
+        },
+      });
+    });
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(fallback);
+      if (revealTimer !== undefined) window.clearTimeout(revealTimer);
+      playerRef.current?.destroy();
+      playerRef.current = null;
+    };
+  }, [video.idYt]);
+
+  useEffect(() => {
+    if (!docked) return;
+
+    const player = playerRef.current;
+    if (player) {
+      const total = player.getDuration();
+      if (total > 0) setDuration(total);
+    }
+
+    const id = window.setInterval(() => {
+      const current = playerRef.current;
+      if (current) setCurrentTime(current.getCurrentTime());
+    }, 250);
+
+    return () => window.clearInterval(id);
+  }, [docked]);
 
   useEffect(() => {
     const update = () => {
@@ -55,6 +128,12 @@ const MainVideoStage = ({ video, placeholderRef }: MainVideoStageProps) => {
         ? placeholder.getBoundingClientRect()
         : ({ top: 0, left: 0, width: fullW, height: fullH } as DOMRect);
 
+      const isDocked = progress >= 1 && !!placeholder;
+      if (isDocked !== dockedRef.current) {
+        dockedRef.current = isDocked;
+        setDocked(isDocked);
+      }
+
       // Cover-size the iframe to its frame at 16:9 so the video fills the frame
       // (no letterbox) in both the fullscreen and collapsed states.
       const coverIframe = (width: number, height: number) => {
@@ -68,14 +147,17 @@ const MainVideoStage = ({ video, placeholderRef }: MainVideoStageProps) => {
         iframe.style.height = `${coverH}px`;
       };
 
-      if (progress >= 1 && placeholder) {
+      if (isDocked) {
         stage.style.position = 'absolute';
         stage.style.top = `${rect.top + window.scrollY}px`;
         stage.style.left = `${rect.left + window.scrollX}px`;
         stage.style.width = `${rect.width}px`;
         stage.style.height = `${rect.height}px`;
         coverIframe(rect.width, rect.height);
-        if (hintRef.current) hintRef.current.style.opacity = '0';
+        if (hintRef.current) {
+          hintRef.current.style.opacity = '0';
+          hintRef.current.style.pointerEvents = 'none';
+        }
         return;
       }
 
@@ -90,6 +172,7 @@ const MainVideoStage = ({ video, placeholderRef }: MainVideoStageProps) => {
 
       if (hintRef.current) {
         hintRef.current.style.opacity = String(1 - progress);
+        hintRef.current.style.pointerEvents = 'auto';
       }
     };
 
@@ -129,7 +212,7 @@ const MainVideoStage = ({ video, placeholderRef }: MainVideoStageProps) => {
       <Box
         component="iframe"
         ref={iframeRef}
-        src={`https://www.youtube.com/embed/${video.idYt}?autoplay=1&mute=1&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3&fs=0&cc_load_policy=0${
+        src={`https://www.youtube.com/embed/${video.idYt}?autoplay=1&mute=1&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3&fs=0&cc_load_policy=0&controls=0&enablejsapi=1&origin=${window.location.origin}${
           video.startTime ? `&start=${video.startTime}` : ''
         }`}
         title={video.title}
@@ -142,6 +225,37 @@ const MainVideoStage = ({ video, placeholderRef }: MainVideoStageProps) => {
           transform: 'translate(-50%, -50%) scaleY(1.08)',
           pointerEvents: 'none',
         }}
+      />
+
+      {!playing && (
+        <Box
+          onClick={handleTogglePlay}
+          role="button"
+          aria-label="Play"
+          sx={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            bgcolor: 'rgba(0, 0, 0, 0.85)',
+            color: 'common.white',
+            fontSize: { xs: '2rem', md: '3rem' },
+            cursor: 'pointer',
+            pointerEvents: 'auto',
+          }}
+        >
+          <FontAwesomeIcon icon={faPlay} />
+        </Box>
+      )}
+
+      <MainVideoControls
+        visible={docked}
+        playing={playing}
+        currentTime={currentTime}
+        duration={duration}
+        onTogglePlay={handleTogglePlay}
+        onSeek={handleSeek}
       />
 
       <Box

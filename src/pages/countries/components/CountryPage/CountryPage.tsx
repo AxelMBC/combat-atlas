@@ -12,6 +12,7 @@ import { useReducedMotion } from 'framer-motion';
 import TopFighters from '@/pages/countries/components/TopFighters';
 import MainEvent from '@/pages/countries/components/MainEvent';
 import TopFights from '@/pages/countries/components/TopFights';
+import Spinner from '@/components/Spinner';
 
 // Hooks
 import { useMainVideoQueue } from '@/hooks/useMainVideoQueue';
@@ -41,10 +42,17 @@ const CountryPage = ({
   } = useMainVideoQueue(mainEventFights);
 
   const [overHero, setOverHero] = useState(fullscreenEnabled);
+  const [videoReady, setVideoReady] = useState(!fullscreenEnabled);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    if (videoReady) return;
+    const fallback = window.setTimeout(() => setVideoReady(true), 6000);
+    return () => window.clearTimeout(fallback);
+  }, [videoReady]);
 
   useEffect(() => {
     if (!fullscreenEnabled) {
@@ -59,6 +67,8 @@ const CountryPage = ({
 
   return (
     <ThemeProvider theme={theme}>
+      {fullscreenEnabled && !videoReady && !error && <Spinner label="CARGANDO" />}
+
       <Box
         sx={{
           pb: 8,
@@ -113,6 +123,7 @@ const CountryPage = ({
             mainVideo={mainVideo}
             fetchMainVideo={fetchNextVideo}
             remainingCount={remainingCount}
+            onVideoReady={() => setVideoReady(true)}
           />
 
           <TopFighters

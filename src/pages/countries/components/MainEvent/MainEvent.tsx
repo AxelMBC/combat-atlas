@@ -15,7 +15,15 @@ import { useTranslation } from '@/i18n';
 const DUMMY_LAST_UPDATE = '01 May 2026';
 
 const MainEvent = memo(
-  ({ config, loading, error, mainVideo, fetchMainVideo, remainingCount }: MainEventProps) => {
+  ({
+    config,
+    loading,
+    error,
+    mainVideo,
+    fetchMainVideo,
+    remainingCount,
+    onVideoReady,
+  }: MainEventProps) => {
     const { t } = useTranslation();
     const reduceMotion = useReducedMotion();
     const placeholderRef = useRef<HTMLDivElement>(null);
@@ -143,7 +151,11 @@ const MainEvent = memo(
               placeholderRef={fullscreenEnabled ? placeholderRef : undefined}
             />
             {fullscreenEnabled && (
-              <MainVideoStage video={mainVideo} placeholderRef={placeholderRef} />
+              <MainVideoStage
+                video={mainVideo}
+                placeholderRef={placeholderRef}
+                onReady={onVideoReady}
+              />
             )}
           </>
         )}

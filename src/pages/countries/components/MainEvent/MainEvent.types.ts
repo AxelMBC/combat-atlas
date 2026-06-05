@@ -8,4 +8,5 @@ export interface MainEventProps {
   mainVideo: MainEvent | null;
   fetchMainVideo: () => void;
   remainingCount: number;
+  onVideoReady: () => void;
 }
