@@ -60,6 +60,8 @@ const en: Record<TranslationKey, string> = {
   'mainEvent.scrollHint': 'Scroll to explore',
   'mainEvent.searching': 'SEARCHING FOR FIGHT...',
   'mainEvent.anotherFight': 'Another Fight',
+  'mainEvent.fullscreenPromptMessage': 'New fight loaded',
+  'mainEvent.fullscreenPromptAction': 'Watch fullscreen',
   'mainEvent.fightsCount': 'fights',
   'mainEvent.lastUpdate': 'Last update',
   'mainEvent.division': 'Division',

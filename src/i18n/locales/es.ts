@@ -57,6 +57,8 @@ const es = {
   'mainEvent.scrollHint': 'Desliza para explorar',
   'mainEvent.searching': 'BUSCANDO COMBATE...',
   'mainEvent.anotherFight': 'Otro Combate',
+  'mainEvent.fullscreenPromptMessage': 'Nuevo combate cargado',
+  'mainEvent.fullscreenPromptAction': 'Pantalla completa',
   'mainEvent.fightsCount': 'combates',
   'mainEvent.lastUpdate': 'Última actualización',
   'mainEvent.division': 'División',
