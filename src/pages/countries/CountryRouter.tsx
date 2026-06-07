@@ -1,17 +1,15 @@
-import { useParams } from "react-router-dom";
-import { Suspense, lazy, useMemo } from "react";
-import type { ComponentType, LazyExoticComponent } from "react";
-import { countryRegistry } from "./registry";
-import Spinner from "@/components/Spinner";
-import NotFound from "@/components/NotFound";
-import ErrorBoundary from "@/components/ErrorBoundary";
-import { useTranslation } from "@/i18n";
+import { useParams } from 'react-router-dom';
+import { Suspense, lazy, useMemo } from 'react';
+import type { ComponentType, LazyExoticComponent } from 'react';
+import { countryRegistry } from './registry';
+import Spinner from '@/components/Spinner';
+import NotFound from '@/components/NotFound';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 const componentCache = new Map<string, LazyExoticComponent<ComponentType>>();
 
 const CountryRouter = () => {
   const { countrySlug } = useParams<{ countrySlug: string }>();
-  const { t } = useTranslation();
 
   const LazyCountry = useMemo(() => {
     const entry = countryRegistry.find((c) => c.slug === countrySlug);
@@ -29,7 +27,7 @@ const CountryRouter = () => {
 
   return (
     <ErrorBoundary fallback={<NotFound messageKey="error.countryLoad" />}>
-      <Suspense fallback={<Spinner label={t("common.loading")} />}>
+      <Suspense fallback={<Spinner />}>
         <LazyCountry />
       </Suspense>
     </ErrorBoundary>

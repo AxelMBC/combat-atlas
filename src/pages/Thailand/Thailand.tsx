@@ -39,7 +39,7 @@ const Thailand = () => {
     dispatch(fetchCountry('thailand'));
   }, [dispatch]);
 
-  if (loading) return <Spinner label="CARGANDO" />;
+  if (loading) return <Spinner />;
 
   if (error)
     return <ErrorFallback theme={theme} onRetry={() => dispatch(fetchCountry('thailand'))} />;

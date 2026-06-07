@@ -6,6 +6,12 @@ const es = {
   'common.close': 'Cerrar',
   'common.notAvailable': 'N/D',
 
+  'spinner.tagline.allArts': 'Todas las artes marciales, un solo lugar.',
+  'spinner.tagline.tapFighter': 'Toca un peleador. Mira sus combates.',
+  'spinner.tagline.exploreWorld': 'El mundo del combate, en un mapa.',
+  'spinner.tagline.everyCountry': 'Cada país pelea a su manera.',
+  'spinner.tagline.legends': 'Leyendas. Combates. Historia.',
+
   'nav.backToWorldMap': '← Mapa Mundial',
 
   'language.toggleAria': 'Idioma',

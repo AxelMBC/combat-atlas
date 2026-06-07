@@ -1,4 +1,4 @@
-@use "@/styles/all/variables" as *;
+@use '@/styles/all/variables' as *;
 
 $sizes: (
   small: 32px,
@@ -63,13 +63,47 @@ $sizes: (
 }
 
 .spinner__label {
-  font-family: "Georgia", serif;
+  font-family: 'Georgia', serif;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: $black;
   user-select: none;
+}
+
+.spinner__tagline {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.4em;
+  max-width: min(90vw, 32ch);
+  font-family: 'Georgia', serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: $black;
+  user-select: none;
+}
+
+.spinner__caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  margin-left: 3px;
+  background-color: $red;
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes bar-pulse {
@@ -87,6 +121,10 @@ $sizes: (
 @media (prefers-reduced-motion: reduce) {
   .spinner__bar {
     animation: bar-fade 1.4s ease-in-out infinite;
+  }
+
+  .spinner__caret {
+    animation: none;
   }
 
   @keyframes bar-fade {

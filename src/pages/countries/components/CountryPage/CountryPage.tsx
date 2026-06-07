@@ -67,7 +67,7 @@ const CountryPage = ({
 
   return (
     <ThemeProvider theme={theme}>
-      {fullscreenEnabled && !videoReady && !error && <Spinner label="CARGANDO" />}
+      {fullscreenEnabled && !videoReady && !error && <Spinner />}
 
       <Box
         sx={{

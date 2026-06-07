@@ -1,27 +1,26 @@
-import type { Fighter } from "@/types/fighter.types";
-import { useEffect } from "react";
+import type { Fighter } from '@/types/fighter.types';
+import { useEffect } from 'react';
 
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchCountry } from "@/store/country/thunks";
-import { resetCountryData } from "@/store/country/countrySlice";
-import { selectCountryState } from "@/store/country/countrySlice";
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { fetchCountry } from '@/store/country/thunks';
+import { resetCountryData } from '@/store/country/countrySlice';
+import { selectCountryState } from '@/store/country/countrySlice';
 
-import { getFighterImage } from "./resources/fighters";
+import { getFighterImage } from './resources/fighters';
 
-import "@/styles/fonts/default.scss";
+import '@/styles/fonts/default.scss';
 
-import { theme } from "./config/mexicoTheme";
-import { mexicoConfig } from "./config/mexico.config";
+import { theme } from './config/mexicoTheme';
+import { mexicoConfig } from './config/mexico.config';
 
-import CountryPage from "@/pages/countries/components/CountryPage";
-import ErrorFallback from "@/components/ErrorFallback";
-import Spinner from "@/components/Spinner";
+import CountryPage from '@/pages/countries/components/CountryPage';
+import ErrorFallback from '@/components/ErrorFallback';
+import Spinner from '@/components/Spinner';
 
 const Mexico = () => {
   const dispatch = useAppDispatch();
 
-  const { fighters, mainEvents, topEvents, loading, error } =
-    useAppSelector(selectCountryState);
+  const { fighters, mainEvents, topEvents, loading, error } = useAppSelector(selectCountryState);
 
   const fightersList = fighters.map((fighter: Fighter) => ({
     ...fighter,
@@ -30,18 +29,13 @@ const Mexico = () => {
 
   useEffect(() => {
     dispatch(resetCountryData());
-    dispatch(fetchCountry("mexico"));
+    dispatch(fetchCountry('mexico'));
   }, [dispatch]);
 
-  if (loading) return <Spinner label="CARGANDO" />;
+  if (loading) return <Spinner />;
 
   if (error)
-    return (
-      <ErrorFallback
-        theme={theme}
-        onRetry={() => dispatch(fetchCountry("mexico"))}
-      />
-    );
+    return <ErrorFallback theme={theme} onRetry={() => dispatch(fetchCountry('mexico'))} />;
 
   return (
     <CountryPage

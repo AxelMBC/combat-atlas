@@ -8,6 +8,12 @@ const en: Record<TranslationKey, string> = {
   'common.close': 'Close',
   'common.notAvailable': 'N/A',
 
+  'spinner.tagline.allArts': 'Every martial art, one place.',
+  'spinner.tagline.tapFighter': 'Tap a fighter. Watch their fights.',
+  'spinner.tagline.exploreWorld': 'The world of combat, on a map.',
+  'spinner.tagline.everyCountry': 'Every country fights its own way.',
+  'spinner.tagline.legends': 'Legends. Fights. History.',
+
   'nav.backToWorldMap': '← World Map',
 
   'language.toggleAria': 'Language',
