@@ -26,8 +26,9 @@ const MainVideoControls = ({
 }: MainVideoControlsProps) => {
   const [dragValue, setDragValue] = useState<number | null>(null);
 
-  const max = duration > 0 ? duration : 0;
-  const value = dragValue ?? Math.min(currentTime, max);
+  const max = Number.isFinite(duration) && duration > 0 ? duration : 0;
+  const safeCurrentTime = Number.isFinite(currentTime) ? currentTime : 0;
+  const value = dragValue ?? Math.min(safeCurrentTime, max);
 
   const toNumber = (next: number | number[]) => (Array.isArray(next) ? next[0] : next);
 

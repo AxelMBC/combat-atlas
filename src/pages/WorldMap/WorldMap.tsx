@@ -28,6 +28,8 @@ const MotionButton = motion.create(Button);
 const PULSE_PERIOD_MS = 1600;
 const PULSE_MIN = 0.55;
 const PULSE_MAX = 1.0;
+const MAX_AUTO_RETRIES = 2;
+const AUTO_RETRY_DELAY_MS = 500;
 
 const WorldMap = () => {
   const navigate = useNavigate();
@@ -51,6 +53,8 @@ const WorldMap = () => {
   const mapRef = useRef<MapRef | null>(null);
   const dialogTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pulseRafRef = useRef<number | null>(null);
+  const autoRetryRef = useRef(0);
+  const retryTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const [mapError, setMapError] = useState(false);
   const [mapRetryKey, setMapRetryKey] = useState(0);
@@ -167,6 +171,7 @@ const WorldMap = () => {
   };
 
   const handleMapLoad = () => {
+    autoRetryRef.current = 0;
     if (!mapRef.current) return;
     const map = mapRef.current.getMap();
 
@@ -198,9 +203,20 @@ const WorldMap = () => {
   };
 
   useEffect(() => {
+    const release = () => {
+      const canvas = mapRef.current?.getMap().getCanvas();
+      const gl = canvas?.getContext('webgl2') ?? canvas?.getContext('webgl');
+      gl?.getExtension('WEBGL_lose_context')?.loseContext();
+    };
+    window.addEventListener('pagehide', release);
+    return () => window.removeEventListener('pagehide', release);
+  }, []);
+
+  useEffect(() => {
     return () => {
       if (dialogTimerRef.current) clearTimeout(dialogTimerRef.current);
       if (pulseRafRef.current !== null) cancelAnimationFrame(pulseRafRef.current);
+      if (retryTimerRef.current) clearTimeout(retryTimerRef.current);
     };
   }, []);
 
@@ -220,6 +236,7 @@ const WorldMap = () => {
       <Box sx={{ position: 'relative', flex: 1, minHeight: 0 }}>
         <Map
           key={mapRetryKey}
+          reuseMaps
           mapStyle={`https://api.maptiler.com/maps/0197251e-f92a-7cb9-98e8-774bde6e5d8e/style.json?key=${import.meta.env.VITE_MAPTILER_KEY}`}
           ref={mapRef}
           minZoom={2}
@@ -244,6 +261,17 @@ const WorldMap = () => {
               cancelAnimationFrame(pulseRafRef.current);
               pulseRafRef.current = null;
             }
+
+            if (autoRetryRef.current < MAX_AUTO_RETRIES) {
+              autoRetryRef.current += 1;
+              if (retryTimerRef.current) clearTimeout(retryTimerRef.current);
+              retryTimerRef.current = setTimeout(() => {
+                setMapRetryKey((k) => k + 1);
+                retryTimerRef.current = null;
+              }, AUTO_RETRY_DELAY_MS);
+              return;
+            }
+
             setMapError(true);
           }}
         />
