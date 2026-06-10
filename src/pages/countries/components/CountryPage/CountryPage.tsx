@@ -19,6 +19,7 @@ import TopFighters from '@/pages/countries/components/TopFighters';
 import MainEvent from '@/pages/countries/components/MainEvent';
 import TopFights from '@/pages/countries/components/TopFights';
 import Spinner from '@/components/Spinner';
+import SiteCredit from '@/components/SiteCredit';
 
 // Hooks
 import { useMainVideoQueue } from '@/hooks/useMainVideoQueue';
@@ -175,6 +176,10 @@ const CountryPage = ({
             videos={topEventsList}
             onVideoSelect={handleVideoSelect}
           />
+
+          <Box sx={{ textAlign: 'center', mt: 4 }}>
+            <SiteCredit tone="onLight" />
+          </Box>
         </Container>
       </Box>
 

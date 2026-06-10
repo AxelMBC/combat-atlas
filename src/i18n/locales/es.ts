@@ -14,6 +14,8 @@ const es = {
 
   'nav.backToWorldMap': '← Mapa Mundial',
 
+  'credit.by': 'por',
+
   'language.toggleAria': 'Idioma',
   'language.toggle.es': 'Español',
   'language.toggle.en': 'Inglés',

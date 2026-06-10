@@ -16,6 +16,8 @@ const en: Record<TranslationKey, string> = {
 
   'nav.backToWorldMap': '← World Map',
 
+  'credit.by': 'by',
+
   'language.toggleAria': 'Language',
   'language.toggle.es': 'Spanish',
   'language.toggle.en': 'English',
