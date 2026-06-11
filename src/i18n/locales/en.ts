@@ -59,13 +59,18 @@ const en: Record<TranslationKey, string> = {
     'In the meantime, you can explore the countries available in Combat Atlas.',
   'mapFallback.aria': 'Unable to load the map',
 
+  'hero.eyebrow': 'COMBAT ATLAS',
+  'hero.statsFights': '{count} fights',
+  'hero.statsCities': '{count} cities',
+  'hero.enterFullscreen': 'Fullscreen',
+  'hero.exitFullscreen': 'Exit fullscreen',
+  'hero.play': 'Play',
+
+  'fightInfo.nowPlaying': 'Now playing',
+
   'mainEvent.scrollHint': 'Scroll to explore',
   'mainEvent.searching': 'SEARCHING FOR FIGHT...',
   'mainEvent.anotherFight': 'Another Fight',
-  'mainEvent.fullscreenPromptMessage': 'New fight loaded',
-  'mainEvent.fullscreenPromptAction': 'Watch fullscreen',
-  'mainEvent.fightsCount': 'fights',
-  'mainEvent.lastUpdate': 'Last update',
   'mainEvent.division': 'Division',
   'mainEvent.venue': 'Venue',
   'mainEvent.year': 'Year',

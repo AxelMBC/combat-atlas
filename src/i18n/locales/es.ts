@@ -56,13 +56,18 @@ const es = {
   'mapFallback.message': 'Mientras tanto, puedes explorar los países disponibles en Combat Atlas.',
   'mapFallback.aria': 'No se pudo cargar el mapa',
 
+  'hero.eyebrow': 'COMBAT ATLAS',
+  'hero.statsFights': '{count} peleas',
+  'hero.statsCities': '{count} ciudades',
+  'hero.enterFullscreen': 'Pantalla completa',
+  'hero.exitFullscreen': 'Salir de pantalla completa',
+  'hero.play': 'Reproducir',
+
+  'fightInfo.nowPlaying': 'Reproduciendo ahora',
+
   'mainEvent.scrollHint': 'Desliza para explorar',
   'mainEvent.searching': 'BUSCANDO COMBATE...',
   'mainEvent.anotherFight': 'Otro Combate',
-  'mainEvent.fullscreenPromptMessage': 'Nuevo combate cargado',
-  'mainEvent.fullscreenPromptAction': 'Pantalla completa',
-  'mainEvent.fightsCount': 'combates',
-  'mainEvent.lastUpdate': 'Última actualización',
   'mainEvent.division': 'División',
   'mainEvent.venue': 'Sede',
   'mainEvent.year': 'Año',

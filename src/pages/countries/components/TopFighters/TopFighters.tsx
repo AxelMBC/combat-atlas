@@ -7,28 +7,23 @@ import { Box, Grid, Typography } from '@mui/material';
 // Components
 import FighterCard from './FighterCard';
 
+// Utils
+import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
+
 const TopFighters = memo(
   ({ title, topFightersData, remainingByFighter, onFighterSelect }: TopFightersProps) => {
     const getRemaining = (id: string) => remainingByFighter[id] ?? 0;
 
     return (
-      <Box
-        className="section-spacing"
-        sx={{ paddingBottom: 8, marginTop: 4, borderBottom: '8px solid #000' }}
-      >
+      <Box component="section" sx={{ paddingBottom: 8, mt: { xs: 5, md: 7 } }}>
         <Typography
-          marginBottom={2}
-          variant="h3"
+          variant="h2"
           sx={{
-            fontFamily: 'Anton, sans-serif',
-            fontWeight: 400,
-            fontSize: { xs: '2.5rem', md: '6rem' },
-            lineHeight: 1,
-            color: 'primary.dark',
-            textTransform: 'uppercase',
-            letterSpacing: '0.01em',
-            textAlign: 'center',
-            marginTop: { xs: 2, md: 6 },
+            fontFamily: CLEAN_SANS,
+            fontWeight: 700,
+            fontSize: { xs: '1.5rem', md: '2rem' },
+            color: '#f2f2f2',
+            mb: 3,
           }}
         >
           {title}
