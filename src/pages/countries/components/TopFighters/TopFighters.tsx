@@ -9,9 +9,11 @@ import FighterCard from './FighterCard';
 
 // Utils
 import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
+import { useThemeMode } from '@/styles/theme';
 
 const TopFighters = memo(
   ({ title, topFightersData, remainingByFighter, onFighterSelect }: TopFightersProps) => {
+    const { palette } = useThemeMode();
     const getRemaining = (id: string) => remainingByFighter[id] ?? 0;
 
     return (
@@ -22,14 +24,14 @@ const TopFighters = memo(
             fontFamily: CLEAN_SANS,
             fontWeight: 700,
             fontSize: { xs: '1.5rem', md: '2rem' },
-            color: '#f2f2f2',
+            color: palette.textPrimary,
             mb: 3,
           }}
         >
           {title}
         </Typography>
 
-        <Grid container spacing={5}>
+        <Grid container spacing={3}>
           <Grid size={{ xs: 12, md: 6, lg: 8 }}>
             {topFightersData[0] && (
               <FighterCard

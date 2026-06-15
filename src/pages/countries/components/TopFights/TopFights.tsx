@@ -9,8 +9,11 @@ import FightCard from './FightCard';
 
 // Utils
 import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
+import { useThemeMode } from '@/styles/theme';
 
 const TopFights = memo(({ title, videos, onVideoSelect }: TopEventsProps) => {
+  const { palette } = useThemeMode();
+
   return (
     <Box component="section" sx={{ mt: { xs: 5, md: 7 } }}>
       <Typography
@@ -19,7 +22,7 @@ const TopFights = memo(({ title, videos, onVideoSelect }: TopEventsProps) => {
           fontFamily: CLEAN_SANS,
           fontWeight: 700,
           fontSize: { xs: '1.5rem', md: '2rem' },
-          color: '#f2f2f2',
+          color: palette.textPrimary,
           mb: 3,
         }}
       >

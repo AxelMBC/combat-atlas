@@ -16,6 +16,7 @@ import { useTranslation } from '@/i18n';
 // Utils
 import { resolveLocalizedString, resolveLocalizedTags } from '@/utils/resolveLocalizedField';
 import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
+import { useThemeMode } from '@/styles/theme';
 
 const MotionButton = motion.create(Button);
 
@@ -28,6 +29,7 @@ const splitFightersFromTitle = (title: string): [string, string] | null => {
 const FightInfoSection = memo(
   ({ loading, error, video, onAnotherFight, anotherFightDisabled }: FightInfoSectionProps) => {
     const { t, language } = useTranslation();
+    const { palette } = useThemeMode();
 
     const tags = video ? resolveLocalizedTags(video.tags, language) : [];
     const description = video
@@ -58,7 +60,7 @@ const FightInfoSection = memo(
             fontWeight: 600,
             letterSpacing: '0.2em',
             textTransform: 'uppercase',
-            color: 'rgba(255, 255, 255, 0.45)',
+            color: palette.textMuted,
             mb: 1.5,
           }}
         >
@@ -71,7 +73,7 @@ const FightInfoSection = memo(
               fontFamily: 'inherit',
               textAlign: 'center',
               fontSize: '1.1rem',
-              color: 'rgba(255, 255, 255, 0.7)',
+              color: palette.textSecondary,
               p: 4,
             }}
           >
@@ -86,7 +88,7 @@ const FightInfoSection = memo(
               textAlign: 'center',
               fontWeight: 600,
               fontSize: '1.1rem',
-              color: 'rgba(255, 255, 255, 0.7)',
+              color: palette.textSecondary,
               p: 4,
             }}
           >
@@ -100,8 +102,8 @@ const FightInfoSection = memo(
               display: 'flex',
               flexDirection: { xs: 'column', md: 'row' },
               alignItems: 'stretch',
-              bgcolor: '#212121',
-              border: '1px solid rgba(255, 255, 255, 0.09)',
+              bgcolor: palette.surface,
+              border: `1px solid ${palette.border}`,
               borderRadius: '16px',
               overflow: 'hidden',
             }}
@@ -130,8 +132,8 @@ const FightInfoSection = memo(
                         fontWeight: 600,
                         letterSpacing: '0.08em',
                         textTransform: 'uppercase',
-                        bgcolor: idx === 0 ? 'primary.main' : 'rgba(255, 255, 255, 0.08)',
-                        color: idx === 0 ? '#fff' : 'rgba(255, 255, 255, 0.85)',
+                        bgcolor: idx === 0 ? 'primary.main' : palette.chipBg,
+                        color: idx === 0 ? '#fff' : palette.chipText,
                       }}
                     >
                       {tag}
@@ -147,13 +149,13 @@ const FightInfoSection = memo(
                   fontWeight: 700,
                   fontSize: { xs: '1.5rem', sm: '1.9rem', md: '2.3rem' },
                   lineHeight: 1.1,
-                  color: '#f2f2f2',
+                  color: palette.textPrimary,
                 }}
               >
                 {fighters ? (
                   <>
                     {fighters[0]}{' '}
-                    <Box component="span" sx={{ color: 'primary.main', fontStyle: 'italic' }}>
+                    <Box component="span" sx={{ color: 'primary.light', fontStyle: 'italic' }}>
                       {t('mainEvent.vs')}
                     </Box>{' '}
                     {fighters[1]}
@@ -166,7 +168,7 @@ const FightInfoSection = memo(
               <Typography
                 sx={{
                   fontFamily: 'inherit',
-                  color: 'rgba(255, 255, 255, 0.6)',
+                  color: palette.textSecondary,
                   fontSize: '0.95rem',
                   lineHeight: 1.6,
                 }}
@@ -179,8 +181,8 @@ const FightInfoSection = memo(
               sx={{
                 flex: { xs: '1 1 auto', md: '0 0 auto' },
                 minWidth: { md: 340 },
-                borderTop: { xs: '1px solid rgba(255, 255, 255, 0.09)', md: 'none' },
-                borderLeft: { xs: 'none', md: '1px solid rgba(255, 255, 255, 0.09)' },
+                borderTop: { xs: `1px solid ${palette.border}`, md: 'none' },
+                borderLeft: { xs: 'none', md: `1px solid ${palette.border}` },
                 p: { xs: 3, md: 4 },
                 display: 'flex',
                 flexDirection: 'column',
@@ -192,7 +194,7 @@ const FightInfoSection = memo(
                 sx={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(3, 1fr)',
-                  border: '1px solid rgba(255, 255, 255, 0.12)',
+                  border: `1px solid ${palette.borderStrong}`,
                   borderRadius: '12px',
                   overflow: 'hidden',
                 }}
@@ -203,7 +205,7 @@ const FightInfoSection = memo(
                     sx={{
                       p: 1.5,
                       borderRight:
-                        idx < stats.length - 1 ? '1px solid rgba(255, 255, 255, 0.12)' : 'none',
+                        idx < stats.length - 1 ? `1px solid ${palette.borderStrong}` : 'none',
                     }}
                   >
                     <Typography
@@ -213,7 +215,7 @@ const FightInfoSection = memo(
                         fontWeight: 600,
                         letterSpacing: '0.12em',
                         textTransform: 'uppercase',
-                        color: 'rgba(255, 255, 255, 0.45)',
+                        color: palette.textMuted,
                       }}
                     >
                       {stat.label}
@@ -223,7 +225,7 @@ const FightInfoSection = memo(
                         fontFamily: 'inherit',
                         fontWeight: 600,
                         fontSize: { xs: '1rem', md: '1.15rem' },
-                        color: '#f2f2f2',
+                        color: palette.textPrimary,
                         lineHeight: 1.2,
                       }}
                     >
@@ -254,7 +256,7 @@ const FightInfoSection = memo(
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: 1.25,
-                  '&:hover': { bgcolor: 'primary.main' },
+                  '&:hover': { bgcolor: 'primary.dark' },
                   '&.Mui-disabled': {
                     bgcolor: 'primary.main',
                     color: '#fff',

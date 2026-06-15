@@ -23,8 +23,7 @@ import { useTranslation } from '@/i18n';
 // Utils
 import { getCountryStats } from '@/pages/countries/components/CinematicHero/getCountryStats';
 import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
-
-const PAGE_BACKGROUND = '#161616';
+import { useThemeMode } from '@/styles/theme';
 
 const CountryPage = ({
   config,
@@ -35,6 +34,7 @@ const CountryPage = ({
 }: CountryPageProps) => {
   const navigate = useNavigate();
   const { t, language } = useTranslation();
+  const { palette } = useThemeMode();
   const reduceMotion = useReducedMotion();
   const autoplayAllowed = !reduceMotion;
 
@@ -71,7 +71,7 @@ const CountryPage = ({
     <ThemeProvider theme={theme}>
       {autoplayAllowed && !videoReady && !error && <Spinner />}
 
-      <Box sx={{ pb: 8, minHeight: '100vh', backgroundColor: PAGE_BACKGROUND }}>
+      <Box sx={{ pb: 8, minHeight: '100vh', backgroundColor: palette.page }}>
         <Button
           onClick={() => navigate('/')}
           variant="text"

@@ -22,6 +22,9 @@ const en: Record<TranslationKey, string> = {
   'language.toggle.es': 'Spanish',
   'language.toggle.en': 'English',
 
+  'theme.toggle.light': 'Switch to light theme',
+  'theme.toggle.dark': 'Switch to dark theme',
+
   'worldMap.explorePrompt': 'Explore a country:',
   'worldMap.availableCountriesAria': 'Available countries',
 
@@ -85,7 +88,7 @@ const en: Record<TranslationKey, string> = {
   'fighter.activeLabel': 'ACTIVE',
   'fighter.activeSince': 'Since',
   'fighter.fightsTotalLabel': 'FIGHTS',
-  'fighter.profileCta': 'PROFILE',
+  'fighter.profileCta': 'Profile',
 
   'fightCard.watchFight': 'Watch Fight',
   'fightCard.round': 'Round',

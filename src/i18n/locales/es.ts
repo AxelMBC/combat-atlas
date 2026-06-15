@@ -20,6 +20,9 @@ const es = {
   'language.toggle.es': 'Español',
   'language.toggle.en': 'Inglés',
 
+  'theme.toggle.light': 'Cambiar a tema claro',
+  'theme.toggle.dark': 'Cambiar a tema oscuro',
+
   'worldMap.explorePrompt': 'Explora un país:',
   'worldMap.availableCountriesAria': 'Países disponibles',
 
@@ -82,7 +85,7 @@ const es = {
   'fighter.activeLabel': 'ACTIVO',
   'fighter.activeSince': 'Desde',
   'fighter.fightsTotalLabel': 'PELEAS',
-  'fighter.profileCta': 'PERFIL',
+  'fighter.profileCta': 'Perfil',
 
   'fightCard.watchFight': 'Ver Pelea',
   'fightCard.round': 'Round',
