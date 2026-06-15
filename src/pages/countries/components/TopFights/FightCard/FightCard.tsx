@@ -4,10 +4,6 @@ import type { CardEventProps } from './FightCard.types';
 // MUI
 import { Box, Typography } from '@mui/material';
 
-// Icons
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
-
 // i18n
 import { useTranslation } from '@/i18n';
 
@@ -15,6 +11,8 @@ import { useTranslation } from '@/i18n';
 import { resolveFallback } from './FightCard.fallbacks';
 
 import { resolveLocalizedTags } from '@/utils/resolveLocalizedField';
+import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
+import { useThemeMode } from '@/styles/theme';
 
 const FALLBACK_THUMBNAIL = '/placeholders/no-video-placeholder.png';
 const YOUTUBE_MISSING_THUMBNAIL_WIDTH = 120;
@@ -29,6 +27,7 @@ const splitFightersFromTitle = (title: string): [string, string] | null => {
 
 const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
   const { t, language } = useTranslation();
+  const { palette } = useThemeMode();
 
   const fallback = useMemo(() => resolveFallback(), []);
 
@@ -37,8 +36,9 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
   const year = video.year ?? fallback?.year;
   const dateLabel = video.dateLabel ?? fallback?.dateLabel;
   const venue = video.venue ?? fallback?.venue;
-  const organization = video.organization ?? fallback?.organization;
-  const weightClass = video.weightClass ?? fallback?.weightClass;
+
+  const discipline = video.type ?? resolvedTags[0];
+  const subtitle = [discipline, venue?.city].filter(Boolean).join(' · ');
 
   const fighters = useMemo(() => {
     if (video.fighterRed && video.fighterBlue) {
@@ -55,30 +55,32 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
       onClick={() => onVideoSelect(video)}
       sx={{
         cursor: 'pointer',
-        transition: 'all 300ms ease',
-        '&:hover': {
-          boxShadow: '12px 12px 0 #ca2626',
-        },
-        '&:hover .fightCardImg': {
-          filter: 'grayscale(0%) brightness(1)',
-          transform: 'scale(1.08)',
-        },
-        bgcolor: 'background',
         display: 'flex',
         flexDirection: 'column',
-        border: '4px solid #000',
-        boxShadow: '8px 8px 0 #000',
-        maxWidth: 420,
+        width: '100%',
         height: '100%',
+        bgcolor: palette.surface,
+        border: `1px solid ${palette.border}`,
+        borderRadius: '14px',
+        overflow: 'hidden',
+        fontFamily: CLEAN_SANS,
+        transition: 'transform 300ms ease, border-color 300ms ease',
+        '&:hover': {
+          transform: 'translateY(-4px)',
+          borderColor: palette.borderHover,
+        },
+        '&:hover .fightCardImg': {
+          filter: 'brightness(1)',
+          transform: 'scale(1.05)',
+        },
       }}
     >
       <Box
         sx={{
           position: 'relative',
           overflow: 'hidden',
-          borderBottom: '4px solid #000',
-          bgcolor: '#171717',
-          height: 210,
+          bgcolor: palette.surfaceSunken,
+          height: 180,
         }}
       >
         <Box
@@ -104,9 +106,7 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
             height: '100%',
             objectFit: 'cover',
             transition: 'all 300ms ease',
-            filter: {
-              lg: 'grayscale(100%) brightness(0.55)',
-            },
+            filter: 'brightness(0.75)',
           }}
           className="fightCardImg"
         />
@@ -116,7 +116,7 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
             position: 'absolute',
             inset: 0,
             background:
-              'linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 35%, rgba(0,0,0,0.15) 60%, rgba(0,0,0,0.85) 100%)',
+              'linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.55) 100%)',
             pointerEvents: 'none',
           }}
         />
@@ -125,14 +125,14 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
           <Typography
             sx={{
               position: 'absolute',
-              top: 8,
+              top: 10,
               left: 14,
               color: 'common.white',
-              fontWeight: 800,
-              fontSize: '1.75rem',
+              fontFamily: 'inherit',
+              fontWeight: 700,
+              fontSize: '1.1rem',
               lineHeight: 1,
-              letterSpacing: 1,
-              textShadow: '2px 2px 0 rgba(0,0,0,0.6)',
+              textShadow: '0 1px 6px rgba(0, 0, 0, 0.6)',
             }}
           >
             {year}
@@ -143,18 +143,21 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
       <Box
         sx={{
           px: 2,
-          py: 1.5,
+          py: 1.75,
           display: 'flex',
           flexDirection: 'column',
           flexGrow: 1,
-          gap: 1.25,
+          gap: 0.75,
         }}
       >
         <Typography
           variant="h3"
           sx={{
-            fontSize: '1.15rem',
-            lineHeight: 1.25,
+            fontFamily: 'inherit',
+            fontWeight: 700,
+            fontSize: '1.05rem',
+            lineHeight: 1.3,
+            color: palette.textPrimary,
           }}
         >
           {fighters ? (
@@ -163,9 +166,9 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
               <Box
                 component="span"
                 sx={{
-                  color: 'primary.main',
+                  color: 'primary.light',
                   fontStyle: 'italic',
-                  px: 0.5,
+                  px: 0.25,
                 }}
               >
                 {t('mainEvent.vs')}
@@ -177,137 +180,57 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
           )}
         </Typography>
 
-        {(venue || organization || weightClass) && (
-          <Box
+        {subtitle && (
+          <Typography
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: 1,
-              fontSize: '0.78rem',
-              color: 'text.primary',
+              fontFamily: 'inherit',
+              fontSize: '0.85rem',
+              color: palette.textSecondary,
             }}
           >
-            {venue ? (
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
-                <FontAwesomeIcon
-                  icon={faLocationDot}
-                  style={{ fontSize: '0.8rem', opacity: 0.75 }}
-                />
-                <Typography component="span" sx={{ fontSize: '0.78rem', fontWeight: 500 }}>
-                  {venue.city}, {venue.country}
-                </Typography>
-              </Box>
-            ) : (
-              <Box />
-            )}
-            {(organization || weightClass) && (
-              <Typography
-                component="span"
-                sx={{
-                  fontSize: '0.78rem',
-                  fontWeight: 500,
-                  opacity: 0.85,
-                  textAlign: 'right',
-                }}
-              >
-                {[organization, weightClass].filter(Boolean).join(' · ')}
-              </Typography>
-            )}
-          </Box>
-        )}
-
-        {resolvedTags.length > 0 && (
-          <Box
-            sx={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: 0.75,
-            }}
-          >
-            {resolvedTags.map((tag, index) => {
-              const tagStyles = [
-                { color: 'common.white', bgcolor: 'primary.main' },
-                { color: 'text.primary', bgcolor: '#fff' },
-                { color: 'common.white', bgcolor: 'secondary.main' },
-              ] as const;
-              const { color, bgcolor } = tagStyles[index % 3];
-
-              return (
-                <Typography
-                  key={tag}
-                  component="span"
-                  sx={{
-                    px: { xs: 0.75, md: 1 },
-                    py: 0.25,
-                    fontSize: { xs: '0.6rem', md: '0.7rem' },
-                    fontWeight: 600,
-                    letterSpacing: 0.5,
-                    textTransform: 'uppercase',
-                    border: '2px solid #000',
-                    boxShadow: '1px 1px 0 #000',
-                    color,
-                    bgcolor,
-                  }}
-                >
-                  {tag}
-                </Typography>
-              );
-            })}
-          </Box>
+            {subtitle}
+          </Typography>
         )}
 
         <Box
           sx={{
             mt: 'auto',
-            pt: 1,
+            pt: 1.25,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             gap: 1,
-            borderTop: '1px solid rgba(0,0,0,0.08)',
+            borderTop: `1px solid ${palette.border}`,
           }}
         >
           <Typography
             component="span"
             sx={{
-              fontSize: '0.72rem',
+              fontFamily: 'inherit',
+              fontSize: '0.7rem',
               fontWeight: 600,
-              letterSpacing: 1.2,
+              letterSpacing: '0.1em',
               textTransform: 'uppercase',
-              color: 'text.primary',
-              opacity: 0.7,
+              color: palette.textMuted,
             }}
           >
             {dateLabel ?? ''}
           </Typography>
 
           <Typography
-            variant="button"
+            component="span"
             sx={{
-              color: 'primary.main',
-              transition: 'gap 300ms ease',
-              '&:hover': {
-                gap: 1.5,
-              },
-              textTransform: 'uppercase',
+              fontFamily: 'inherit',
+              fontSize: '0.8rem',
+              fontWeight: 600,
+              color: 'primary.light',
               display: 'flex',
               alignItems: 'center',
-              gap: 1,
+              gap: 0.75,
             }}
           >
             {t('fightCard.watchFight')}
-            <Box
-              component="span"
-              sx={{
-                transition: 'transform 300ms ease',
-                '&:hover': {
-                  transform: 'translateX(4px)',
-                },
-              }}
-            >
-              →
-            </Box>
+            <Box component="span">→</Box>
           </Typography>
         </Box>
       </Box>
