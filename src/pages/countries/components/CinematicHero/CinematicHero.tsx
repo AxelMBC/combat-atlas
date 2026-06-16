@@ -29,10 +29,8 @@ const styleIframe = (iframe: HTMLIFrameElement, title: string) => {
   iframe.style.top = '50%';
   iframe.style.left = '50%';
   iframe.style.border = '0';
-  iframe.style.transform = 'translate(-50%, -50%) scaleY(1.08)';
-  iframe.style.pointerEvents = 'none';
+  iframe.style.transform = 'translate(-50%, -50%)';
 };
-
 const bob = keyframes`
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(6px); }
@@ -127,7 +125,7 @@ const CinematicHero = ({
           iv_load_policy: 3,
           fs: 0,
           cc_load_policy: 0,
-          controls: 0,
+          controls: 1,
           enablejsapi: 1,
           origin: window.location.origin,
           start: Number(current.startTime) || 0,
@@ -221,7 +219,7 @@ const CinematicHero = ({
         '&:fullscreen': { height: '100%' },
       }}
     >
-      <Box ref={mountRef} sx={{ position: 'absolute', inset: 0, pointerEvents: 'none' }} />
+      <Box ref={mountRef} sx={{ position: 'absolute', inset: 0 }} />
 
       {showPoster && posterUrl && (
         <Box
@@ -243,7 +241,7 @@ const CinematicHero = ({
           position: 'absolute',
           inset: 0,
           background:
-            'linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 45%, rgba(0, 0, 0, 0.35) 100%)',
+            'linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.3) 100%)',
           pointerEvents: 'none',
         }}
       />
