@@ -75,6 +75,8 @@ const es = {
   'mainEvent.venue': 'Sede',
   'mainEvent.year': 'Año',
   'mainEvent.vs': 'VS',
+  'mainEvent.watchOnYoutube': 'Ver original en YouTube',
+  'mainEvent.watchOnYoutubeAria': 'Ver «{title}» en YouTube (se abre en una pestaña nueva)',
 
   'fighter.noFights': 'Sin peleas',
   'fighter.exhausted': 'Agotado',

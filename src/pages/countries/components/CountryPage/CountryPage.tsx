@@ -63,7 +63,7 @@ const CountryPage = ({
 
   useEffect(() => {
     if (videoReady) return;
-    const fallback = window.setTimeout(() => setVideoReady(true), 6000);
+    const fallback = window.setTimeout(() => setVideoReady(true), 300);
     return () => window.clearTimeout(fallback);
   }, [videoReady]);
 
@@ -123,18 +123,17 @@ const CountryPage = ({
             onAnotherFight={fetchNextVideo}
             anotherFightDisabled={remainingCount <= 1}
           />
-
-          <TopFights
-            title={t(config.topEventsTitleKey)}
-            videos={topEventsList}
-            onVideoSelect={onVideoSelect}
-          />
-
           <TopFighters
             title={t(config.topFightersTitleKey)}
             topFightersData={topFightersData}
             remainingByFighter={remainingByFighter}
             onFighterSelect={fetchVideoByFighter}
+          />
+
+          <TopFights
+            title={t(config.topEventsTitleKey)}
+            videos={topEventsList}
+            onVideoSelect={onVideoSelect}
           />
 
           <Box sx={{ textAlign: 'center', mt: 4 }}>
