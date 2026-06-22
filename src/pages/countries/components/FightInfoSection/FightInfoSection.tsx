@@ -8,7 +8,7 @@ import { Box, Button, Typography } from '@mui/material';
 
 // Icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faForward } from '@fortawesome/free-solid-svg-icons';
+import { faForward, faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 
 // i18n
 import { useTranslation } from '@/i18n';
@@ -19,6 +19,19 @@ import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
 import { useThemeMode } from '@/styles/theme';
 
 const MotionButton = motion.create(Button);
+
+const YOUTUBE_RED = '#FF0000';
+
+const YouTubeGlyph = () => (
+  <Box
+    component="svg"
+    viewBox="0 0 24 24"
+    aria-hidden
+    sx={{ width: 18, height: 18, fill: 'currentColor', flexShrink: 0 }}
+  >
+    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+  </Box>
+);
 
 const splitFightersFromTitle = (title: string): [string, string] | null => {
   const parts = title.split(/\s+vs\.?\s+/i);
@@ -267,6 +280,38 @@ const FightInfoSection = memo(
                 {t('mainEvent.anotherFight')}
                 <FontAwesomeIcon icon={faForward} />
               </MotionButton>
+
+              <Button
+                component="a"
+                href={`https://www.youtube.com/watch?v=${video.idYt}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={t('mainEvent.watchOnYoutubeAria', { title: video.title })}
+                sx={{
+                  width: '100%',
+                  py: 1,
+                  borderRadius: '999px',
+                  border: `1.5px solid ${YOUTUBE_RED}`,
+                  bgcolor: 'transparent',
+                  color: YOUTUBE_RED,
+                  fontFamily: CLEAN_SANS,
+                  fontWeight: 600,
+                  fontSize: '0.9rem',
+                  textTransform: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 1,
+                  transition: 'transform 0.15s ease, background-color 0.15s ease, color 0.15s ease',
+                  '&:hover': { bgcolor: YOUTUBE_RED, color: '#fff', transform: 'scale(1.02)' },
+                  '&:active': { transform: 'scale(0.98)' },
+                  '&.Mui-focusVisible': { outline: `2px solid ${YOUTUBE_RED}`, outlineOffset: 2 },
+                }}
+              >
+                <YouTubeGlyph />
+                {t('mainEvent.watchOnYoutube')}
+                <FontAwesomeIcon icon={faArrowUpRightFromSquare} style={{ fontSize: '0.7em' }} />
+              </Button>
             </Box>
           </Box>
         )}

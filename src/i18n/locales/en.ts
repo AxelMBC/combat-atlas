@@ -78,6 +78,8 @@ const en: Record<TranslationKey, string> = {
   'mainEvent.venue': 'Venue',
   'mainEvent.year': 'Year',
   'mainEvent.vs': 'VS',
+  'mainEvent.watchOnYoutube': 'Watch original on YouTube',
+  'mainEvent.watchOnYoutubeAria': 'Watch "{title}" on YouTube (opens in a new tab)',
 
   'fighter.noFights': 'No fights',
   'fighter.exhausted': 'Sold out',
