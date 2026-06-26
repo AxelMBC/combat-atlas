@@ -1,6 +1,8 @@
 import { memo } from 'react';
 import type { FighterCardProps } from './FighterCard.types';
 
+import useScrollFocus from '@/hooks/useScrollFocus';
+
 // MUI
 import { Box, Typography } from '@mui/material';
 
@@ -14,6 +16,7 @@ import { useThemeMode } from '@/styles/theme';
 const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: FighterCardProps) => {
   const { t } = useTranslation();
   const { palette } = useThemeMode();
+  const { ref, isFocused } = useScrollFocus<HTMLDivElement>();
   const disabled = remaining <= 0;
   const isFeature = variant === 'feature';
 
@@ -258,6 +261,19 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
     </Box>
   );
 
+  const activeStyles = {
+    borderColor: palette.borderHover,
+    '@media (prefers-reduced-motion: no-preference)': {
+      transform: 'translateY(-4px)',
+    },
+    '& .fighter-portrait img': {
+      filter: 'grayscale(0%) brightness(1)',
+      '@media (prefers-reduced-motion: no-preference)': {
+        transform: 'scale(1.03)',
+      },
+    },
+  } as const;
+
   const cardSx = {
     cursor: disabled ? 'not-allowed' : 'pointer',
     opacity: disabled ? 0.55 : 1,
@@ -268,20 +284,26 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
     overflow: 'hidden',
     fontFamily: CLEAN_SANS,
     transition: 'opacity 0.3s ease, transform 300ms ease, border-color 300ms ease',
-    '&:hover': disabled
+    '@media (hover: hover)': disabled
       ? undefined
       : {
-          transform: 'translateY(-4px)',
-          borderColor: palette.borderHover,
+          '&:hover': activeStyles,
         },
-    '&:hover .fighter-portrait img': disabled
+    '@media (hover: none)': disabled
       ? undefined
-      : { filter: 'grayscale(0%) brightness(1)', transform: 'scale(1.03)' },
+      : {
+          transition: 'transform 150ms ease, border-color 150ms ease',
+          '& .fighter-portrait img': {
+            transition: 'filter 150ms ease, transform 150ms ease',
+          },
+          ...(isFocused && activeStyles),
+        },
   } as const;
 
   if (isFeature) {
     return (
       <Box
+        ref={ref}
         onClick={disabled ? undefined : () => onSelect(boxer)}
         sx={{
           ...cardSx,
@@ -355,6 +377,7 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
 
   return (
     <Box
+      ref={ref}
       onClick={disabled ? undefined : () => onSelect(boxer)}
       sx={{
         ...cardSx,

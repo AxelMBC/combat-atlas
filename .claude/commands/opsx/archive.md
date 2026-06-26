@@ -1,5 +1,5 @@
 ---
-name: "OPSX: Archive"
+name: 'OPSX: Archive'
 description: Archive a completed change in the experimental workflow
 category: Workflow
 tags: [workflow, archive, experimental]
@@ -67,6 +67,7 @@ Archive a completed change in the experimental workflow.
 5. **Perform the archive**
 
    Create an `archive` directory under `planningHome.changesDir` if it doesn't exist:
+
    ```bash
    mkdir -p "<planningHome.changesDir>/archive"
    ```
@@ -90,6 +91,14 @@ Archive a completed change in the experimental workflow.
    - Spec sync status (synced / sync skipped / no delta specs)
    - Note about any warnings (incomplete artifacts/tasks)
 
+7. **Always suggest a commit title**
+
+   After the summary, ALWAYS propose a single-line commit title summarizing the change, derived from the change name and what the proposal/specs accomplished.
+   - Use Conventional Commits style consistent with the repo's history (e.g., `feat:`, `fix:`, `refactor:`, `docs:`) — inspect recent `git log` if the convention is unclear.
+   - Keep it under ~72 characters, imperative mood, describing the change's outcome (not "archive change").
+   - Present it in a copy-pasteable code block.
+   - Offer it as a suggestion only — do NOT run `git commit`. The user commits when ready.
+
 **Output On Success**
 
 ```
@@ -101,6 +110,8 @@ Archive a completed change in the experimental workflow.
 **Specs:** ✓ Synced to main specs
 
 All artifacts complete. All tasks complete.
+
+**Suggested commit title:** `<conventional-commit title summarizing the change>`
 ```
 
 **Output On Success (No Delta Specs)**
@@ -114,6 +125,8 @@ All artifacts complete. All tasks complete.
 **Specs:** No delta specs
 
 All artifacts complete. All tasks complete.
+
+**Suggested commit title:** `<conventional-commit title summarizing the change>`
 ```
 
 **Output On Success With Warnings**
@@ -132,6 +145,8 @@ All artifacts complete. All tasks complete.
 - Delta spec sync was skipped (user chose to skip)
 
 Review the archive if this was not intentional.
+
+**Suggested commit title:** `<conventional-commit title summarizing the change>`
 ```
 
 **Output On Error (Archive Exists)**
@@ -151,6 +166,7 @@ Target archive directory already exists.
 ```
 
 **Guardrails**
+
 - Always prompt for change selection if not provided
 - Use artifact graph (openspec status --json) for completion checking
 - Don't block archive on warnings - just inform and confirm
@@ -158,3 +174,4 @@ Target archive directory already exists.
 - Show clear summary of what happened
 - If sync is requested, use the Skill tool to invoke `openspec-sync-specs` (agent-driven)
 - If delta specs exist, always run the sync assessment and show the combined summary before prompting
+- Always end with a suggested Conventional Commits title; suggest only, never run `git commit`
