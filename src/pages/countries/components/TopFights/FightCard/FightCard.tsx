@@ -1,6 +1,8 @@
 import { memo, useMemo } from 'react';
 import type { CardEventProps } from './FightCard.types';
 
+import useScrollFocus from '@/hooks/useScrollFocus';
+
 // MUI
 import { Box, Typography } from '@mui/material';
 
@@ -28,6 +30,20 @@ const splitFightersFromTitle = (title: string): [string, string] | null => {
 const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
   const { t, language } = useTranslation();
   const { palette } = useThemeMode();
+  const { ref, isFocused } = useScrollFocus<HTMLDivElement>();
+
+  const activeStyles = {
+    borderColor: palette.borderHover,
+    '@media (prefers-reduced-motion: no-preference)': {
+      transform: 'translateY(-4px)',
+    },
+    '& .fightCardImg': {
+      filter: 'brightness(1)',
+      '@media (prefers-reduced-motion: no-preference)': {
+        transform: 'scale(1.05)',
+      },
+    },
+  } as const;
 
   const fallback = useMemo(() => resolveFallback(), []);
 
@@ -52,6 +68,7 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
 
   return (
     <Box
+      ref={ref}
       onClick={() => onVideoSelect(video)}
       sx={{
         cursor: 'pointer',
@@ -65,13 +82,15 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
         overflow: 'hidden',
         fontFamily: CLEAN_SANS,
         transition: 'transform 300ms ease, border-color 300ms ease',
-        '&:hover': {
-          transform: 'translateY(-4px)',
-          borderColor: palette.borderHover,
+        '@media (hover: hover)': {
+          '&:hover': activeStyles,
         },
-        '&:hover .fightCardImg': {
-          filter: 'brightness(1)',
-          transform: 'scale(1.05)',
+        '@media (hover: none)': {
+          transition: 'transform 150ms ease, border-color 150ms ease',
+          '& .fightCardImg': {
+            transition: 'all 150ms ease',
+          },
+          ...(isFocused && activeStyles),
         },
       }}
     >

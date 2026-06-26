@@ -14,7 +14,8 @@
       "Bash(openspec status *)",
       "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('mode:', d['actionContext']['mode']\\); print\\('artifacts:', [\\(a['id'],a['status']\\) for a in d['artifacts']]\\); print\\('specs existing:', d['artifactPaths']['specs']['existingOutputPaths']\\)\")",
       "Bash([ -e \"$TARGET\" ])",
-      "PowerShell($src = \"openspec\\\\changes\\\\add-youtube-attribution\"; $target = \"openspec\\\\changes\\\\archive\\\\2026-06-21-add-youtube-attribution\"; if \\(-not \\(Test-Path \"openspec\\\\changes\\\\archive\"\\)\\) { New-Item -ItemType Directory -Path \"openspec\\\\changes\\\\archive\" | Out-Null }; if \\(Test-Path $target\\) { Write-Output \"ERROR: target exists\" } else { Move-Item -Path $src -Destination $target; if \\($?\\) { Write-Output \"Moved to $target\" } })"
+      "PowerShell($src = \"openspec\\\\changes\\\\add-youtube-attribution\"; $target = \"openspec\\\\changes\\\\archive\\\\2026-06-21-add-youtube-attribution\"; if \\(-not \\(Test-Path \"openspec\\\\changes\\\\archive\"\\)\\) { New-Item -ItemType Directory -Path \"openspec\\\\changes\\\\archive\" | Out-Null }; if \\(Test-Path $target\\) { Write-Output \"ERROR: target exists\" } else { Move-Item -Path $src -Destination $target; if \\($?\\) { Write-Output \"Moved to $target\" } })",
+      "Bash(openspec new *)"
     ]
   },
   "hooks": {
