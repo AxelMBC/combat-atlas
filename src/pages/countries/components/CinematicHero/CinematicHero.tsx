@@ -86,11 +86,17 @@ const CinematicHero = ({
   }, []);
 
   useEffect(() => {
+    const orientation = typeof screen !== 'undefined' ? screen.orientation : undefined;
+    const onOrientationChange = () => {
+      if (document.fullscreenElement === containerRef.current) sizeIframe();
+    };
     window.addEventListener('resize', sizeIframe);
     document.addEventListener('fullscreenchange', sizeIframe);
+    orientation?.addEventListener?.('change', onOrientationChange);
     return () => {
       window.removeEventListener('resize', sizeIframe);
       document.removeEventListener('fullscreenchange', sizeIframe);
+      orientation?.removeEventListener?.('change', onOrientationChange);
     };
   }, [sizeIframe]);
 

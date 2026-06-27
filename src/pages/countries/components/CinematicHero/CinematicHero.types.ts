@@ -18,3 +18,7 @@ export interface UseHeroFullscreenResult {
   isFullscreen: boolean;
   toggleFullscreen: () => void;
 }
+
+export interface LockableScreenOrientation extends ScreenOrientation {
+  lock: (orientation: 'landscape' | 'portrait' | 'natural' | 'any') => Promise<void>;
+}
