@@ -25,6 +25,8 @@ import { getCountryStats } from '@/pages/countries/components/CinematicHero/getC
 import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
 import { useThemeMode } from '@/styles/theme';
 
+const LOADING_DELAY_MS = 3000;
+
 const CountryPage = ({
   config,
   topFightersData,
@@ -63,7 +65,7 @@ const CountryPage = ({
 
   useEffect(() => {
     if (videoReady) return;
-    const fallback = window.setTimeout(() => setVideoReady(true), 300);
+    const fallback = window.setTimeout(() => setVideoReady(true), LOADING_DELAY_MS);
     return () => window.clearTimeout(fallback);
   }, [videoReady]);
 
