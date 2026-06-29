@@ -50,11 +50,10 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
   const resolvedTags = resolveLocalizedTags(video.tags, language);
 
   const year = video.year ?? fallback?.year;
-  const dateLabel = video.dateLabel ?? fallback?.dateLabel;
-  const venue = video.venue ?? fallback?.venue;
 
   const discipline = video.type ?? resolvedTags[0];
-  const subtitle = [discipline, venue?.city].filter(Boolean).join(' · ');
+
+  const subtitle = [discipline, video.location].filter(Boolean).join(' · ');
 
   const fighters = useMemo(() => {
     if (video.fighterRed && video.fighterBlue) {
@@ -232,9 +231,7 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
               textTransform: 'uppercase',
               color: palette.textMuted,
             }}
-          >
-            {dateLabel ?? ''}
-          </Typography>
+          ></Typography>
 
           <Typography
             component="span"
