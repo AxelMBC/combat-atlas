@@ -17,7 +17,13 @@
       "PowerShell($src = \"openspec\\\\changes\\\\add-youtube-attribution\"; $target = \"openspec\\\\changes\\\\archive\\\\2026-06-21-add-youtube-attribution\"; if \\(-not \\(Test-Path \"openspec\\\\changes\\\\archive\"\\)\\) { New-Item -ItemType Directory -Path \"openspec\\\\changes\\\\archive\" | Out-Null }; if \\(Test-Path $target\\) { Write-Output \"ERROR: target exists\" } else { Move-Item -Path $src -Destination $target; if \\($?\\) { Write-Output \"Moved to $target\" } })",
       "Bash(openspec new *)",
       "PowerShell(graphify hook *)",
-      "PowerShell(graphify claude *)"
+      "PowerShell(graphify claude *)",
+      "Read(//c/Program Files/Google/Chrome/Application/**)",
+      "Read(//c/Program Files \\\\\\(x86\\\\\\)/Microsoft/Edge/Application/**)",
+      "Bash(npx --no-install playwright --version)",
+      "Bash(ls openspec/specs/)",
+      "Bash(ls openspec/specs/explore-bar-theming/)",
+      "Bash(openspec validate *)"
     ]
   },
   "hooks": {

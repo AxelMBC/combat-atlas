@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 
 import { countryRegistry } from '@/pages/countries/registry';
 import { useTranslation } from '@/i18n';
+import { useThemeMode } from '@/styles/theme';
 import SiteCredit from '@/components/SiteCredit';
 
 const CountryChipBar = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { mode, palette } = useThemeMode();
 
   return (
     <Box
@@ -18,18 +20,19 @@ const CountryChipBar = () => {
         width: '100%',
         px: { xs: 2, md: 4 },
         py: 1.5,
-        background: 'rgba(0, 0, 0, 0.85)',
-        borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+        background: palette.surface,
+        borderTop: `1px solid ${palette.border}`,
         display: 'flex',
         alignItems: 'center',
         gap: 2,
         overflowX: 'auto',
+        transition: 'background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease',
       }}
     >
       <Typography
         variant="body2"
         sx={{
-          color: 'rgba(255, 255, 255, 0.7)',
+          color: palette.textSecondary,
           fontWeight: 500,
           whiteSpace: 'nowrap',
           flexShrink: 0,
@@ -52,18 +55,18 @@ const CountryChipBar = () => {
                   width: 10,
                   height: 10,
                   borderRadius: '50%',
-                  background: accentColor ?? 'rgba(255,255,255,0.6)',
+                  background: accentColor ?? palette.textMuted,
                   ml: '8px !important',
                 }}
               />
             }
             sx={{
-              color: 'white',
-              background: 'rgba(255, 255, 255, 0.08)',
-              border: '1px solid rgba(255, 255, 255, 0.15)',
+              color: palette.chipText,
+              background: palette.chipBg,
+              border: `1px solid ${palette.border}`,
               fontWeight: 500,
               '&:hover': {
-                background: 'rgba(255, 255, 255, 0.16)',
+                background: palette.borderStrong,
               },
             }}
           />
@@ -71,7 +74,7 @@ const CountryChipBar = () => {
       </Box>
 
       <Box sx={{ marginLeft: 'auto', flexShrink: 0 }}>
-        <SiteCredit tone="onDark" />
+        <SiteCredit tone={mode === 'dark' ? 'onDark' : 'onLight'} />
       </Box>
     </Box>
   );
