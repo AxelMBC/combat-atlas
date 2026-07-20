@@ -16,6 +16,8 @@ const TopFighters = memo(
     const { palette } = useThemeMode();
     const getRemaining = (id: string) => remainingByFighter[id] ?? 0;
 
+    if (topFightersData.length === 0) return null;
+
     return (
       <Box component="section" sx={{ paddingBottom: 8, mt: { xs: 5, md: 7 } }}>
         <Typography

@@ -1,1 +1,1 @@
-export { default } from "./FightCard";
+export { default } from './FightCard';

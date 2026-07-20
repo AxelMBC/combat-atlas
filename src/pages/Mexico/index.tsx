@@ -1,1 +1,1 @@
-export { default } from "./Mexico";
+export { default } from './Mexico';

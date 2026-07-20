@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { TopEventsProps } from './TopFights.types';
+import type { TopEventsProps } from './TopFights.types';
 
 // MUI
 import { Box, Grid, Typography } from '@mui/material';
@@ -13,6 +13,9 @@ import { useThemeMode } from '@/styles/theme';
 
 const TopFights = memo(({ title, videos, onVideoSelect }: TopEventsProps) => {
   const { palette } = useThemeMode();
+  const playableVideos = videos.filter((video) => video.idYt);
+
+  if (playableVideos.length === 0) return null;
 
   return (
     <Box component="section" sx={{ mt: { xs: 5, md: 7 } }}>
@@ -30,14 +33,11 @@ const TopFights = memo(({ title, videos, onVideoSelect }: TopEventsProps) => {
       </Typography>
 
       <Grid container spacing={3}>
-        {videos.map(
-          (video) =>
-            video.idYt && (
-              <Grid key={video.idYt} size={{ xs: 12, sm: 6, lg: 4 }} sx={{ display: 'flex' }}>
-                <FightCard video={video} onVideoSelect={onVideoSelect} />
-              </Grid>
-            ),
-        )}
+        {playableVideos.map((video) => (
+          <Grid key={video.idYt} size={{ xs: 12, sm: 6, lg: 4 }} sx={{ display: 'flex' }}>
+            <FightCard video={video} onVideoSelect={onVideoSelect} />
+          </Grid>
+        ))}
       </Grid>
     </Box>
   );

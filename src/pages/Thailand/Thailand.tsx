@@ -1,17 +1,10 @@
-import type { Fighter } from '@/types/fighter.types';
-import type { MainEvent } from '@/types/fightEvent.types';
-import { useEffect } from 'react';
+import '@/styles/fonts/default.scss';
 
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { fetchCountry } from '@/store/country/thunks';
-import { resetCountryData } from '@/store/country/countrySlice';
-import { selectCountryState } from '@/store/country/countrySlice';
+import { useCountryPageData } from '@/hooks/useCountryPageData';
+import { useTranslation } from '@/i18n';
 
 import { getFighterImage } from './resources/fighters';
 import { getTopFightImage } from './resources/fights';
-
-import '@/styles/fonts/default.scss';
-
 import { theme } from './config/thailandTheme';
 import { thailandConfig } from './config/thailand.config';
 
@@ -20,29 +13,15 @@ import ErrorFallback from '@/components/ErrorFallback';
 import Spinner from '@/components/Spinner';
 
 const Thailand = () => {
-  const dispatch = useAppDispatch();
-
-  const { fighters, mainEvents, topEvents, loading, error } = useAppSelector(selectCountryState);
-
-  const fightersList = fighters.map((fighter: Fighter) => ({
-    ...fighter,
-    image: getFighterImage(fighter.image),
-  }));
-
-  const topFightsList = topEvents.map((fight: MainEvent) => ({
-    ...fight,
-    ...(fight.thumbnail && { thumbnail: getTopFightImage(fight.thumbnail) }),
-  }));
-
-  useEffect(() => {
-    dispatch(resetCountryData());
-    dispatch(fetchCountry('thailand'));
-  }, [dispatch]);
+  const { t } = useTranslation();
+  const { fightersList, mainEvents, topFightsList, loading, error, retry } = useCountryPageData(
+    'thailand',
+    { resolveFighterImage: getFighterImage, resolveTopFightThumbnail: getTopFightImage },
+  );
 
   if (loading) return <Spinner />;
 
-  if (error)
-    return <ErrorFallback theme={theme} onRetry={() => dispatch(fetchCountry('thailand'))} />;
+  if (error) return <ErrorFallback theme={theme} message={t(error)} onRetry={retry} />;
 
   return (
     <CountryPage

@@ -1,24 +1,34 @@
-// Data
-import { topFightersData } from "./data/topFightersList";
-import { topEvents } from "./data/topEventsList";
-import { mainEventFights } from "./data/allEventsList";
+import '@/styles/fonts/default.scss';
 
-// Config
-import "@/styles/fonts/default.scss";
-import { countryConfig } from "./config/country.config";
-import { theme } from "./config/countryTheme";
+import { useCountryPageData } from '@/hooks/useCountryPageData';
+import { useTranslation } from '@/i18n';
 
-// Components
-import CountryPage from "@/pages/countries/components/CountryPage/CountryPage";
+// Replace with your country's slug (must match its registry entry).
+// Wire an image resolver if you bundle fighter images locally:
+// import { getFighterImage } from './resources/fighters';
+import { countryConfig } from './config/country.config';
+import { theme } from './config/countryTheme';
+
+import CountryPage from '@/pages/countries/components/CountryPage';
+import ErrorFallback from '@/components/ErrorFallback';
+import Spinner from '@/components/Spinner';
 
 const CountryTemplate = () => {
+  const { t } = useTranslation();
+  const { fightersList, mainEvents, topFightsList, loading, error, retry } =
+    useCountryPageData('your-country');
+
+  if (loading) return <Spinner />;
+
+  if (error) return <ErrorFallback theme={theme} message={t(error)} onRetry={retry} />;
+
   return (
     <CountryPage
       theme={theme}
       config={countryConfig}
-      topFightersData={topFightersData}
-      topEventsList={topEvents}
-      mainEventFights={mainEventFights}
+      mainEventFights={mainEvents}
+      topFightersData={fightersList}
+      topEventsList={topFightsList}
     />
   );
 };

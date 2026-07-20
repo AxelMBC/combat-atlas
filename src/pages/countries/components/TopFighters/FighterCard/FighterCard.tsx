@@ -284,6 +284,14 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
     overflow: 'hidden',
     fontFamily: CLEAN_SANS,
     transition: 'opacity 0.3s ease, transform 300ms ease, border-color 300ms ease',
+    '&:focus-visible': disabled
+      ? undefined
+      : {
+          outline: '2px solid',
+          outlineColor: 'primary.main',
+          outlineOffset: '2px',
+          ...activeStyles,
+        },
     '@media (hover: hover)': disabled
       ? undefined
       : {
@@ -300,11 +308,25 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
         },
   } as const;
 
+  const interactiveProps = disabled
+    ? {}
+    : {
+        role: 'button',
+        tabIndex: 0,
+        onClick: () => onSelect(boxer),
+        onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            onSelect(boxer);
+          }
+        },
+      };
+
   if (isFeature) {
     return (
       <Box
         ref={ref}
-        onClick={disabled ? undefined : () => onSelect(boxer)}
+        {...interactiveProps}
         sx={{
           ...cardSx,
           display: 'flex',
@@ -378,7 +400,7 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
   return (
     <Box
       ref={ref}
-      onClick={disabled ? undefined : () => onSelect(boxer)}
+      {...interactiveProps}
       sx={{
         ...cardSx,
         display: 'flex',

@@ -27,21 +27,22 @@ const es = {
   'worldMap.availableCountriesAria': 'Países disponibles',
 
   'country.mexico.name': 'México',
-  'country.mexico.headerTitle': 'Boxeo al Estilo Mexicano',
   'country.mexico.topFightersTitle': 'Ídolos de México',
   'country.mexico.topEventsTitle': 'Peleas Históricas',
 
   'country.thailand.name': 'Tailandia',
-  'country.thailand.headerTitle': 'Armas Thailandesas',
   'country.thailand.topFightersTitle': 'Leyendas Historicas',
   'country.thailand.topEventsTitle': 'Las guerras de Thailandia',
 
   'country.unitedStates.name': 'Estados Unidos',
-  'country.unitedStates.headerTitle': 'Lucha con Garra Americana',
   'country.unitedStates.topFightersTitle': 'Leyendas del Tapete',
   'country.unitedStates.topEventsTitle': 'Duelos Olímpicos',
 
   'error.countryLoad': 'Ocurrió un error al cargar el país. Inténtalo de nuevo.',
+  'error.countryData':
+    'No pudimos cargar los datos del país. Revisa tu conexión e inténtalo de nuevo.',
+  'error.fightersLoad': 'No pudimos cargar los peleadores. Inténtalo de nuevo.',
+  'error.eventSubmit': 'No se pudo enviar el evento. Inténtalo de nuevo.',
   'error.formLoad': 'Error al cargar el formulario',
   'error.noMoreVideos': 'No hay más videos disponibles.',
   'error.noFighterEvent': 'No se encontró un evento principal para el peleador seleccionado.',
@@ -90,7 +91,6 @@ const es = {
   'fighter.profileCta': 'Perfil',
 
   'fightCard.watchFight': 'Ver Pelea',
-  'fightCard.round': 'Round',
 
   'eventForm.pageTitle': 'Nuevo Evento de Pelea',
   'eventForm.pageDescription': 'Completá el formulario para ingresar un nuevo evento al sistema.',

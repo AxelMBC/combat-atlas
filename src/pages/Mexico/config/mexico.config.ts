@@ -1,9 +1,6 @@
 import type { CountryPageConfig } from '@/pages/countries/components/CountryPage/CountryPage.types';
 
 export const mexicoConfig: CountryPageConfig = {
-  countryName: 'Mexico',
-  themeClassName: 'mexico-theme',
-  headerTitleKey: 'country.mexico.headerTitle',
   countryNameKey: 'country.mexico.name',
   topFightersTitleKey: 'country.mexico.topFightersTitle',
   topEventsTitleKey: 'country.mexico.topEventsTitle',

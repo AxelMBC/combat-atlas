@@ -9,9 +9,6 @@ import { Box, Typography } from '@mui/material';
 // i18n
 import { useTranslation } from '@/i18n';
 
-// Fallback dummy data
-import { resolveFallback } from './FightCard.fallbacks';
-
 import { resolveLocalizedTags } from '@/utils/resolveLocalizedField';
 import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
 import { useThemeMode } from '@/styles/theme';
@@ -45,11 +42,9 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
     },
   } as const;
 
-  const fallback = useMemo(() => resolveFallback(), []);
-
   const resolvedTags = resolveLocalizedTags(video.tags, language);
 
-  const year = video.year ?? fallback?.year;
+  const year = video.year;
 
   const discipline = video.type ?? resolvedTags[0];
 
@@ -68,7 +63,15 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
   return (
     <Box
       ref={ref}
+      role="button"
+      tabIndex={0}
       onClick={() => onVideoSelect(video)}
+      onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          onVideoSelect(video);
+        }
+      }}
       sx={{
         cursor: 'pointer',
         display: 'flex',
@@ -81,6 +84,12 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
         overflow: 'hidden',
         fontFamily: CLEAN_SANS,
         transition: 'transform 300ms ease, border-color 300ms ease',
+        '&:focus-visible': {
+          outline: '2px solid',
+          outlineColor: 'primary.main',
+          outlineOffset: '2px',
+          ...activeStyles,
+        },
         '@media (hover: hover)': {
           '&:hover': activeStyles,
         },
@@ -216,23 +225,11 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
             pt: 1.25,
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-end',
             gap: 1,
             borderTop: `1px solid ${palette.border}`,
           }}
         >
-          <Typography
-            component="span"
-            sx={{
-              fontFamily: 'inherit',
-              fontSize: '0.7rem',
-              fontWeight: 600,
-              letterSpacing: '0.1em',
-              textTransform: 'uppercase',
-              color: palette.textMuted,
-            }}
-          ></Typography>
-
           <Typography
             component="span"
             sx={{

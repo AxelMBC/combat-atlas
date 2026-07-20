@@ -1,25 +1,26 @@
-import type { PayloadAction } from "@reduxjs/toolkit";
+import type { PayloadAction } from '@reduxjs/toolkit';
 import type {
   EventFormData,
+  EventFormFieldUpdate,
   EventIngestionState,
-} from "./eventIngestionSlice.types";
-import type { RootState } from "@/store";
+} from './eventIngestionSlice.types';
+import type { RootState } from '@/store';
 
-import { createSlice } from "@reduxjs/toolkit";
-import { fetchFightersByCountry, submitEvent } from "./thunks";
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchFightersByCountry, submitEvent } from './thunks';
 
 const initialForm: EventFormData = {
-  country: "",
-  idYt: "",
-  startTime: "0",
-  title: "",
-  description: "",
+  country: '',
+  idYt: '',
+  startTime: '0',
+  title: '',
+  description: '',
   tags: [],
-  fighterRed: "",
-  fighterRedId: "",
-  fighterBlue: "",
-  fighterBlueId: "",
-  fighterId: "",
+  fighterRed: '',
+  fighterRedId: '',
+  fighterBlue: '',
+  fighterBlueId: '',
+  fighterId: '',
 };
 
 const initialState: EventIngestionState = {
@@ -32,25 +33,23 @@ const initialState: EventIngestionState = {
   submitError: null,
 };
 
+const setFormField = <K extends keyof EventFormData>(
+  form: EventFormData,
+  field: K,
+  value: EventFormData[K],
+): void => {
+  form[field] = value;
+};
+
 export const eventIngestionSlice = createSlice({
-  name: "eventIngestion",
+  name: 'eventIngestion',
   initialState,
   reducers: {
-    updateField: (
-      state,
-      action: PayloadAction<{
-        field: keyof EventFormData;
-        value: EventFormData[keyof EventFormData];
-      }>
-    ) => {
-      const { field, value } = action.payload;
-      (state.form[field] as EventFormData[typeof field]) = value;
+    updateField: (state, action: PayloadAction<EventFormFieldUpdate>) => {
+      setFormField(state.form, action.payload.field, action.payload.value);
     },
     addTag: (state, action: PayloadAction<string>) => {
-      if (
-        state.form.tags.length < 10 &&
-        !state.form.tags.includes(action.payload)
-      ) {
+      if (state.form.tags.length < 10 && !state.form.tags.includes(action.payload)) {
         state.form.tags.push(action.payload);
       }
     },
@@ -80,7 +79,7 @@ export const eventIngestionSlice = createSlice({
       })
       .addCase(fetchFightersByCountry.rejected, (state, action) => {
         state.loadingFighters = false;
-        state.fetchFightersError = action.payload as string;
+        state.fetchFightersError = action.payload ?? null;
       })
       .addCase(submitEvent.pending, (state) => {
         state.submitting = true;
@@ -93,7 +92,7 @@ export const eventIngestionSlice = createSlice({
       })
       .addCase(submitEvent.rejected, (state, action) => {
         state.submitting = false;
-        state.submitError = action.payload as string;
+        state.submitError = action.payload ?? null;
       });
   },
 });
@@ -102,14 +101,10 @@ export const { updateField, addTag, removeTag, resetForm, clearSubmitStatus } =
   eventIngestionSlice.actions;
 
 export const selectEventForm = (state: RootState) => state.eventIngestion.form;
-export const selectAvailableFighters = (state: RootState) =>
-  state.eventIngestion.availableFighters;
-export const selectLoadingFighters = (state: RootState) =>
-  state.eventIngestion.loadingFighters;
-export const selectSubmitStatus = (state: RootState) => ({
-  submitting: state.eventIngestion.submitting,
-  submitSuccess: state.eventIngestion.submitSuccess,
-  submitError: state.eventIngestion.submitError,
-});
+export const selectAvailableFighters = (state: RootState) => state.eventIngestion.availableFighters;
+export const selectLoadingFighters = (state: RootState) => state.eventIngestion.loadingFighters;
+export const selectSubmitting = (state: RootState) => state.eventIngestion.submitting;
+export const selectSubmitSuccess = (state: RootState) => state.eventIngestion.submitSuccess;
+export const selectSubmitError = (state: RootState) => state.eventIngestion.submitError;
 
 export default eventIngestionSlice.reducer;

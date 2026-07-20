@@ -1,6 +1,6 @@
-import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
-export type FeedbackVariant = "success" | "error";
+export type FeedbackVariant = 'success' | 'error';
 
 export interface FeedbackModalProps {
   open: boolean;

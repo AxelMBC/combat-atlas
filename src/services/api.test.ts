@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 type RejectionHandler = (err: unknown) => Promise<unknown>;
 
@@ -7,7 +7,7 @@ const { requestMock, getOnRejected, setOnRejected } = vi.hoisted(() => {
   return {
     requestMock: vi.fn(),
     getOnRejected: () => {
-      if (!onRejected) throw new Error("interceptor not registered");
+      if (!onRejected) throw new Error('interceptor not registered');
       return onRejected;
     },
     setOnRejected: (fn: RejectionHandler) => {
@@ -16,21 +16,20 @@ const { requestMock, getOnRejected, setOnRejected } = vi.hoisted(() => {
   };
 });
 
-vi.mock("axios", () => ({
+vi.mock('axios', () => ({
   default: {
     create: () => ({
       request: requestMock,
       interceptors: {
         response: {
-          use: (_onFulfilled: unknown, onRejected: RejectionHandler) =>
-            setOnRejected(onRejected),
+          use: (_onFulfilled: unknown, onRejected: RejectionHandler) => setOnRejected(onRejected),
         },
       },
     }),
   },
 }));
 
-import "./api";
+import './api';
 
 interface AxiosErrorShape {
   config: Record<string, unknown>;
@@ -41,17 +40,17 @@ interface AxiosErrorShape {
 const makeError = (
   status: number | undefined,
   opts: { message?: string; dataMessage?: string } = {},
-  config: Record<string, unknown> = {}
+  config: Record<string, unknown> = {},
 ): AxiosErrorShape => ({
   config,
   response:
     status === undefined
       ? undefined
       : { status, data: opts.dataMessage ? { message: opts.dataMessage } : undefined },
-  message: opts.message ?? "request failed",
+  message: opts.message ?? 'request failed',
 });
 
-describe("api response interceptor", () => {
+describe('api response interceptor', () => {
   beforeEach(() => {
     vi.useFakeTimers();
     requestMock.mockReset();
@@ -61,9 +60,9 @@ describe("api response interceptor", () => {
     vi.useRealTimers();
   });
 
-  describe("retry behavior", () => {
+  describe('retry behavior', () => {
     it("retries on 5xx and resolves with the next attempt's success", async () => {
-      const config: Record<string, unknown> = { url: "/foo" };
+      const config: Record<string, unknown> = { url: '/foo' };
       requestMock.mockResolvedValueOnce({ status: 200, data: { ok: true } });
 
       const promise = getOnRejected()(makeError(500, {}, config));
@@ -76,8 +75,8 @@ describe("api response interceptor", () => {
       expect(config._retryCount).toBe(1);
     });
 
-    it("retries when the response is missing (network error)", async () => {
-      const config: Record<string, unknown> = { url: "/foo" };
+    it('retries when the response is missing (network error)', async () => {
+      const config: Record<string, unknown> = { url: '/foo' };
       requestMock.mockResolvedValueOnce({ status: 200 });
 
       const promise = getOnRejected()(makeError(undefined, {}, config));
@@ -89,40 +88,32 @@ describe("api response interceptor", () => {
       expect(config._retryCount).toBe(1);
     });
 
-    it("does not retry on 4xx and rejects with the extracted message", async () => {
-      const config: Record<string, unknown> = { url: "/foo" };
+    it('does not retry on 4xx and rejects with the extracted message', async () => {
+      const config: Record<string, unknown> = { url: '/foo' };
 
       const promise = getOnRejected()(
-        makeError(
-          400,
-          { message: "axios said", dataMessage: "bad input" },
-          config
-        )
+        makeError(400, { message: 'axios said', dataMessage: 'bad input' }, config),
       );
 
-      await expect(promise).rejects.toThrow("bad input");
+      await expect(promise).rejects.toThrow('bad input');
       expect(requestMock).not.toHaveBeenCalled();
       expect(config._retryCount).toBeUndefined();
     });
 
-    it("rejects after MAX_RETRIES failed attempts", async () => {
-      const config: Record<string, unknown> = { url: "/foo" };
+    it('rejects after MAX_RETRIES failed attempts', async () => {
+      const config: Record<string, unknown> = { url: '/foo' };
 
       const failingAttempt = (cfg: Record<string, unknown>) =>
-        getOnRejected()(
-          makeError(500, { message: "server down" }, cfg)
-        );
+        getOnRejected()(makeError(500, { message: 'server down' }, cfg));
 
       requestMock
         .mockImplementationOnce(failingAttempt)
         .mockImplementationOnce(failingAttempt)
         .mockImplementationOnce(failingAttempt);
 
-      const promise = getOnRejected()(
-        makeError(500, { message: "server down" }, config)
-      );
+      const promise = getOnRejected()(makeError(500, { message: 'server down' }, config));
 
-      const assertion = expect(promise).rejects.toThrow("server down");
+      const assertion = expect(promise).rejects.toThrow('server down');
       await vi.runAllTimersAsync();
       await assertion;
 
@@ -130,7 +121,7 @@ describe("api response interceptor", () => {
       expect(config._retryCount).toBe(3);
     });
 
-    it("waits 300ms before the first retry", async () => {
+    it('waits 300ms before the first retry', async () => {
       const config: Record<string, unknown> = {};
       requestMock.mockResolvedValueOnce({ status: 200 });
 
@@ -145,15 +136,13 @@ describe("api response interceptor", () => {
       await promise;
     });
 
-    it("uses exponential backoff (600ms) before the second retry", async () => {
+    it('uses exponential backoff (600ms) before the second retry', async () => {
       const config: Record<string, unknown> = {};
       requestMock
-        .mockImplementationOnce((cfg) =>
-          getOnRejected()(makeError(500, { message: "fail" }, cfg))
-        )
+        .mockImplementationOnce((cfg) => getOnRejected()(makeError(500, { message: 'fail' }, cfg)))
         .mockResolvedValueOnce({ status: 200 });
 
-      const promise = getOnRejected()(makeError(500, { message: "fail" }, config));
+      const promise = getOnRejected()(makeError(500, { message: 'fail' }, config));
 
       // Advance past the first 300ms delay → 1st retry fires
       await vi.advanceTimersByTimeAsync(300);
@@ -170,24 +159,22 @@ describe("api response interceptor", () => {
     });
   });
 
-  describe("error message extraction", () => {
-    it("uses response.data.message when present", async () => {
+  describe('error message extraction', () => {
+    it('uses response.data.message when present', async () => {
       const promise = getOnRejected()(
         makeError(400, {
-          message: "axios message (ignored)",
-          dataMessage: "from server",
-        })
+          message: 'axios message (ignored)',
+          dataMessage: 'from server',
+        }),
       );
 
-      await expect(promise).rejects.toThrow("from server");
+      await expect(promise).rejects.toThrow('from server');
     });
 
-    it("falls back to error.message when response.data.message is absent", async () => {
-      const promise = getOnRejected()(
-        makeError(400, { message: "fallback message" })
-      );
+    it('falls back to error.message when response.data.message is absent', async () => {
+      const promise = getOnRejected()(makeError(400, { message: 'fallback message' }));
 
-      await expect(promise).rejects.toThrow("fallback message");
+      await expect(promise).rejects.toThrow('fallback message');
     });
   });
 });

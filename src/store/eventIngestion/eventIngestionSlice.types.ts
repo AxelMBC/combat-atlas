@@ -1,4 +1,5 @@
-import type { Fighter } from "@/types/fighter.types";
+import type { Fighter } from '@/types/fighter.types';
+import type { TranslationKey } from '@/i18n';
 
 export interface EventFormData {
   country: string;
@@ -14,12 +15,16 @@ export interface EventFormData {
   fighterId: string;
 }
 
+export type EventFormFieldUpdate = {
+  [K in keyof EventFormData]: { field: K; value: EventFormData[K] };
+}[keyof EventFormData];
+
 export interface EventIngestionState {
   form: EventFormData;
   availableFighters: Fighter[];
   loadingFighters: boolean;
-  fetchFightersError: string | null;
+  fetchFightersError: TranslationKey | null;
   submitting: boolean;
   submitSuccess: boolean;
-  submitError: string | null;
+  submitError: TranslationKey | null;
 }

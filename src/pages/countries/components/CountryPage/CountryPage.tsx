@@ -57,7 +57,7 @@ const CountryPage = ({
     () => getCountryStats(mainEventFights, language),
     [mainEventFights, language],
   );
-  const countryName = config.countryNameKey ? t(config.countryNameKey) : config.countryName;
+  const countryName = t(config.countryNameKey);
 
   useEffect(() => {
     window.scrollTo(0, 0);

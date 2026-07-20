@@ -1,5 +1,5 @@
-import { Box, Divider, Paper, Typography } from "@mui/material";
-import type { FormSectionProps } from "./FormSection.types";
+import { Box, Divider, Paper, Typography } from '@mui/material';
+import type { FormSectionProps } from './FormSection.types';
 
 const FormSection = ({ title, children }: FormSectionProps) => {
   return (

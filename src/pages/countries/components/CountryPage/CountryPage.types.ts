@@ -16,15 +16,11 @@ export interface ColorPalette {
 }
 
 export interface CountryPageConfig {
-  countryName: string;
-  themeClassName: string;
-  headerTitleKey: TranslationKey;
-  countryNameKey?: TranslationKey;
+  countryNameKey: TranslationKey;
   topFightersTitleKey: TranslationKey;
   topEventsTitleKey: TranslationKey;
   colorPalette: ColorPalette;
   maxWidth: string;
-  headerTitleFont?: string;
 }
 
 export interface CountryPageProps {

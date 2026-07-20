@@ -23,7 +23,14 @@
       "Bash(npx --no-install playwright --version)",
       "Bash(ls openspec/specs/)",
       "Bash(ls openspec/specs/explore-bar-theming/)",
-      "Bash(openspec validate *)"
+      "Bash(openspec validate *)",
+      "PowerShell(openspec list *)",
+      "PowerShell(openspec status *)",
+      "PowerShell(openspec new *)",
+      "PowerShell(openspec instructions *)",
+      "PowerShell(yarn format *)",
+      "PowerShell(git *)",
+      "PowerShell(openspec validate *)"
     ]
   },
   "hooks": {

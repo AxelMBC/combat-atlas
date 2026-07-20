@@ -1,4 +1,4 @@
-import type { TranslationKey } from "@/i18n";
+import type { TranslationKey } from '@/i18n';
 
 export interface CountryOption {
   slug: string;

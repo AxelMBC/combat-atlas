@@ -1,4 +1,4 @@
-import type { TranslationKey, TranslationParams } from "@/i18n";
+import type { TranslationKey, TranslationParams } from '@/i18n';
 
 export interface FieldError {
   key: TranslationKey;

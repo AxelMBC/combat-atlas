@@ -1,5 +1,2 @@
-export { default } from "./FeedbackModal";
-export type {
-  FeedbackModalProps,
-  FeedbackVariant,
-} from "./FeedbackModal.types";
+export { default } from './FeedbackModal';
+export type { FeedbackModalProps, FeedbackVariant } from './FeedbackModal.types';

@@ -1,6 +1,6 @@
-import type { Fighter } from "@/types/fighter.types";
+import type { Fighter } from '@/types/fighter.types';
 
-export type Corner = "red" | "blue";
+export type Corner = 'red' | 'blue';
 
 export interface FighterSelectorProps {
   corner: Corner;

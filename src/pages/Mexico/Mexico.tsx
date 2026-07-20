@@ -1,15 +1,9 @@
-import type { Fighter } from '@/types/fighter.types';
-import { useEffect } from 'react';
-
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { fetchCountry } from '@/store/country/thunks';
-import { resetCountryData } from '@/store/country/countrySlice';
-import { selectCountryState } from '@/store/country/countrySlice';
-
-import { getFighterImage } from './resources/fighters';
-
 import '@/styles/fonts/default.scss';
 
+import { useCountryPageData } from '@/hooks/useCountryPageData';
+import { useTranslation } from '@/i18n';
+
+import { getFighterImage } from './resources/fighters';
 import { theme } from './config/mexicoTheme';
 import { mexicoConfig } from './config/mexico.config';
 
@@ -18,24 +12,15 @@ import ErrorFallback from '@/components/ErrorFallback';
 import Spinner from '@/components/Spinner';
 
 const Mexico = () => {
-  const dispatch = useAppDispatch();
-
-  const { fighters, mainEvents, topEvents, loading, error } = useAppSelector(selectCountryState);
-
-  const fightersList = fighters.map((fighter: Fighter) => ({
-    ...fighter,
-    image: getFighterImage(fighter.image),
-  }));
-
-  useEffect(() => {
-    dispatch(resetCountryData());
-    dispatch(fetchCountry('mexico'));
-  }, [dispatch]);
+  const { t } = useTranslation();
+  const { fightersList, mainEvents, topFightsList, loading, error, retry } = useCountryPageData(
+    'mexico',
+    { resolveFighterImage: getFighterImage },
+  );
 
   if (loading) return <Spinner />;
 
-  if (error)
-    return <ErrorFallback theme={theme} onRetry={() => dispatch(fetchCountry('mexico'))} />;
+  if (error) return <ErrorFallback theme={theme} message={t(error)} onRetry={retry} />;
 
   return (
     <CountryPage
@@ -43,7 +28,7 @@ const Mexico = () => {
       config={mexicoConfig}
       mainEventFights={mainEvents}
       topFightersData={fightersList}
-      topEventsList={topEvents}
+      topEventsList={topFightsList}
     />
   );
 };

@@ -1,13 +1,18 @@
-# Graph Report - .  (2026-06-28)
+# Graph Report - Frontend  (2026-07-19)
 
 ## Corpus Check
-- 227 files · ~96,017 words
+- 216 files · ~102,091 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 547 nodes · 816 edges · 40 communities (32 shown, 8 thin omitted)
-- Extraction: 90% EXTRACTED · 10% INFERRED · 0% AMBIGUOUS · INFERRED: 81 edges (avg confidence: 0.85)
-- Token cost: 264,248 input · 0 output
+- 956 nodes · 1126 edges · 145 communities (84 shown, 61 thin omitted)
+- Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 64 edges (avg confidence: 0.84)
+- Token cost: 0 input · 0 output
+
+## Graph Freshness
+- Built from commit: `7227ee6b`
+- Run `git rev-parse HEAD` and compare to check if the graph is stale.
+- Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - [[_COMMUNITY_Country Page & Theme Config|Country Page & Theme Config]]
@@ -45,30 +50,118 @@
 - [[_COMMUNITY_YouTube Attribution Tasks|YouTube Attribution Tasks]]
 - [[_COMMUNITY_Hero Fullscreen Tasks|Hero Fullscreen Tasks]]
 - [[_COMMUNITY_Scroll-Focus Cards Tasks|Scroll-Focus Cards Tasks]]
+- [[_COMMUNITY_Community 40|Community 40]]
+- [[_COMMUNITY_Community 41|Community 41]]
+- [[_COMMUNITY_Community 42|Community 42]]
+- [[_COMMUNITY_Community 43|Community 43]]
+- [[_COMMUNITY_Community 44|Community 44]]
+- [[_COMMUNITY_Community 45|Community 45]]
+- [[_COMMUNITY_Community 46|Community 46]]
+- [[_COMMUNITY_Community 47|Community 47]]
+- [[_COMMUNITY_Community 48|Community 48]]
+- [[_COMMUNITY_Community 49|Community 49]]
+- [[_COMMUNITY_Community 50|Community 50]]
+- [[_COMMUNITY_Community 51|Community 51]]
+- [[_COMMUNITY_Community 52|Community 52]]
+- [[_COMMUNITY_Community 53|Community 53]]
+- [[_COMMUNITY_Community 54|Community 54]]
+- [[_COMMUNITY_Community 55|Community 55]]
+- [[_COMMUNITY_Community 56|Community 56]]
+- [[_COMMUNITY_Community 57|Community 57]]
+- [[_COMMUNITY_Community 58|Community 58]]
+- [[_COMMUNITY_Community 59|Community 59]]
+- [[_COMMUNITY_Community 60|Community 60]]
+- [[_COMMUNITY_Community 61|Community 61]]
+- [[_COMMUNITY_Community 62|Community 62]]
+- [[_COMMUNITY_Community 63|Community 63]]
+- [[_COMMUNITY_Community 64|Community 64]]
+- [[_COMMUNITY_Community 65|Community 65]]
+- [[_COMMUNITY_Community 66|Community 66]]
+- [[_COMMUNITY_Community 67|Community 67]]
+- [[_COMMUNITY_Community 68|Community 68]]
+- [[_COMMUNITY_Community 69|Community 69]]
+- [[_COMMUNITY_Community 70|Community 70]]
+- [[_COMMUNITY_Community 71|Community 71]]
+- [[_COMMUNITY_Community 72|Community 72]]
+- [[_COMMUNITY_Community 73|Community 73]]
+- [[_COMMUNITY_Community 74|Community 74]]
+- [[_COMMUNITY_Community 75|Community 75]]
+- [[_COMMUNITY_Community 76|Community 76]]
+- [[_COMMUNITY_Community 77|Community 77]]
+- [[_COMMUNITY_Community 78|Community 78]]
+- [[_COMMUNITY_Community 79|Community 79]]
+- [[_COMMUNITY_Community 80|Community 80]]
+- [[_COMMUNITY_Community 81|Community 81]]
+- [[_COMMUNITY_Community 83|Community 83]]
+- [[_COMMUNITY_Community 85|Community 85]]
+- [[_COMMUNITY_Community 87|Community 87]]
+- [[_COMMUNITY_Community 88|Community 88]]
+- [[_COMMUNITY_Community 90|Community 90]]
+- [[_COMMUNITY_Community 91|Community 91]]
+- [[_COMMUNITY_Community 93|Community 93]]
+- [[_COMMUNITY_Community 94|Community 94]]
+- [[_COMMUNITY_Community 95|Community 95]]
+- [[_COMMUNITY_Community 97|Community 97]]
+- [[_COMMUNITY_Community 99|Community 99]]
+- [[_COMMUNITY_Community 100|Community 100]]
+- [[_COMMUNITY_Community 102|Community 102]]
+- [[_COMMUNITY_Community 104|Community 104]]
+- [[_COMMUNITY_Community 105|Community 105]]
+- [[_COMMUNITY_Community 106|Community 106]]
+- [[_COMMUNITY_Community 107|Community 107]]
+- [[_COMMUNITY_Community 109|Community 109]]
+- [[_COMMUNITY_Community 111|Community 111]]
+- [[_COMMUNITY_Community 112|Community 112]]
+- [[_COMMUNITY_Community 114|Community 114]]
+- [[_COMMUNITY_Community 116|Community 116]]
+- [[_COMMUNITY_Community 117|Community 117]]
+- [[_COMMUNITY_Community 119|Community 119]]
+- [[_COMMUNITY_Community 121|Community 121]]
+- [[_COMMUNITY_Community 122|Community 122]]
+- [[_COMMUNITY_Community 124|Community 124]]
+- [[_COMMUNITY_Community 126|Community 126]]
+- [[_COMMUNITY_Community 127|Community 127]]
+- [[_COMMUNITY_Community 128|Community 128]]
+- [[_COMMUNITY_Community 129|Community 129]]
+- [[_COMMUNITY_Community 130|Community 130]]
+- [[_COMMUNITY_Community 131|Community 131]]
+- [[_COMMUNITY_Community 132|Community 132]]
+- [[_COMMUNITY_Community 133|Community 133]]
+- [[_COMMUNITY_Community 134|Community 134]]
+- [[_COMMUNITY_Community 135|Community 135]]
+- [[_COMMUNITY_Community 136|Community 136]]
+- [[_COMMUNITY_Community 137|Community 137]]
+- [[_COMMUNITY_Community 138|Community 138]]
+- [[_COMMUNITY_Community 139|Community 139]]
+- [[_COMMUNITY_Community 140|Community 140]]
+- [[_COMMUNITY_Community 141|Community 141]]
+- [[_COMMUNITY_Community 142|Community 142]]
+- [[_COMMUNITY_Community 143|Community 143]]
+- [[_COMMUNITY_Community 144|Community 144]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `useTranslation()` - 19 edges
+1. `useTranslation()` - 23 edges
 2. `compilerOptions` - 17 edges
 3. `compilerOptions` - 11 edges
-4. `scripts` - 8 edges
-5. `ErrorBoundary` - 6 edges
-6. `SurfacePalette` - 6 edges
-7. `ThemeModeContextValue` - 6 edges
-8. `OpenSpec Sync Specs Skill` - 6 edges
-9. `OpenSpec CLI` - 6 edges
-10. `LanguageContextValue` - 5 edges
+4. `SPEC: Cinematic Hero for Country Pages` - 10 edges
+5. `Decisions` - 10 edges
+6. `scripts` - 9 edges
+7. `useCountryPageData()` - 9 edges
+8. `Tasks: fix-audit-urgent-findings` - 9 edges
+9. `Getting Started with Your React + TypeScript + Vite App` - 8 edges
+10. `6. Technical Design` - 7 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `OPSX Apply Prompt` --semantically_similar_to--> `OpenSpec Apply Change Skill`  [INFERRED] [semantically similar]
-  .github/prompts/opsx-apply.prompt.md → .claude/skills/openspec-apply-change/SKILL.md
-- `OpenSpec Apply Change Skill (GitHub)` --semantically_similar_to--> `OpenSpec Apply Change Skill`  [INFERRED] [semantically similar]
-  .github/skills/openspec-apply-change/SKILL.md → .claude/skills/openspec-apply-change/SKILL.md
-- `OPSX Sync Prompt` --semantically_similar_to--> `OpenSpec Sync Specs Skill`  [INFERRED] [semantically similar]
-  .github/prompts/opsx-sync.prompt.md → .claude/skills/openspec-sync-specs/SKILL.md
-- `OpenSpec Sync Specs Skill (GitHub)` --semantically_similar_to--> `OpenSpec Sync Specs Skill`  [INFERRED] [semantically similar]
-  .github/skills/openspec-sync-specs/SKILL.md → .claude/skills/openspec-sync-specs/SKILL.md
-- `README Getting Started` --semantically_similar_to--> `CLAUDE.md Project Guidance`  [INFERRED] [semantically similar]
-  README.md → CLAUDE.md
+- `Fighter Placeholder Image` --semantically_similar_to--> `No Fighter Placeholder (silhouette)`  [INFERRED] [semantically similar]
+  src/pages/Mexico/resources/fighters/placeholder.webp → public/placeholders/no-fighter-placeholder.png
+- `ErrorFallback()` --calls--> `useTranslation()`  [INFERRED]
+  src/components/ErrorFallback/ErrorFallback.tsx → src/i18n/useTranslation.ts
+- `FeedbackModal()` --calls--> `useTranslation()`  [INFERRED]
+  src/components/FeedbackModal/FeedbackModal.tsx → src/i18n/useTranslation.ts
+- `LanguageToggle()` --calls--> `useTranslation()`  [INFERRED]
+  src/components/LanguageToggle/LanguageToggle.tsx → src/i18n/useTranslation.ts
+- `MapFallback()` --calls--> `useTranslation()`  [INFERRED]
+  src/components/MapFallback/MapFallback.tsx → src/i18n/useTranslation.ts
 
 ## Import Cycles
 - None detected.
@@ -79,47 +172,35 @@
 - **Hero Native Fullscreen OpenSpec Change** — openspec_changes_archive_2026_06_26_hero_native_fullscreen_proposal_hero_fullscreen, openspec_changes_archive_2026_06_26_hero_native_fullscreen_design_hero_fullscreen, openspec_changes_archive_2026_06_26_hero_native_fullscreen_specs_hero_fullscreen_spec_hero_fullscreen, openspec_changes_archive_2026_06_26_hero_native_fullscreen_tasks_hero_fullscreen [EXTRACTED 1.00]
 - **Mobile Scroll-Focus Cards OpenSpec Change** — openspec_changes_archive_2026_06_26_mobile_scroll_focus_cards_proposal_scroll_focus_cards, openspec_changes_archive_2026_06_26_mobile_scroll_focus_cards_design_scroll_focus_cards, openspec_changes_archive_2026_06_26_mobile_scroll_focus_cards_specs_scroll_focus_cards_spec_scroll_focus_cards, openspec_changes_archive_2026_06_26_mobile_scroll_focus_cards_tasks_scroll_focus_cards [EXTRACTED 1.00]
 
-## Communities (40 total, 8 thin omitted)
+## Communities (145 total, 61 thin omitted)
 
 ### Community 0 - "Country Page & Theme Config"
-Cohesion: 0.07
-Nodes (27): ErrorFallback(), ErrorFallbackProps, ColorPalette, CountryPageConfig, CountryPageProps, EventForm(), mexicoConfig, theme (+19 more)
+Cohesion: 0.06
+Nodes (28): ErrorFallback(), ErrorFallbackProps, Spinner(), SpinnerProps, SpinnerSize, EMPTY_PHRASES, TAGLINE_KEYS, UseTypewriterOptions (+20 more)
 
 ### Community 1 - "Error Boundaries & Fallbacks"
-Cohesion: 0.09
-Nodes (17): ErrorBoundary, ErrorBoundaryProps, ErrorBoundaryState, MapFallback(), MapFallbackProps, NotFound(), NotFoundProps, root (+9 more)
+Cohesion: 0.25
+Nodes (4): MapFallback(), MapFallbackProps, MotionButton, WorldMap()
 
 ### Community 2 - "Event Ingestion Form"
-Cohesion: 0.09
-Nodes (16): FieldError, FieldErrors, CORNER_COLORS, CORNER_LABEL_KEYS, FighterSelector(), Corner, FighterSelectorProps, FormSectionProps (+8 more)
+Cohesion: 0.10
+Nodes (15): FeedbackModal(), FeedbackModalProps, FeedbackVariant, VariantStyles, VARIANT_STYLES, FieldError, FieldErrors, FormSectionProps (+7 more)
 
 ### Community 3 - "Runtime Dependencies"
-Cohesion: 0.07
-Nodes (29): dependencies, axios, @emotion/react, @emotion/styled, @fortawesome/fontawesome-svg-core, @fortawesome/free-solid-svg-icons, @fortawesome/react-fontawesome, framer-motion (+21 more)
-
-### Community 4 - "Project Specs & Hero Design Docs"
-Cohesion: 0.09
-Nodes (28): CLAUDE.md Project Guidance, Cinematic Hero for Country Pages SPEC, CinematicHero Component, createCountryTheme / CountryPageConfig, Atlas App HTML Shell, YouTube Attribution Change Design, YouTube Attribution Change Proposal, YouTube Attribution Delta Spec (+20 more)
-
-### Community 5 - "App Shell & Feedback Modal"
-Cohesion: 0.11
-Nodes (14): FeedbackModal(), FeedbackModalProps, FeedbackVariant, VariantStyles, VARIANT_STYLES, LanguageToggle(), SiteCredit(), SiteCreditProps (+6 more)
+Cohesion: 0.06
+Nodes (30): dependencies, axios, @emotion/react, @emotion/styled, @fortawesome/fontawesome-svg-core, @fortawesome/free-solid-svg-icons, @fortawesome/react-fontawesome, framer-motion (+22 more)
 
 ### Community 6 - "Cinematic Hero & Fullscreen Hook"
-Cohesion: 0.11
-Nodes (16): bob, chipSx, CinematicHero(), CinematicHeroProps, LockableScreenOrientation, UseHeroFullscreenResult, getOrientation(), lockLandscape() (+8 more)
+Cohesion: 0.06
+Nodes (22): bob, chipSx, CinematicHero(), CinematicHeroProps, CountryStats, LockableScreenOrientation, UseHeroFullscreenResult, getCountryStats() (+14 more)
 
 ### Community 7 - "API Client & Services"
-Cohesion: 0.11
-Nodes (11): api, AxiosErrorShape, RejectionHandler, { requestMock, getOnRejected, setOnRejected }, eventIngestionSlice, initialForm, initialState, EventFormData (+3 more)
+Cohesion: 0.09
+Nodes (12): api, AxiosErrorShape, RejectionHandler, { requestMock, getOnRejected, setOnRejected }, eventIngestionSlice, initialForm, initialState, EventFormData (+4 more)
 
 ### Community 8 - "Country Redux Slice"
-Cohesion: 0.13
-Nodes (13): countrySlice, initialState, initialState, CountryState, fetchCountry, SessionCache, makeEvent(), makeFighter() (+5 more)
-
-### Community 9 - "OpenSpec Workflow Tooling"
-Cohesion: 0.12
-Nodes (23): OpenSpec CLI, OPSX Apply Command, OPSX Archive Command, OPSX Explore Command, OpenSpec Change Workflow, OPSX Propose Command, Delta Spec Format, OPSX Sync Command (+15 more)
+Cohesion: 0.05
+Nodes (33): makeEvent(), makeFighter(), makePayload(), makeStore(), mockedGetCountryData, renderCountryHook(), UseCountryPageDataOptions, UseCountryPageDataResult (+25 more)
 
 ### Community 10 - "Dev & Test Dependencies"
 Cohesion: 0.10
@@ -134,8 +215,8 @@ Cohesion: 0.10
 Nodes (19): compilerOptions, allowImportingTsExtensions, isolatedModules, jsx, lib, module, moduleDetection, moduleResolution (+11 more)
 
 ### Community 13 - "Fight Event Types & Utils"
-Cohesion: 0.15
-Nodes (8): FightDecision, FightDivision, FightVenue, LocalizedString, LocalizedTags, MainEvent, pickRandomEvent(), shuffleArray()
+Cohesion: 0.09
+Nodes (21): 1. Context & Problem, 2. Goals, 3.1 Page structure (top to bottom), 3.2 Hero states, 3.3 Scroll behavior, 3.4 "Otro combate" (random next fight), 3.5 Reduced motion / no-autoplay fallback, 3. UX Specification (+13 more)
 
 ### Community 14 - "Theme Palette & Mode"
 Cohesion: 0.30
@@ -146,24 +227,24 @@ Cohesion: 0.15
 Nodes (13): Thailand, Pornsanae Sitmonchai vs Pakorn Sakyothin I, Ramon Dekkers vs Coban Lookchaomaesaitong II, Sakmongkol Sithchuchok vs Jongsanan Fairtex V, Samart Payakaroon vs Dieselnoi Chor Thanasukarn, Coban Lookchaomaesaitong, Dieselnoi Chor Thanasukarn, Jongsanan Fairtex (+5 more)
 
 ### Community 16 - "Loading Spinner & Typewriter"
-Cohesion: 0.26
-Nodes (7): Spinner(), SpinnerProps, SpinnerSize, EMPTY_PHRASES, TAGLINE_KEYS, UseTypewriterOptions, useTypewriter()
+Cohesion: 0.12
+Nodes (16): Context, D1 — `CountryDataResponse` declared in `src/types/country.types.ts`, D2 — `useCountryPageData(slug, resolvers)` hook, not a factory, D3 — Empty sections return `null` inside the section components, D4 — `countryNameKey` becomes required; `countryName` string is deleted, D5 — Registry-derived admin options, D6 — Errors as `TranslationKey`, translated at render, D7 — Cards keyboard access via the CinematicHero pattern (+8 more)
 
 ### Community 17 - "Country Template Scaffold"
-Cohesion: 0.24
-Nodes (5): countryConfig, theme, mainEventFights, topEvents, topFightersData
+Cohesion: 0.27
+Nodes (10): useCountryPageData(), useMainVideoQueue(), useTranslation(), CountryPage(), CountryTemplate(), Mexico(), Thailand(), UnitedStates() (+2 more)
 
 ### Community 18 - "Node TypeScript Config"
 Cohesion: 0.15
 Nodes (12): compilerOptions, allowImportingTsExtensions, lib, module, moduleDetection, moduleResolution, noEmit, skipLibCheck (+4 more)
 
 ### Community 19 - "Fight Card Component"
-Cohesion: 0.22
-Nodes (5): FIGHT_FALLBACKS, FightFallback, resolveFallback(), FightCard, CardEventProps
+Cohesion: 0.12
+Nodes (15): OpenSpec Config (spec-driven), Purpose, Requirement: Accessible, recognizable presentation, Requirement: Bilingual labels, Requirement: Original video attribution link, Requirement: Scope limited to the info card, Requirements, Scenario: Anchor semantics (+7 more)
 
 ### Community 20 - "Fighter Card & Scroll Focus"
-Cohesion: 0.27
-Nodes (5): UseScrollFocusOptions, UseScrollFocusResult, FighterCard, FighterCardProps, FighterCardVariant
+Cohesion: 0.07
+Nodes (13): UseScrollFocusOptions, UseScrollFocusResult, FighterCard, FighterCardProps, FighterCardVariant, renderSection(), TopFighters, TopFightersProps (+5 more)
 
 ### Community 21 - "Thailand Fighter Portraits"
 Cohesion: 0.25
@@ -174,40 +255,192 @@ Cohesion: 0.36
 Nodes (8): Mexico (country), Boxing (discipline), No Fighter Placeholder (silhouette), Canelo Alvarez (boxer portrait), Juan Manuel Marquez (boxer portrait), Julio Cesar Chavez (boxer in ring) AMBIGUOUS, Fighter Placeholder Image, Salvador Sanchez (boxer in ring) AMBIGUOUS
 
 ### Community 23 - "Country Stats & Localization"
-Cohesion: 0.32
-Nodes (3): CountryStats, getCountryStats(), resolveLocalizedTags()
+Cohesion: 0.14
+Nodes (13): hero-fullscreen Specification, Purpose, Requirement: Graceful degradation on unsupported platforms, Requirement: Mobile landscape orientation in fullscreen, Requirement: Native fullscreen toggle, Requirements, Scenario: Entering fullscreen, Scenario: Entering fullscreen on a phone held in portrait (+5 more)
+
+### Community 24 - "Country Page & Top Fights"
+Cohesion: 0.14
+Nodes (13): Purpose, Requirement: Active transition keeps pace with scrolling, Requirement: Centered card receives active treatment on touch devices, Requirement: Desktop hover behavior is preserved, Requirement: Single active card with no flicker between cards, Requirements, Scenario: A card scrolls into the center band, Scenario: A card scrolls out of the center band (+5 more)
 
 ### Community 25 - "Fight Info Section"
-Cohesion: 0.29
-Nodes (3): FightInfoSection, MotionButton, FightInfoSectionProps
+Cohesion: 0.15
+Nodes (12): Final report, Inputs & naming, `src/pages/<Pascal>/config/<camel>.config.ts`, `src/pages/<Pascal>/config/<camel>Theme.ts`, `src/pages/<Pascal>/index.tsx`, `src/pages/<Pascal>/<Pascal>.tsx`, Step 1 — Research palette, Step 2 — Generate the Spanish copy (+4 more)
 
 ### Community 26 - "Project Commands & Conventions"
 Cohesion: 0.33
-Nodes (7): Add Country Command, Country Registry Pattern, Codebase Audit Command, Project Code Style Rules, Check Command, Combat Atlas Frontend Guidelines (Copilot), Neo-brutalist Design
+Nodes (5): Architecture, Build and Test, Code Style, Combat Atlas Frontend Guidelines, Conventions
 
 ### Community 27 - "US Wrestler Portraits"
 Cohesion: 0.33
 Nodes (6): United States, Cael Sanderson, Dan Gable, John Smith, Jordan Burroughs, Kyle Snyder
 
+### Community 28 - "Top Fighters Section"
+Cohesion: 0.15
+Nodes (12): ADDED Requirements, Requirement: Accessible, recognizable presentation, Requirement: Bilingual labels, Requirement: Original video attribution link, Requirement: Scope limited to the info card, Scenario: Anchor semantics, Scenario: Hero player unchanged, Scenario: Link is shown for the active fight (+4 more)
+
+### Community 40 - "Community 40"
+Cohesion: 0.15
+Nodes (12): ADDED Requirements, country-page-sections, Requirement: Empty sections are not rendered, Requirement: Hero shows the localized country name, Requirement: No fabricated fight data, Scenario: Config without a name key does not compile, Scenario: Fight without a year, Scenario: No top fighters (+4 more)
+
+### Community 41 - "Community 41"
+Cohesion: 0.15
+Nodes (12): explore-bar-theming Specification, Purpose, Requirement: Explore bar color changes are perceptibly smooth, Requirement: Explore bar contents remain legible in both modes, Requirement: Explore bar reacts to theme mode, Requirements, Scenario: Chips are readable in light mode, Scenario: Initial render honors the persisted preference (+4 more)
+
+### Community 42 - "Community 42"
+Cohesion: 0.17
+Nodes (11): ADDED Requirements, Requirement: Graceful degradation on unsupported platforms, Requirement: Mobile landscape orientation in fullscreen, Requirement: Native fullscreen toggle, Scenario: Entering fullscreen, Scenario: Entering fullscreen on a phone held in portrait, Scenario: Exiting fullscreen, Scenario: Exiting fullscreen restores orientation (+3 more)
+
+### Community 43 - "Community 43"
+Cohesion: 0.17
+Nodes (11): Band thickness: `-47%` (≈42px on a ~700px viewport), Context, Decisions, Detection: `IntersectionObserver` with a negative `rootMargin` band, Gating: `(hover: none)` rather than a width breakpoint, Goals / Non-Goals, Hook shape and home, Open Questions (+3 more)
+
+### Community 44 - "Community 44"
+Cohesion: 0.17
+Nodes (11): ADDED Requirements, Requirement: Active transition keeps pace with scrolling, Requirement: Centered card receives active treatment on touch devices, Requirement: Desktop hover behavior is preserved, Requirement: Single active card with no flicker between cards, Scenario: A card scrolls into the center band, Scenario: A card scrolls out of the center band, Scenario: Active state changes during a scroll (+3 more)
+
+### Community 45 - "Community 45"
+Cohesion: 0.18
+Nodes (10): Check for context, Ending Discovery, Guardrails, Handling Different Entry Points, OpenSpec Awareness, The Stance, What You Don't Have To Do, What You Might Do (+2 more)
+
+### Community 46 - "Community 46"
+Cohesion: 0.18
+Nodes (10): Check for context, Ending Discovery, Guardrails, Handling Different Entry Points, OpenSpec Awareness, The Stance, What You Don't Have To Do, What You Might Do (+2 more)
+
+### Community 47 - "Community 47"
+Cohesion: 0.18
+Nodes (10): ADDED Requirements, Requirement: Explore bar color changes are perceptibly smooth, Requirement: Explore bar contents remain legible in both modes, Requirement: Explore bar reacts to theme mode, Scenario: Chips are readable in light mode, Scenario: Initial render honors the persisted preference, Scenario: Site credit adapts to mode, Scenario: Smooth transition on toggle (+2 more)
+
+### Community 48 - "Community 48"
+Cohesion: 0.20
+Nodes (9): Check for context, Ending Discovery, Guardrails, OpenSpec Awareness, The Stance, What You Don't Have To Do, What You Might Do, When a change exists (+1 more)
+
+### Community 49 - "Community 49"
+Cohesion: 0.20
+Nodes (9): Check for context, Ending Discovery, Guardrails, OpenSpec Awareness, The Stance, What You Don't Have To Do, What You Might Do, When a change exists (+1 more)
+
+### Community 50 - "Community 50"
+Cohesion: 0.20
+Nodes (9): ADDED Requirements, country-page-data, Requirement: Country data has a typed contract, Requirement: Country pages share one data hook, Scenario: Backend field rename breaks the build, Scenario: Existing pages consolidated, Scenario: New country needs no fetch logic, Scenario: Thailand thumbnail mapping preserved (+1 more)
+
+### Community 51 - "Community 51"
+Cohesion: 0.20
+Nodes (9): 1. Formatting baseline (isolated commit), 2. Deletions & dead code, 3. Typed country-data boundary, 4. Localized errors, 5. Shared country page data hook, 6. Sections, hero, admin options, 7. Card keyboard access, 8. Verify & close out (+1 more)
+
+### Community 52 - "Community 52"
+Cohesion: 0.22
+Nodes (8): Dimensions (each scored 1-10), Hard rules, Process, Project rules to enforce, Report format, Saving the report, Scope, Scoring rubric
+
+### Community 53 - "Community 53"
+Cohesion: 0.22
+Nodes (8): Build for Production, Clone the Repository, ESLint Configuration, Getting Started with Your React + TypeScript + Vite App, Install Dependencies, Prerequisites, Preview the Production Build, Start the Development Server
+
+### Community 54 - "Community 54"
+Cohesion: 0.22
+Nodes (8): 1. Config (`config/country.config.ts`), 2. Fighter Images (`resources/fighters/`), 3. Data, 4. Register the Country, Folder Structure, How to Add a New Country, Quick Start, Step by Step
+
+### Community 55 - "Community 55"
+Cohesion: 0.25
+Nodes (7): Capabilities, Impact, Modified Capabilities, New Capabilities, Proposal: fix-audit-urgent-findings, What Changes, Why
+
+### Community 56 - "Community 56"
+Cohesion: 0.25
+Nodes (7): ADDED Requirements, card-keyboard-access, Requirement: Cards are keyboard-operable, Scenario: Activate a fight card by keyboard, Scenario: Activate a fighter card by keyboard, Scenario: Disabled fighter card is skipped, Scenario: Focus is visible
+
+### Community 57 - "Community 57"
+Cohesion: 0.25
+Nodes (7): ADDED Requirements, localized-errors, Requirement: User-visible errors resolve through i18n, Scenario: Country data fetch fails in English UI, Scenario: Event submit fails in Spanish UI, Scenario: Language switch retranslates a stored error, Scenario: Missing locale entry does not compile
+
+### Community 58 - "Community 58"
+Cohesion: 0.46
+Nodes (3): ErrorBoundary, ErrorBoundaryProps, ErrorBoundaryState
+
+### Community 59 - "Community 59"
+Cohesion: 0.36
+Nodes (6): EventForm(), useAppDispatch, useAppSelector, AppDispatch, RootState, store
+
+### Community 60 - "Community 60"
+Cohesion: 0.29
+Nodes (5): Architecture, Commands, Conventions, Environment, graphify
+
+### Community 61 - "Community 61"
+Cohesion: 0.29
+Nodes (6): Capabilities, Impact, Modified Capabilities, New Capabilities, What Changes, Why
+
+### Community 62 - "Community 62"
+Cohesion: 0.29
+Nodes (6): Capabilities, Impact, Modified Capabilities, New Capabilities, What Changes, Why
+
+### Community 63 - "Community 63"
+Cohesion: 0.29
+Nodes (6): Capabilities, Impact, Modified Capabilities, New Capabilities, What Changes, Why
+
+### Community 64 - "Community 64"
+Cohesion: 0.29
+Nodes (6): Capabilities, Impact, Modified Capabilities, New Capabilities, What Changes, Why
+
+### Community 65 - "Community 65"
+Cohesion: 0.38
+Nodes (4): componentCache, CountryRouter(), countryRegistry, CountryEntry
+
+### Community 66 - "Community 66"
+Cohesion: 0.38
+Nodes (5): CORNER_COLORS, CORNER_LABEL_KEYS, FighterSelector(), Corner, FighterSelectorProps
+
+### Community 67 - "Community 67"
+Cohesion: 0.33
+Nodes (5): Context, Decisions, Goals / Non-Goals, Migration Plan, Risks / Trade-offs
+
+### Community 68 - "Community 68"
+Cohesion: 0.33
+Nodes (5): ADDED Requirements, event-ingestion-countries, Requirement: Country options derive from the registry, Scenario: All registered countries selectable, Scenario: Future country appears automatically
+
+### Community 69 - "Community 69"
+Cohesion: 0.33
+Nodes (4): root, rootElement, router, EventIngestionPage()
+
+### Community 70 - "Community 70"
+Cohesion: 0.40
+Nodes (4): Context, Decisions, Goals / Non-Goals, Risks / Trade-offs
+
+### Community 71 - "Community 71"
+Cohesion: 0.40
+Nodes (4): Context, Decisions, Goals / Non-Goals, Risks / Trade-offs
+
+### Community 72 - "Community 72"
+Cohesion: 0.40
+Nodes (4): 1. Scroll-focus hook, 2. FightCard two-trigger active state, 3. FighterCard two-trigger active state, 4. Motion and verification
+
+### Community 73 - "Community 73"
+Cohesion: 0.40
+Nodes (4): 1. Wire the explore bar into theme mode, 2. Drive bar colors from the palette, 3. Make the site credit mode-aware, 4. Verify
+
+### Community 76 - "Community 76"
+Cohesion: 0.50
+Nodes (3): 1. i18n, 2. Attribution button, 3. Verification
+
+### Community 77 - "Community 77"
+Cohesion: 0.50
+Nodes (3): 1. Orientation lock in the fullscreen hook, 2. Keep the video covering the screen on rotation, 3. Verification
+
 ## Knowledge Gaps
-- **181 isolated node(s):** `name`, `private`, `version`, `type`, `dev` (+176 more)
+- **462 isolated node(s):** `name`, `private`, `version`, `type`, `dev` (+457 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **8 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **61 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `useTranslation()` connect `App Shell & Feedback Modal` to `Country Page & Theme Config`, `Error Boundaries & Fallbacks`, `Event Ingestion Form`, `Cinematic Hero & Fullscreen Hook`, `i18n Language Provider`, `Loading Spinner & Typewriter`?**
-  _High betweenness centrality (0.091) - this node is a cross-community bridge._
-- **Why does `CountryPage()` connect `App Shell & Feedback Modal` to `Country Page & Top Fights`?**
-  _High betweenness centrality (0.049) - this node is a cross-community bridge._
-- **Why does `useThemeMode()` connect `App Shell & Feedback Modal` to `Theme Palette & Mode`?**
-  _High betweenness centrality (0.041) - this node is a cross-community bridge._
-- **Are the 18 inferred relationships involving `useTranslation()` (e.g. with `ErrorFallback()` and `FeedbackModal()`) actually correct?**
-  _`useTranslation()` has 18 INFERRED edges - model-reasoned connections that need verification._
+- **Why does `useTranslation()` connect `Country Template Scaffold` to `Country Page & Theme Config`, `Error Boundaries & Fallbacks`, `Event Ingestion Form`, `Community 66`, `App Shell & Feedback Modal`, `Cinematic Hero & Fullscreen Hook`, `Community 69`, `Community 74`, `Community 75`, `i18n Language Provider`, `Community 59`?**
+  _High betweenness centrality (0.034) - this node is a cross-community bridge._
+- **Why does `useThemeMode()` connect `Country Template Scaffold` to `App Shell & Feedback Modal`, `Theme Palette & Mode`?**
+  _High betweenness centrality (0.014) - this node is a cross-community bridge._
+- **Why does `CountryPage()` connect `Country Template Scaffold` to `Country Page & Theme Config`?**
+  _High betweenness centrality (0.013) - this node is a cross-community bridge._
+- **Are the 22 inferred relationships involving `useTranslation()` (e.g. with `ErrorFallback()` and `FeedbackModal()`) actually correct?**
+  _`useTranslation()` has 22 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `name`, `private`, `version` to the rest of the system?**
-  _181 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _464 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Country Page & Theme Config` be split into smaller, more focused modules?**
-  _Cohesion score 0.06509803921568627 - nodes in this community are weakly interconnected._
-- **Should `Error Boundaries & Fallbacks` be split into smaller, more focused modules?**
-  _Cohesion score 0.08907563025210084 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05605499735589635 - nodes in this community are weakly interconnected._
+- **Should `Event Ingestion Form` be split into smaller, more focused modules?**
+  _Cohesion score 0.1010752688172043 - nodes in this community are weakly interconnected._
