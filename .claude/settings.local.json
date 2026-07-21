@@ -35,7 +35,8 @@
       "PowerShell(yarn format:check *)",
       "PowerShell(yarn *)",
       "PowerShell(graphify update *)",
-      "PowerShell(Get-ChildItem *)"
+      "PowerShell(Get-ChildItem *)",
+      "PowerShell(Get-ChildItem \"src/pages/countries/components/TopFighters/FighterCard\" -File | ForEach-Object { [PSCustomObject]@{ Lines = \\(Get-Content $_.FullName | Measure-Object -Line\\).Lines; File = $_.Name } } | Sort-Object Lines -Descending | Format-Table -AutoSize)"
     ]
   },
   "hooks": {
