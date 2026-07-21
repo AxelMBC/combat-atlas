@@ -1,17 +1,18 @@
-import { memo, useMemo } from 'react';
+﻿import { memo, useMemo } from 'react';
 import type { CardEventProps } from './FightCard.types';
 
 import useScrollFocus from '@/hooks/useScrollFocus';
 
 // MUI
 import { Box, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 // i18n
 import { useTranslation } from '@/i18n';
 
 import { resolveLocalizedTags } from '@/utils/resolveLocalizedField';
 import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
-import { useThemeMode } from '@/styles/theme';
+import { cardActiveSx, cardSurfaceSx } from '@/pages/countries/components/shared';
 
 const FALLBACK_THUMBNAIL = '/placeholders/no-video-placeholder.png';
 const YOUTUBE_MISSING_THUMBNAIL_WIDTH = 120;
@@ -26,14 +27,11 @@ const splitFightersFromTitle = (title: string): [string, string] | null => {
 
 const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
   const { t, language } = useTranslation();
-  const { palette } = useThemeMode();
+  const { surfaces } = useTheme().palette;
   const { ref, isFocused } = useScrollFocus<HTMLDivElement>();
 
   const activeStyles = {
-    borderColor: palette.borderHover,
-    '@media (prefers-reduced-motion: no-preference)': {
-      transform: 'translateY(-4px)',
-    },
+    ...cardActiveSx(surfaces),
     '& .fightCardImg': {
       filter: 'brightness(1)',
       '@media (prefers-reduced-motion: no-preference)': {
@@ -73,15 +71,13 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
         }
       }}
       sx={{
+        ...cardSurfaceSx(surfaces),
         cursor: 'pointer',
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
         height: '100%',
-        bgcolor: palette.surface,
-        border: `1px solid ${palette.border}`,
         borderRadius: '14px',
-        overflow: 'hidden',
         fontFamily: CLEAN_SANS,
         transition: 'transform 300ms ease, border-color 300ms ease',
         '&:focus-visible': {
@@ -106,7 +102,7 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
         sx={{
           position: 'relative',
           overflow: 'hidden',
-          bgcolor: palette.surfaceSunken,
+          bgcolor: surfaces.surfaceSunken,
           height: 180,
         }}
       >
@@ -184,7 +180,7 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
             fontWeight: 700,
             fontSize: '1.05rem',
             lineHeight: 1.3,
-            color: palette.textPrimary,
+            color: surfaces.textPrimary,
           }}
         >
           {fighters ? (
@@ -212,7 +208,7 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
             sx={{
               fontFamily: 'inherit',
               fontSize: '0.85rem',
-              color: palette.textSecondary,
+              color: surfaces.textSecondary,
             }}
           >
             {subtitle}
@@ -227,7 +223,7 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
             alignItems: 'center',
             justifyContent: 'flex-end',
             gap: 1,
-            borderTop: `1px solid ${palette.border}`,
+            borderTop: `1px solid ${surfaces.border}`,
           }}
         >
           <Typography

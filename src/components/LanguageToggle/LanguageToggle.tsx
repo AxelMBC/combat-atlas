@@ -1,10 +1,12 @@
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { alpha, useTheme } from '@mui/material/styles';
 
 import { useTranslation } from '@/i18n';
 import type { Language } from '@/i18n';
 
 const LanguageToggle = () => {
   const { language, setLanguage, t } = useTranslation();
+  const { surfaces } = useTheme().palette;
 
   const handleChange = (_event: React.MouseEvent<HTMLElement>, next: Language | null) => {
     if (next) setLanguage(next);
@@ -18,20 +20,20 @@ const LanguageToggle = () => {
       onChange={handleChange}
       aria-label={t('language.toggleAria')}
       sx={{
-        background: '#000',
-        border: '2px solid #000',
+        background: surfaces.textPrimary,
+        border: `2px solid ${surfaces.textPrimary}`,
         borderRadius: 0,
-        boxShadow: '3px 3px 0 #000',
-        transition: 'transform 120ms ease, box-shadow 120ms ease',
+        boxShadow: `3px 3px 0 ${surfaces.textPrimary}`,
+        transition: 'transform 120ms ease, box-shadow 120ms ease, background 120ms ease',
         '&:hover': {
           transform: 'translate(-1px, -1px)',
-          boxShadow: '4px 4px 0 #000',
+          boxShadow: `4px 4px 0 ${surfaces.textPrimary}`,
         },
         '& .MuiToggleButton-root + .MuiToggleButton-root': {
-          borderLeft: '1px solid rgba(255, 255, 255, 0.18)',
+          borderLeft: `1px solid ${alpha(surfaces.page, 0.18)}`,
         },
         '& .MuiToggleButton-root': {
-          color: 'rgba(255, 255, 255, 0.55)',
+          color: alpha(surfaces.page, 0.55),
           fontFamily: '"Anton", sans-serif',
           fontSize: '0.95rem',
           letterSpacing: 2,
@@ -41,16 +43,16 @@ const LanguageToggle = () => {
           py: 0.5,
           transition: 'background 120ms ease, color 120ms ease',
           '&:hover': {
-            color: '#fff',
-            background: 'rgba(255, 255, 255, 0.08)',
+            color: surfaces.page,
+            background: alpha(surfaces.page, 0.08),
           },
           '&.Mui-selected': {
-            color: '#000',
-            background: '#fff',
-            '&:hover': { background: '#fff', color: '#000' },
+            color: surfaces.textPrimary,
+            background: surfaces.page,
+            '&:hover': { background: surfaces.page, color: surfaces.textPrimary },
           },
           '&:focus-visible': {
-            outline: '2px solid #fff',
+            outline: `2px solid ${surfaces.page}`,
             outlineOffset: 2,
           },
         },

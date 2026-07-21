@@ -8,7 +8,7 @@ Ensure the world map's bottom country-explorer bar (`CountryChipBar`) is fully t
 
 ### Requirement: Explore bar reacts to theme mode
 
-The world map's bottom country-explorer bar (`CountryChipBar`) SHALL derive all of its colors from the active theme's `SurfacePalette`, obtained via `useThemeMode()`. It MUST NOT use hard-coded dark color values for its background, borders, prompt text, or chips.
+The world map's bottom country-explorer bar (`CountryChipBar`) SHALL derive all of its colors from the active theme's `SurfacePalette`, obtained from the MUI theme (`theme.palette.surfaces`). It MUST NOT use hard-coded dark color values for its background, borders, prompt text, or chips, and it MUST NOT read the palette from `useThemeMode()`.
 
 #### Scenario: Toggling to light mode on the landing page
 

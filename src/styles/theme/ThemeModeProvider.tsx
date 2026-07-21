@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { ThemeProvider } from '@mui/material/styles';
 
 import { ThemeModeContext } from './ThemeModeContext';
-import { DARK_PALETTE } from './darkPalette';
-import { LIGHT_PALETTE } from './lightPalette';
+import { createAppTheme, getSurfacePalette } from './createAppTheme';
 import type { ThemeMode, ThemeModeContextValue, ThemeModeProviderProps } from './themeMode.types';
 
 const STORAGE_KEY = 'preferredTheme';
@@ -31,20 +31,26 @@ const ThemeModeProvider = ({ children }: ThemeModeProviderProps) => {
     }
   }, [mode]);
 
+  useEffect(() => {
+    const { page, textPrimary } = getSurfacePalette(mode);
+    const rootStyle = document.documentElement.style;
+    rootStyle.setProperty('--surface-page', page);
+    rootStyle.setProperty('--surface-text-primary', textPrimary);
+  }, [mode]);
+
   const toggleMode = useCallback(() => {
     setMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
   }, []);
 
-  const value = useMemo<ThemeModeContextValue>(
-    () => ({
-      mode,
-      toggleMode,
-      palette: mode === 'dark' ? DARK_PALETTE : LIGHT_PALETTE,
-    }),
-    [mode, toggleMode],
-  );
+  const value = useMemo<ThemeModeContextValue>(() => ({ mode, toggleMode }), [mode, toggleMode]);
 
-  return <ThemeModeContext.Provider value={value}>{children}</ThemeModeContext.Provider>;
+  const theme = useMemo(() => createAppTheme(mode), [mode]);
+
+  return (
+    <ThemeModeContext.Provider value={value}>
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    </ThemeModeContext.Provider>
+  );
 };
 
 export default ThemeModeProvider;

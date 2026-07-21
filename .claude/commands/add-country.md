@@ -13,9 +13,10 @@ If either argument is missing or blank, stop and ask the user for the missing pi
 ## Inputs & naming
 
 From `$1` derive three forms and use them consistently:
-  - **Slug** — lowercase, spaces → hyphens (e.g. `south-korea`). Used for URL, registry key, `themeClassName`, `sessionStorage` key.
-  - **Pascal** — PascalCase, no spaces (e.g. `SouthKorea`). Used for folder name, component name, file names (`<Pascal>.tsx`).
-  - **Camel** — camelCase, no spaces (e.g. `southKorea`). Used for config/theme variable names (`<camel>Config`, `<camel>Theme`) and file names (`<camel>.config.ts`, `<camel>Theme.ts`).
+
+- **Slug** — lowercase, spaces → hyphens (e.g. `south-korea`). Used for URL, registry key, `themeClassName`, `sessionStorage` key.
+- **Pascal** — PascalCase, no spaces (e.g. `SouthKorea`). Used for folder name, component name, file names (`<Pascal>.tsx`).
+- **Camel** — camelCase, no spaces (e.g. `southKorea`). Used for config variable names (`<camel>Config`) and file names (`<camel>.config.ts`).
 
 If the slug already exists in `src/pages/countries/registry.ts`, stop and tell the user — do not overwrite.
 
@@ -37,6 +38,7 @@ The UI is Spanish — all on-page text must be in Spanish. Generate three titles
 - Thailand + Muay Thai → `"Armas Thailandesas"`, `"Leyendas Historicas"`, `"Las guerras de Thailandia"`
 
 For the new country, produce:
+
 - `headerTitle` — punchy tagline linking $2 to $1 (e.g. for Japan + Karate: `"Karate de Espíritu Japonés"`; for Brazil + Jiu-Jitsu: `"El Arte Suave de Brasil"`).
 - `topFightersTitle` — refers to the fighters/legends of that sport in that country.
 - `topEventsTitle` — refers to famous fights/tournaments of that sport in that country.
@@ -50,7 +52,7 @@ Create the folder `src/pages/<Pascal>/` with exactly these files. Follow the Mex
 ### `src/pages/<Pascal>/index.tsx`
 
 ```tsx
-export { default } from "./<Pascal>";
+export { default } from './<Pascal>';
 ```
 
 ### `src/pages/<Pascal>/config/<camel>.config.ts`
@@ -82,17 +84,6 @@ export const <camel>Config: CountryPageConfig = {
 };
 ```
 
-### `src/pages/<Pascal>/config/<camel>Theme.ts`
-
-Mirror `mexicoTheme.ts` exactly, swapping the import and variable names:
-
-```ts
-import { createCountryTheme } from "@/styles/theme/createCountryTheme";
-import { <camel>Config } from "./<camel>.config";
-
-export const theme = createCountryTheme(<camel>Config);
-```
-
 ### `src/pages/<Pascal>/<Pascal>.tsx`
 
 Mirror `Mexico.tsx` — backend-driven, no local fighter-image resolver (new countries rely on whatever the API returns). Use the slug (lowercase) in the `fetchCountry` calls:
@@ -107,8 +98,8 @@ import { resetCountryData, selectCountryState } from "@/store/country/countrySli
 
 import "@/styles/fonts/default.scss";
 
-import { theme } from "./config/<camel>Theme";
 import { <camel>Config } from "./config/<camel>.config";
+import { useCountryTheme } from "@/styles/theme";
 
 import CountryPage from "@/components/CountryPage";
 import ErrorFallback from "@/components/ErrorFallback";
@@ -116,6 +107,7 @@ import Spinner from "@/components/Spinner";
 
 const <Pascal> = () => {
   const dispatch = useAppDispatch();
+  const theme = useCountryTheme(<camel>Config);
   const { fighters, mainEvents, topEvents, loading, error } =
     useAppSelector(selectCountryState);
 
@@ -154,6 +146,7 @@ export default <Pascal>;
 ```
 
 Before writing these, verify the imports actually exist by reading:
+
 - `src/components/CountryPage/CountryPage.types.ts` — confirm `CountryPageConfig` shape still matches the fields above; if it's changed, adapt.
 - `src/store/country/countrySlice.ts` — confirm `resetCountryData` and `selectCountryState` are still exported.
 
@@ -182,6 +175,7 @@ Run `yarn tsc -b --noEmit` (and `yarn lint` if it's fast) to confirm the new fil
 ## Final report
 
 Tell the user:
+
 - the slug they can visit (`/<slug>`) and which martial art it represents,
 - the palette + fonts chosen with one-line rationale,
 - the three Spanish titles generated,

@@ -14,8 +14,8 @@ pages/YourCountry/
 ├── YourCountry.tsx          # Page component (useCountryPageData + CountryPage)
 ├── index.tsx                # Re-export
 ├── config/
-│   ├── country.config.ts    # CountryPageConfig (translation keys, colors)
-│   └── countryTheme.ts      # MUI theme derived from config
+│   └── country.config.ts    # CountryPageConfig (translation keys, colors)
+│                            # (the MUI theme is built at render time via useCountryTheme(config))
 ├── data/                    # Sample data shapes for reference only —
 │   └── ...                  # real data comes from the API via useCountryPageData
 └── resources/

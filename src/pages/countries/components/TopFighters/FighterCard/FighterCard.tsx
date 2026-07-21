@@ -1,21 +1,28 @@
-import { memo } from 'react';
+﻿import { memo } from 'react';
 import type { FighterCardProps } from './FighterCard.types';
 
 import useScrollFocus from '@/hooks/useScrollFocus';
 
 // MUI
 import { Box, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 // i18n
 import { useTranslation } from '@/i18n';
 
 // Utils
 import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
-import { useThemeMode } from '@/styles/theme';
+import {
+  cardActiveSx,
+  cardSurfaceSx,
+  overlayPillSx,
+  statLabelSx,
+  statValueSx,
+} from '@/pages/countries/components/shared';
 
 const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: FighterCardProps) => {
   const { t } = useTranslation();
-  const { palette } = useThemeMode();
+  const { surfaces } = useTheme().palette;
   const { ref, isFocused } = useScrollFocus<HTMLDivElement>();
   const disabled = remaining <= 0;
   const isFeature = variant === 'feature';
@@ -34,30 +41,16 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
     return period;
   };
 
-  const pillSx = {
-    px: 1.5,
-    py: 0.5,
-    borderRadius: '999px',
-    backdropFilter: 'blur(8px)',
-    fontFamily: CLEAN_SANS,
-    fontWeight: 600,
-    fontSize: '0.7rem',
-    letterSpacing: '0.08em',
-    textTransform: 'uppercase',
-    lineHeight: 1.4,
-    whiteSpace: 'nowrap',
-  } as const;
-
   const cornerBadge = (
     <Box
       sx={{
-        ...pillSx,
+        ...overlayPillSx,
         position: 'absolute',
         top: 12,
         right: 12,
         zIndex: 2,
-        bgcolor: disabled ? palette.pillScrim : 'primary.main',
-        color: disabled ? palette.textMuted : '#fff',
+        bgcolor: disabled ? surfaces.pillScrim : 'primary.main',
+        color: disabled ? surfaces.textMuted : 'common.white',
       }}
     >
       {disabled
@@ -69,13 +62,13 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
   const rankBadge = (
     <Box
       sx={{
-        ...pillSx,
+        ...overlayPillSx,
         position: 'absolute',
         bottom: 12,
         left: 12,
         zIndex: 2,
-        bgcolor: palette.pillScrim,
-        color: '#fff',
+        bgcolor: surfaces.pillScrim,
+        color: 'common.white',
         fontSize: isFeature ? '0.95rem' : '0.8rem',
         fontWeight: 700,
         letterSpacing: '0.12em',
@@ -94,7 +87,7 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
         width: size.width,
         height: size.height,
         flexShrink: 0,
-        bgcolor: palette.surfaceSunken,
+        bgcolor: surfaces.surfaceSunken,
         overflow: 'hidden',
       }}
     >
@@ -129,7 +122,7 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
       {disabled && (
         <Box
           sx={{
-            ...pillSx,
+            ...overlayPillSx,
             position: 'absolute',
             top: '50%',
             left: '50%',
@@ -138,7 +131,7 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
             px: 2.5,
             py: 0.75,
             bgcolor: 'rgba(0, 0, 0, 0.65)',
-            color: '#fff',
+            color: 'common.white',
             fontSize: isFeature ? '1rem' : '0.85rem',
             fontWeight: 700,
             letterSpacing: '0.15em',
@@ -160,15 +153,7 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
     },
   ];
 
-  const statLabelSx = {
-    fontFamily: CLEAN_SANS,
-    fontWeight: 600,
-    fontSize: '0.65rem',
-    letterSpacing: '0.12em',
-    textTransform: 'uppercase',
-    color: palette.textMuted,
-    lineHeight: 1.2,
-  } as const;
+  const labelSx = { ...statLabelSx(surfaces), lineHeight: 1.2 } as const;
 
   const statsBlock = (size: 'sm' | 'lg') => {
     if (size === 'sm') {
@@ -187,17 +172,14 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
               key={stat.label}
               sx={{ display: 'flex', flexDirection: 'column', gap: 0.4, minWidth: 0 }}
             >
-              <Typography component="span" sx={statLabelSx}>
+              <Typography component="span" sx={labelSx}>
                 {stat.label}
               </Typography>
               <Typography
                 component="span"
                 sx={{
-                  fontFamily: CLEAN_SANS,
-                  fontWeight: 600,
+                  ...statValueSx(surfaces),
                   fontSize: '1rem',
-                  lineHeight: 1.2,
-                  color: palette.textPrimary,
                   whiteSpace: 'nowrap',
                 }}
               >
@@ -221,17 +203,15 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
               gap: 2,
             }}
           >
-            <Typography component="span" sx={{ ...statLabelSx, fontSize: '0.75rem' }}>
+            <Typography component="span" sx={{ ...labelSx, fontSize: '0.75rem' }}>
               {stat.label}
             </Typography>
             <Typography
               component="span"
               sx={{
-                fontFamily: CLEAN_SANS,
+                ...statValueSx(surfaces),
                 fontWeight: 700,
                 fontSize: { xs: '1.15rem', md: '1.35rem' },
-                lineHeight: 1.2,
-                color: palette.textPrimary,
               }}
             >
               {stat.value}
@@ -251,7 +231,7 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
         fontFamily: CLEAN_SANS,
         fontWeight: 600,
         fontSize: '0.85rem',
-        color: disabled ? palette.textMuted : 'primary.light',
+        color: disabled ? surfaces.textMuted : 'primary.light',
       }}
     >
       {t('fighter.profileCta')}
@@ -262,10 +242,7 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
   );
 
   const activeStyles = {
-    borderColor: palette.borderHover,
-    '@media (prefers-reduced-motion: no-preference)': {
-      transform: 'translateY(-4px)',
-    },
+    ...cardActiveSx(surfaces),
     '& .fighter-portrait img': {
       filter: 'grayscale(0%) brightness(1)',
       '@media (prefers-reduced-motion: no-preference)': {
@@ -275,13 +252,10 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
   } as const;
 
   const cardSx = {
+    ...cardSurfaceSx(surfaces),
     cursor: disabled ? 'not-allowed' : 'pointer',
     opacity: disabled ? 0.55 : 1,
     height: '100%',
-    bgcolor: palette.surface,
-    border: `1px solid ${palette.border}`,
-    borderRadius: '16px',
-    overflow: 'hidden',
     fontFamily: CLEAN_SANS,
     transition: 'opacity 0.3s ease, transform 300ms ease, border-color 300ms ease',
     '&:focus-visible': disabled
@@ -351,7 +325,7 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
               fontWeight: 700,
               fontSize: { xs: '1.75rem', md: '2.25rem' },
               lineHeight: 1.1,
-              color: palette.textPrimary,
+              color: surfaces.textPrimary,
               wordBreak: 'normal',
               overflowWrap: 'break-word',
               hyphens: 'none',
@@ -364,7 +338,7 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
             sx={{
               fontFamily: CLEAN_SANS,
               fontSize: '0.95rem',
-              color: palette.textSecondary,
+              color: surfaces.textSecondary,
               mt: 1,
             }}
           >
@@ -375,7 +349,7 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
             sx={{
               mt: { xs: 3, md: 4 },
               pt: { xs: 2, md: 3 },
-              borderTop: `1px solid ${palette.border}`,
+              borderTop: `1px solid ${surfaces.border}`,
             }}
           >
             {statsBlock('lg')}
@@ -385,7 +359,7 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
             sx={{
               mt: 'auto',
               pt: 3,
-              borderTop: `1px solid ${palette.border}`,
+              borderTop: `1px solid ${surfaces.border}`,
               display: 'flex',
               justifyContent: 'flex-end',
             }}
@@ -424,7 +398,7 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
             fontWeight: 700,
             fontSize: '1.35rem',
             lineHeight: 1.2,
-            color: palette.textPrimary,
+            color: surfaces.textPrimary,
           }}
         >
           {boxer.name}
@@ -433,7 +407,7 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
           sx={{
             fontFamily: CLEAN_SANS,
             fontSize: '0.85rem',
-            color: palette.textSecondary,
+            color: surfaces.textSecondary,
           }}
         >
           {boxer.cityState || na}
@@ -443,7 +417,7 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
           sx={{
             mt: 1.5,
             pt: 1.5,
-            borderTop: `1px solid ${palette.border}`,
+            borderTop: `1px solid ${surfaces.border}`,
           }}
         >
           {statsBlock('sm')}
@@ -455,7 +429,7 @@ const FighterCard = memo(({ boxer, rank, remaining, variant, onSelect }: Fighter
             justifyContent: 'flex-end',
             mt: 'auto',
             pt: 1.5,
-            borderTop: `1px solid ${palette.border}`,
+            borderTop: `1px solid ${surfaces.border}`,
           }}
         >
           {profileCta}

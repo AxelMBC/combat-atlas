@@ -5,8 +5,8 @@ import { useTranslation } from '@/i18n';
 
 import { getFighterImage } from './resources/fighters';
 import { getTopFightImage } from './resources/fights';
-import { theme } from './config/thailandTheme';
 import { thailandConfig } from './config/thailand.config';
+import { useCountryTheme } from '@/styles/theme';
 
 import CountryPage from '@/pages/countries/components/CountryPage';
 import ErrorFallback from '@/components/ErrorFallback';
@@ -14,6 +14,7 @@ import Spinner from '@/components/Spinner';
 
 const Thailand = () => {
   const { t } = useTranslation();
+  const theme = useCountryTheme(thailandConfig);
   const { fightersList, mainEvents, topFightsList, loading, error, retry } = useCountryPageData(
     'thailand',
     { resolveFighterImage: getFighterImage, resolveTopFightThumbnail: getTopFightImage },

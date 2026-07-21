@@ -30,7 +30,12 @@
       "PowerShell(openspec instructions *)",
       "PowerShell(yarn format *)",
       "PowerShell(git *)",
-      "PowerShell(openspec validate *)"
+      "PowerShell(openspec validate *)",
+      "PowerShell(Set-Content *)",
+      "PowerShell(yarn format:check *)",
+      "PowerShell(yarn *)",
+      "PowerShell(graphify update *)",
+      "PowerShell(Get-ChildItem *)"
     ]
   },
   "hooks": {

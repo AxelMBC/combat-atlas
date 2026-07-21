@@ -13,7 +13,7 @@ $sizes: (
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: $bg;
+  background-color: var(--surface-page, #{$bg});
   gap: 20px;
   z-index: 9999;
 }
@@ -68,7 +68,7 @@ $sizes: (
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: $black;
+  color: var(--surface-text-primary, #{$black});
   user-select: none;
 }
 
@@ -82,7 +82,7 @@ $sizes: (
   font-weight: 700;
   letter-spacing: 0.04em;
   text-align: center;
-  color: $black;
+  color: var(--surface-text-primary, #{$black});
   user-select: none;
 }
 

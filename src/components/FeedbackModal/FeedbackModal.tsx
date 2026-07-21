@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Box, Button, Modal, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
@@ -36,6 +37,7 @@ const FeedbackModal = ({
   const [shouldRender, setShouldRender] = useState(open);
   const shouldReduceMotion = useReducedMotion();
   const { t } = useTranslation();
+  const { surfaces } = useTheme().palette;
   const resolvedConfirmLabel = confirmLabel ?? t('common.accept');
 
   useEffect(() => {
@@ -130,7 +132,7 @@ const FeedbackModal = ({
                   <Box
                     sx={{
                       position: 'relative',
-                      bgcolor: '#0b0b0f',
+                      bgcolor: surfaces.surface,
                       borderRadius: '10px',
                       px: { xs: 3, sm: 5 },
                       py: { xs: 4, sm: 5 },
@@ -170,7 +172,7 @@ const FeedbackModal = ({
                       id="feedback-modal-title"
                       variant="h5"
                       sx={{
-                        color: '#f5f5f7',
+                        color: surfaces.textPrimary,
                         fontWeight: 800,
                         letterSpacing: '0.5px',
                         textTransform: 'uppercase',
@@ -184,7 +186,7 @@ const FeedbackModal = ({
                       <Typography
                         id="feedback-modal-description"
                         sx={{
-                          color: 'rgba(245, 245, 247, 0.7)',
+                          color: surfaces.textSecondary,
                           mb: 3,
                           position: 'relative',
                         }}
@@ -199,7 +201,7 @@ const FeedbackModal = ({
                       sx={{
                         minWidth: 140,
                         bgcolor: styles.buttonBg,
-                        color: '#0b0b0f',
+                        color: 'common.black',
                         fontWeight: 700,
                         letterSpacing: '1px',
                         textTransform: 'uppercase',

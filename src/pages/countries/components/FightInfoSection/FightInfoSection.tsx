@@ -1,10 +1,11 @@
-import type { FightInfoSectionProps } from './FightInfoSection.types';
+﻿import type { FightInfoSectionProps } from './FightInfoSection.types';
 
 import { memo, useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 // MUI
 import { Box, Button, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 // Icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,7 +17,12 @@ import { useTranslation } from '@/i18n';
 // Utils
 import { resolveLocalizedString, resolveLocalizedTags } from '@/utils/resolveLocalizedField';
 import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
-import { useThemeMode } from '@/styles/theme';
+import {
+  cardSurfaceSx,
+  pillSx,
+  statLabelSx,
+  statValueSx,
+} from '@/pages/countries/components/shared';
 
 const MotionButton = motion.create(Button);
 
@@ -42,7 +48,7 @@ const splitFightersFromTitle = (title: string): [string, string] | null => {
 const FightInfoSection = memo(
   ({ loading, error, video, onAnotherFight, anotherFightDisabled }: FightInfoSectionProps) => {
     const { t, language } = useTranslation();
-    const { palette } = useThemeMode();
+    const { surfaces } = useTheme().palette;
 
     const tags = video ? resolveLocalizedTags(video.tags, language) : [];
     const description = video
@@ -73,7 +79,7 @@ const FightInfoSection = memo(
             fontWeight: 600,
             letterSpacing: '0.2em',
             textTransform: 'uppercase',
-            color: palette.textMuted,
+            color: surfaces.textMuted,
             mb: 1.5,
           }}
         >
@@ -86,7 +92,7 @@ const FightInfoSection = memo(
               fontFamily: 'inherit',
               textAlign: 'center',
               fontSize: '1.1rem',
-              color: palette.textSecondary,
+              color: surfaces.textSecondary,
               p: 4,
             }}
           >
@@ -101,7 +107,7 @@ const FightInfoSection = memo(
               textAlign: 'center',
               fontWeight: 600,
               fontSize: '1.1rem',
-              color: palette.textSecondary,
+              color: surfaces.textSecondary,
               p: 4,
             }}
           >
@@ -112,13 +118,10 @@ const FightInfoSection = memo(
         {!loading && !error && video && (
           <Box
             sx={{
+              ...cardSurfaceSx(surfaces),
               display: 'flex',
               flexDirection: { xs: 'column', md: 'row' },
               alignItems: 'stretch',
-              bgcolor: palette.surface,
-              border: `1px solid ${palette.border}`,
-              borderRadius: '16px',
-              overflow: 'hidden',
             }}
           >
             <Box
@@ -137,16 +140,9 @@ const FightInfoSection = memo(
                     <Box
                       key={`${tag}-${idx}`}
                       sx={{
-                        px: 1.5,
-                        py: 0.5,
-                        borderRadius: '999px',
-                        fontFamily: 'inherit',
-                        fontSize: '0.7rem',
-                        fontWeight: 600,
-                        letterSpacing: '0.08em',
-                        textTransform: 'uppercase',
-                        bgcolor: idx === 0 ? 'primary.main' : palette.chipBg,
-                        color: idx === 0 ? '#fff' : palette.chipText,
+                        ...pillSx,
+                        bgcolor: idx === 0 ? 'primary.main' : surfaces.chipBg,
+                        color: idx === 0 ? 'common.white' : surfaces.chipText,
                       }}
                     >
                       {tag}
@@ -162,7 +158,7 @@ const FightInfoSection = memo(
                   fontWeight: 700,
                   fontSize: { xs: '1.5rem', sm: '1.9rem', md: '2.3rem' },
                   lineHeight: 1.1,
-                  color: palette.textPrimary,
+                  color: surfaces.textPrimary,
                 }}
               >
                 {fighters ? (
@@ -181,7 +177,7 @@ const FightInfoSection = memo(
               <Typography
                 sx={{
                   fontFamily: 'inherit',
-                  color: palette.textSecondary,
+                  color: surfaces.textSecondary,
                   fontSize: '0.95rem',
                   lineHeight: 1.6,
                 }}
@@ -194,8 +190,8 @@ const FightInfoSection = memo(
               sx={{
                 flex: { xs: '1 1 auto', md: '0 0 auto' },
                 minWidth: { md: 340 },
-                borderTop: { xs: `1px solid ${palette.border}`, md: 'none' },
-                borderLeft: { xs: 'none', md: `1px solid ${palette.border}` },
+                borderTop: { xs: `1px solid ${surfaces.border}`, md: 'none' },
+                borderLeft: { xs: 'none', md: `1px solid ${surfaces.border}` },
                 p: { xs: 3, md: 4 },
                 display: 'flex',
                 flexDirection: 'column',
@@ -207,7 +203,7 @@ const FightInfoSection = memo(
                 sx={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(3, 1fr)',
-                  border: `1px solid ${palette.borderStrong}`,
+                  border: `1px solid ${surfaces.borderStrong}`,
                   borderRadius: '12px',
                   overflow: 'hidden',
                 }}
@@ -218,29 +214,12 @@ const FightInfoSection = memo(
                     sx={{
                       p: 1.5,
                       borderRight:
-                        idx < stats.length - 1 ? `1px solid ${palette.borderStrong}` : 'none',
+                        idx < stats.length - 1 ? `1px solid ${surfaces.borderStrong}` : 'none',
                     }}
                   >
+                    <Typography sx={statLabelSx(surfaces)}>{stat.label}</Typography>
                     <Typography
-                      sx={{
-                        fontFamily: 'inherit',
-                        fontSize: '0.65rem',
-                        fontWeight: 600,
-                        letterSpacing: '0.12em',
-                        textTransform: 'uppercase',
-                        color: palette.textMuted,
-                      }}
-                    >
-                      {stat.label}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontFamily: 'inherit',
-                        fontWeight: 600,
-                        fontSize: { xs: '1rem', md: '1.15rem' },
-                        color: palette.textPrimary,
-                        lineHeight: 1.2,
-                      }}
+                      sx={{ ...statValueSx(surfaces), fontSize: { xs: '1rem', md: '1.15rem' } }}
                     >
                       {stat.value}
                     </Typography>
@@ -260,7 +239,7 @@ const FightInfoSection = memo(
                   py: 1.25,
                   borderRadius: '999px',
                   bgcolor: 'primary.main',
-                  color: '#fff',
+                  color: 'common.white',
                   fontFamily: CLEAN_SANS,
                   fontWeight: 700,
                   fontSize: '1rem',
@@ -272,7 +251,7 @@ const FightInfoSection = memo(
                   '&:hover': { bgcolor: 'primary.dark' },
                   '&.Mui-disabled': {
                     bgcolor: 'primary.main',
-                    color: '#fff',
+                    color: 'common.white',
                     opacity: 0.45,
                   },
                 }}
@@ -303,7 +282,11 @@ const FightInfoSection = memo(
                   justifyContent: 'center',
                   gap: 1,
                   transition: 'transform 0.15s ease, background-color 0.15s ease, color 0.15s ease',
-                  '&:hover': { bgcolor: YOUTUBE_RED, color: '#fff', transform: 'scale(1.02)' },
+                  '&:hover': {
+                    bgcolor: YOUTUBE_RED,
+                    color: 'common.white',
+                    transform: 'scale(1.02)',
+                  },
                   '&:active': { transform: 'scale(0.98)' },
                   '&.Mui-focusVisible': { outline: `2px solid ${YOUTUBE_RED}`, outlineOffset: 2 },
                 }}

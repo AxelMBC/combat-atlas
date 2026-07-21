@@ -1,4 +1,5 @@
-import { Box, Chip, Typography } from '@mui/material';
+﻿import { Box, Chip, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 
 import { countryRegistry } from '@/pages/countries/registry';
@@ -9,7 +10,8 @@ import SiteCredit from '@/components/SiteCredit';
 const CountryChipBar = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { mode, palette } = useThemeMode();
+  const { mode } = useThemeMode();
+  const { surfaces } = useTheme().palette;
 
   return (
     <Box
@@ -20,8 +22,8 @@ const CountryChipBar = () => {
         width: '100%',
         px: { xs: 2, md: 4 },
         py: 1.5,
-        background: palette.surface,
-        borderTop: `1px solid ${palette.border}`,
+        background: surfaces.surface,
+        borderTop: `1px solid ${surfaces.border}`,
         display: 'flex',
         alignItems: 'center',
         gap: 2,
@@ -32,7 +34,7 @@ const CountryChipBar = () => {
       <Typography
         variant="body2"
         sx={{
-          color: palette.textSecondary,
+          color: surfaces.textSecondary,
           fontWeight: 500,
           whiteSpace: 'nowrap',
           flexShrink: 0,
@@ -55,18 +57,18 @@ const CountryChipBar = () => {
                   width: 10,
                   height: 10,
                   borderRadius: '50%',
-                  background: accentColor ?? palette.textMuted,
+                  background: accentColor ?? surfaces.textMuted,
                   ml: '8px !important',
                 }}
               />
             }
             sx={{
-              color: palette.chipText,
-              background: palette.chipBg,
-              border: `1px solid ${palette.border}`,
+              color: surfaces.chipText,
+              background: surfaces.chipBg,
+              border: `1px solid ${surfaces.border}`,
               fontWeight: 500,
               '&:hover': {
-                background: palette.borderStrong,
+                background: surfaces.borderStrong,
               },
             }}
           />

@@ -4,8 +4,8 @@ import { useCountryPageData } from '@/hooks/useCountryPageData';
 import { useTranslation } from '@/i18n';
 
 import { getFighterImage } from './resources';
-import { theme } from './config/unitedStatesTheme';
 import { unitedStatesConfig } from './config/unitedStates.config';
+import { useCountryTheme } from '@/styles/theme';
 
 import CountryPage from '@/pages/countries/components/CountryPage';
 import ErrorFallback from '@/components/ErrorFallback';
@@ -13,6 +13,7 @@ import Spinner from '@/components/Spinner';
 
 const UnitedStates = () => {
   const { t } = useTranslation();
+  const theme = useCountryTheme(unitedStatesConfig);
   const { fightersList, mainEvents, topFightsList, loading, error, retry } = useCountryPageData(
     'united-states',
     { resolveFighterImage: getFighterImage },

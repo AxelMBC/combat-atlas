@@ -7,7 +7,7 @@ import { useTranslation } from '@/i18n';
 // Wire an image resolver if you bundle fighter images locally:
 // import { getFighterImage } from './resources/fighters';
 import { countryConfig } from './config/country.config';
-import { theme } from './config/countryTheme';
+import { useCountryTheme } from '@/styles/theme';
 
 import CountryPage from '@/pages/countries/components/CountryPage';
 import ErrorFallback from '@/components/ErrorFallback';
@@ -15,6 +15,7 @@ import Spinner from '@/components/Spinner';
 
 const CountryTemplate = () => {
   const { t } = useTranslation();
+  const theme = useCountryTheme(countryConfig);
   const { fightersList, mainEvents, topFightsList, loading, error, retry } =
     useCountryPageData('your-country');
 
