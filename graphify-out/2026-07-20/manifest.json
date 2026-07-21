@@ -1,7 +1,7 @@
 {
   ".claude/settings.local.json": {
-    "mtime": 1784600449.3074796,
-    "ast_hash": "02426b108f650e9164cbefac21527822",
+    "mtime": 1784601424.549186,
+    "ast_hash": "8063cda11e7118cd24aa348d0ef8289a",
     "semantic_hash": ""
   },
   "eslint.config.js": {
@@ -459,19 +459,14 @@
     "ast_hash": "6ddc65892610b6904eec4c5161b7e86d",
     "semantic_hash": "6ddc65892610b6904eec4c5161b7e86d"
   },
-  "src/pages/countries/components/TopFighters/FighterCard/FighterCard.tsx": {
-    "mtime": 1784598455.0846238,
-    "ast_hash": "2708bd589e7a3d50698a6af4c6301e77",
-    "semantic_hash": ""
-  },
   "src/pages/countries/components/TopFighters/FighterCard/FighterCard.types.ts": {
     "mtime": 1780281446.520199,
     "ast_hash": "d97e29f98f1180644ca0c3e7ab4a8849",
     "semantic_hash": "d97e29f98f1180644ca0c3e7ab4a8849"
   },
   "src/pages/countries/components/TopFighters/FighterCard/index.tsx": {
-    "mtime": 1784522061.9355981,
-    "ast_hash": "2a87094b517badcabc12ecec403e75e4",
+    "mtime": 1784601288.0178263,
+    "ast_hash": "c1183c899d3a60eecde5dd86c77818e8",
     "semantic_hash": ""
   },
   "src/pages/countries/components/TopFighters/TopFighters.tsx": {
@@ -1320,13 +1315,78 @@
     "semantic_hash": ""
   },
   "openspec/changes/split-fighter-card/tasks.md": {
-    "mtime": 1784599658.6569836,
-    "ast_hash": "63892f844d2128442f560331aa9a0472",
+    "mtime": 1784601435.9106102,
+    "ast_hash": "380ec4a6630145f70aac4636fedd83c9",
     "semantic_hash": ""
   },
   "openspec/specs/theme-surface-tokens/spec.md": {
     "mtime": 1784600392.4099135,
     "ast_hash": "2bd1f2b1292f24838d59c33e15fefa11",
+    "semantic_hash": ""
+  },
+  "src/pages/countries/components/TopFighters/FighterCard/FighterCardCompact.tsx": {
+    "mtime": 1784601285.5093536,
+    "ast_hash": "439cc7a84591352a53fa72794c64394f",
+    "semantic_hash": ""
+  },
+  "src/pages/countries/components/TopFighters/FighterCard/FighterCardFeature.tsx": {
+    "mtime": 1784601277.0096147,
+    "ast_hash": "f5cf957d68b476ba17fabcabb4326af5",
+    "semantic_hash": ""
+  },
+  "src/pages/countries/components/TopFighters/FighterCard/FighterCardShell.tsx": {
+    "mtime": 1784601229.8298035,
+    "ast_hash": "cfe44fec114949b1835c35a89cedae57",
+    "semantic_hash": ""
+  },
+  "src/pages/countries/components/TopFighters/FighterCard/FighterCardShell.types.ts": {
+    "mtime": 1784601220.7912576,
+    "ast_hash": "f7165ff01f609a41def83f4379c9d4f1",
+    "semantic_hash": ""
+  },
+  "src/pages/countries/components/TopFighters/FighterCard/FighterPortrait.tsx": {
+    "mtime": 1784601243.8000455,
+    "ast_hash": "60a69ae3677301904ef701013d33170e",
+    "semantic_hash": ""
+  },
+  "src/pages/countries/components/TopFighters/FighterCard/FighterPortrait.types.ts": {
+    "mtime": 1784601232.2555375,
+    "ast_hash": "a2dafe1e07604065bd210ac8fa6f9359",
+    "semantic_hash": ""
+  },
+  "src/pages/countries/components/TopFighters/FighterCard/FighterProfileCta.tsx": {
+    "mtime": 1784601263.5603428,
+    "ast_hash": "f7ab68fb1bf07fff324730d9ffcbc33a",
+    "semantic_hash": ""
+  },
+  "src/pages/countries/components/TopFighters/FighterCard/FighterProfileCta.types.ts": {
+    "mtime": 1784601256.6639025,
+    "ast_hash": "f7e2d576ab341d149a9b13ae9892817e",
+    "semantic_hash": ""
+  },
+  "src/pages/countries/components/TopFighters/FighterCard/FighterStats.tsx": {
+    "mtime": 1784601255.230481,
+    "ast_hash": "ccb4ff1537e42b405d0f737b5646f911",
+    "semantic_hash": ""
+  },
+  "src/pages/countries/components/TopFighters/FighterCard/FighterStats.types.ts": {
+    "mtime": 1784601245.2895086,
+    "ast_hash": "3ee2fa8a8d0296a26e42458a249fd0ed",
+    "semantic_hash": ""
+  },
+  "src/pages/countries/components/TopFighters/FighterCard/formatActivePeriod.test.ts": {
+    "mtime": 1784601212.1970613,
+    "ast_hash": "d44c89c775c7ebbee36ab40fe0cd7dcd",
+    "semantic_hash": ""
+  },
+  "src/pages/countries/components/TopFighters/FighterCard/formatActivePeriod.ts": {
+    "mtime": 1784601208.7987509,
+    "ast_hash": "c9acabdb7fcc69a9d665b0168729730d",
+    "semantic_hash": ""
+  },
+  "src/pages/countries/components/TopFighters/FighterCard/formatActivePeriod.types.ts": {
+    "mtime": 1784601206.3221676,
+    "ast_hash": "f78e6421c010f8d5fd6d68965d38fb27",
     "semantic_hash": ""
   }
 }

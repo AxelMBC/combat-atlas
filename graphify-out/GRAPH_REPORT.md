@@ -1,16 +1,16 @@
 # Graph Report - Frontend  (2026-07-20)
 
 ## Corpus Check
-- 244 files · ~109,832 words
+- 245 files · ~110,339 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1151 nodes · 1361 edges · 163 communities (105 shown, 58 thin omitted)
-- Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 76 edges (avg confidence: 0.83)
+- 1208 nodes · 1398 edges · 174 communities (113 shown, 61 thin omitted)
+- Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 67 edges (avg confidence: 0.84)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `fcfeb030`
+- Built from commit: `303abd0d`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -153,12 +153,23 @@
 - [[_COMMUNITY_Community 157|Community 157]]
 - [[_COMMUNITY_Community 158|Community 158]]
 - [[_COMMUNITY_Community 159|Community 159]]
+- [[_COMMUNITY_Community 160|Community 160]]
 - [[_COMMUNITY_Community 161|Community 161]]
 - [[_COMMUNITY_Community 162|Community 162]]
+- [[_COMMUNITY_Community 163|Community 163]]
 - [[_COMMUNITY_Community 164|Community 164]]
+- [[_COMMUNITY_Community 165|Community 165]]
+- [[_COMMUNITY_Community 166|Community 166]]
+- [[_COMMUNITY_Community 167|Community 167]]
+- [[_COMMUNITY_Community 168|Community 168]]
+- [[_COMMUNITY_Community 169|Community 169]]
+- [[_COMMUNITY_Community 170|Community 170]]
+- [[_COMMUNITY_Community 171|Community 171]]
+- [[_COMMUNITY_Community 172|Community 172]]
+- [[_COMMUNITY_Community 173|Community 173]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `useTranslation()` - 28 edges
+1. `useTranslation()` - 23 edges
 2. `compilerOptions` - 17 edges
 3. `compilerOptions` - 11 edges
 4. `SPEC: Cinematic Hero for Country Pages` - 10 edges
@@ -176,10 +187,10 @@
   src/components/ErrorFallback/ErrorFallback.tsx → src/i18n/useTranslation.ts
 - `FeedbackModal()` --calls--> `useTranslation()`  [INFERRED]
   src/components/FeedbackModal/FeedbackModal.tsx → src/i18n/useTranslation.ts
-- `FighterPortrait()` --calls--> `useTranslation()`  [INFERRED]
-  src/pages/countries/components/TopFighters/FighterCard/FighterPortrait.tsx → src/i18n/useTranslation.ts
-- `FighterProfileCta()` --calls--> `useTranslation()`  [INFERRED]
-  src/pages/countries/components/TopFighters/FighterCard/FighterProfileCta.tsx → src/i18n/useTranslation.ts
+- `FighterSelector()` --calls--> `useTranslation()`  [INFERRED]
+  src/pages/EventIngestion/components/FighterSelector/FighterSelector.tsx → src/i18n/useTranslation.ts
+- `TagsInput()` --calls--> `useTranslation()`  [INFERRED]
+  src/pages/EventIngestion/components/TagsInput/TagsInput.tsx → src/i18n/useTranslation.ts
 
 ## Import Cycles
 - None detected.
@@ -190,19 +201,19 @@
 - **Hero Native Fullscreen OpenSpec Change** — openspec_changes_archive_2026_06_26_hero_native_fullscreen_proposal_hero_fullscreen, openspec_changes_archive_2026_06_26_hero_native_fullscreen_design_hero_fullscreen, openspec_changes_archive_2026_06_26_hero_native_fullscreen_specs_hero_fullscreen_spec_hero_fullscreen, openspec_changes_archive_2026_06_26_hero_native_fullscreen_tasks_hero_fullscreen [EXTRACTED 1.00]
 - **Mobile Scroll-Focus Cards OpenSpec Change** — openspec_changes_archive_2026_06_26_mobile_scroll_focus_cards_proposal_scroll_focus_cards, openspec_changes_archive_2026_06_26_mobile_scroll_focus_cards_design_scroll_focus_cards, openspec_changes_archive_2026_06_26_mobile_scroll_focus_cards_specs_scroll_focus_cards_spec_scroll_focus_cards, openspec_changes_archive_2026_06_26_mobile_scroll_focus_cards_tasks_scroll_focus_cards [EXTRACTED 1.00]
 
-## Communities (163 total, 58 thin omitted)
+## Communities (174 total, 61 thin omitted)
 
 ### Community 0 - "Country Page & Theme Config"
 Cohesion: 0.26
 Nodes (7): Spinner(), SpinnerProps, SpinnerSize, EMPTY_PHRASES, TAGLINE_KEYS, UseTypewriterOptions, useTypewriter()
 
 ### Community 1 - "Error Boundaries & Fallbacks"
-Cohesion: 0.05
-Nodes (28): ErrorBoundary, ErrorBoundaryProps, ErrorBoundaryState, LanguageToggle(), MapFallback(), MapFallbackProps, NotFound(), NotFoundProps (+20 more)
+Cohesion: 0.06
+Nodes (25): ErrorBoundary, ErrorBoundaryProps, ErrorBoundaryState, LanguageToggle(), MapFallback(), MapFallbackProps, NotFound(), NotFoundProps (+17 more)
 
 ### Community 2 - "Event Ingestion Form"
-Cohesion: 0.08
-Nodes (20): FeedbackModal(), FeedbackModalProps, FeedbackVariant, VariantStyles, VARIANT_STYLES, FieldError, FieldErrors, CORNER_COLORS (+12 more)
+Cohesion: 0.10
+Nodes (15): FeedbackModal(), FeedbackModalProps, FeedbackVariant, VariantStyles, VARIANT_STYLES, FieldError, FieldErrors, FormSectionProps (+7 more)
 
 ### Community 3 - "Runtime Dependencies"
 Cohesion: 0.12
@@ -221,8 +232,8 @@ Cohesion: 0.16
 Nodes (8): eventIngestionSlice, initialForm, initialState, EventFormData, EventFormFieldUpdate, EventIngestionState, fetchFightersByCountry, submitEvent
 
 ### Community 8 - "Country Redux Slice"
-Cohesion: 0.05
-Nodes (19): CountryStats, getCountryStats(), FightInfoSection, MotionButton, FightInfoSectionProps, renderSection(), renderSection(), TopFights (+11 more)
+Cohesion: 0.16
+Nodes (8): mainEventFights, topEvents, FightDecision, FightDivision, FightVenue, LocalizedString, LocalizedTags, shuffleArray()
 
 ### Community 10 - "Dev & Test Dependencies"
 Cohesion: 0.10
@@ -254,7 +265,7 @@ Nodes (16): Context, D1 — `CountryDataResponse` declared in `src/types/country
 
 ### Community 17 - "Country Template Scaffold"
 Cohesion: 0.25
-Nodes (9): useCountryPageData(), EventForm(), Mexico(), Thailand(), UnitedStates(), useAppDispatch, useAppSelector, AppDispatch (+1 more)
+Nodes (9): useCountryPageData(), EventForm(), Mexico(), Thailand(), useAppDispatch, useAppSelector, AppDispatch, RootState (+1 more)
 
 ### Community 18 - "Node TypeScript Config"
 Cohesion: 0.15
@@ -266,7 +277,7 @@ Nodes (15): OpenSpec Config (spec-driven), Purpose, Requirement: Accessible, rec
 
 ### Community 20 - "Fighter Card & Scroll Focus"
 Cohesion: 0.06
-Nodes (31): UseScrollFocusOptions, UseScrollFocusResult, useScrollFocus(), cardActiveSx(), cardSurfaceSx(), overlayPillSx, pillSx, statLabelSx() (+23 more)
+Nodes (24): cardActiveSx(), cardSurfaceSx(), overlayPillSx, pillSx, statLabelSx(), statValueSx(), FighterCardShell(), FighterCardShellProps (+16 more)
 
 ### Community 21 - "Thailand Fighter Portraits"
 Cohesion: 0.25
@@ -339,6 +350,10 @@ Nodes (9): Check for context, Ending Discovery, Guardrails, OpenSpec Awareness, 
 ### Community 49 - "Community 49"
 Cohesion: 0.20
 Nodes (9): Check for context, Ending Discovery, Guardrails, OpenSpec Awareness, The Stance, What You Don't Have To Do, What You Might Do, When a change exists (+1 more)
+
+### Community 50 - "Community 50"
+Cohesion: 0.20
+Nodes (4): api, AxiosErrorShape, RejectionHandler, { requestMock, getOnRejected, setOnRejected }
 
 ### Community 51 - "Community 51"
 Cohesion: 0.14
@@ -485,8 +500,8 @@ Cohesion: 0.25
 Nodes (7): ADDED Requirements, localized-errors, Requirement: User-visible errors resolve through i18n, Scenario: Country data fetch fails in English UI, Scenario: Event submit fails in Spanish UI, Scenario: Language switch retranslates a stored error, Scenario: Missing locale entry does not compile
 
 ### Community 152 - "Community 152"
-Cohesion: 0.40
-Nodes (3): AxiosErrorShape, RejectionHandler, { requestMock, getOnRejected, setOnRejected }
+Cohesion: 0.12
+Nodes (15): fighter-card-composition, Purpose, Requirement: Active-period formatting is a pure, tested util, Requirement: Fighter card interaction behavior is preserved, Requirement: Fighter card is composed from shared subcomponents, Requirement: Fighter card preserves its public API and variant dispatch, Requirements, Scenario: Callers and their tests are untouched (+7 more)
 
 ### Community 153 - "Community 153"
 Cohesion: 0.29
@@ -501,8 +516,8 @@ Cohesion: 0.43
 Nodes (6): makeEvent(), makeFighter(), makePayload(), makeStore(), mockedGetCountryData, renderCountryHook()
 
 ### Community 156 - "Community 156"
-Cohesion: 0.43
-Nodes (4): topFightersData, CountryDataResponse, Fighter, MainEvent
+Cohesion: 0.27
+Nodes (6): FighterCardProps, FighterCardVariant, topFightersData, CountryDataResponse, Fighter, MainEvent
 
 ### Community 157 - "Community 157"
 Cohesion: 0.33
@@ -512,6 +527,10 @@ Nodes (5): ADDED Requirements, event-ingestion-countries, Requirement: Country o
 Cohesion: 0.33
 Nodes (5): name, packageManager, private, type, version
 
+### Community 160 - "Community 160"
+Cohesion: 0.13
+Nodes (14): ADDED Requirements, fighter-card-composition — Delta Spec, Requirement: Active-period formatting is a pure, tested util, Requirement: Fighter card interaction behavior is preserved, Requirement: Fighter card is composed from shared subcomponents, Requirement: Fighter card preserves its public API and variant dispatch, Scenario: Callers and their tests are untouched, Scenario: Compact variant renders the compact layout (+6 more)
+
 ### Community 161 - "Community 161"
 Cohesion: 0.38
 Nodes (3): mexicoConfig, fighterImages, getFighterImage()
@@ -520,29 +539,53 @@ Nodes (3): mexicoConfig, fighterImages, getFighterImage()
 Cohesion: 0.27
 Nodes (5): thailandConfig, fighterImages, getFighterImage(), getTopFightImage(), topFightsImages
 
+### Community 163 - "Community 163"
+Cohesion: 0.15
+Nodes (12): Context, D1 — `index.tsx` becomes the variant dispatcher, D2 — `FighterCardShell` owns interaction + card chrome, D3 — `FighterPortrait` owns image + badges, D4 — `FighterStats` owns the stat grid/list + consumes the util, D5 — `formatActivePeriod` is a pure util with a test, D6 — Static `sx` to module scope; reuse `shared/`, Decisions (+4 more)
+
 ### Community 164 - "Community 164"
+Cohesion: 0.32
+Nodes (4): unitedStatesConfig, fighterImages, getFighterImage(), UnitedStates()
+
+### Community 165 - "Community 165"
+Cohesion: 0.25
+Nodes (7): Capabilities, Impact, Modified Capabilities, New Capabilities, split-fighter-card — Proposal, What Changes, Why
+
+### Community 166 - "Community 166"
+Cohesion: 0.32
+Nodes (3): CountryStats, getCountryStats(), resolveLocalizedTags()
+
+### Community 167 - "Community 167"
+Cohesion: 0.29
+Nodes (3): FightInfoSection, MotionButton, FightInfoSectionProps
+
+### Community 170 - "Community 170"
 Cohesion: 0.38
-Nodes (3): unitedStatesConfig, fighterImages, getFighterImage()
+Nodes (5): CORNER_COLORS, CORNER_LABEL_KEYS, FighterSelector(), Corner, FighterSelectorProps
+
+### Community 172 - "Community 172"
+Cohesion: 0.40
+Nodes (4): 1. Pure util (D5), 2. Shared subcomponents (D2–D4), 3. Variant components + dispatcher (D1, D6), 4. Verification
 
 ## Knowledge Gaps
-- **561 isolated node(s):** `name`, `private`, `version`, `type`, `dev` (+556 more)
+- **599 isolated node(s):** `Context`, `Goals / Non-Goals`, `D1 — `index.tsx` becomes the variant dispatcher`, `D2 — `FighterCardShell` owns interaction + card chrome`, `D3 — `FighterPortrait` owns image + badges` (+594 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **58 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **61 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `useTranslation()` connect `Error Boundaries & Fallbacks` to `Country Page & Theme Config`, `Event Ingestion Form`, `Cinematic Hero & Fullscreen Hook`, `Community 40`, `i18n Language Provider`, `Country Template Scaffold`, `Fighter Card & Scroll Focus`, `Community 151`?**
-  _High betweenness centrality (0.040) - this node is a cross-community bridge._
+- **Why does `useTranslation()` connect `Error Boundaries & Fallbacks` to `Country Page & Theme Config`, `Event Ingestion Form`, `Community 164`, `Cinematic Hero & Fullscreen Hook`, `Community 40`, `Community 170`, `i18n Language Provider`, `Country Template Scaffold`, `Community 151`?**
+  _High betweenness centrality (0.023) - this node is a cross-community bridge._
 - **Why does `EventForm()` connect `Country Template Scaffold` to `Error Boundaries & Fallbacks`, `Event Ingestion Form`?**
-  _High betweenness centrality (0.005) - this node is a cross-community bridge._
-- **Why does `useMainVideoQueue()` connect `Error Boundaries & Fallbacks` to `Country Redux Slice`?**
-  _High betweenness centrality (0.005) - this node is a cross-community bridge._
-- **Are the 27 inferred relationships involving `useTranslation()` (e.g. with `ErrorFallback()` and `FeedbackModal()`) actually correct?**
-  _`useTranslation()` has 27 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `name`, `private`, `version` to the rest of the system?**
-  _563 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _High betweenness centrality (0.004) - this node is a cross-community bridge._
+- **Why does `ErrorBoundary` connect `Error Boundaries & Fallbacks` to `Fighter Card & Scroll Focus`?**
+  _High betweenness centrality (0.004) - this node is a cross-community bridge._
+- **Are the 22 inferred relationships involving `useTranslation()` (e.g. with `ErrorFallback()` and `FeedbackModal()`) actually correct?**
+  _`useTranslation()` has 22 INFERRED edges - model-reasoned connections that need verification._
+- **What connects `Context`, `Goals / Non-Goals`, `D1 — `index.tsx` becomes the variant dispatcher` to the rest of the system?**
+  _601 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Error Boundaries & Fallbacks` be split into smaller, more focused modules?**
-  _Cohesion score 0.05454545454545454 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05878084179970972 - nodes in this community are weakly interconnected._
 - **Should `Event Ingestion Form` be split into smaller, more focused modules?**
-  _Cohesion score 0.07965860597439545 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.1010752688172043 - nodes in this community are weakly interconnected._
