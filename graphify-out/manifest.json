@@ -1,7 +1,7 @@
 {
   ".claude/settings.local.json": {
-    "mtime": 1784598867.0134344,
-    "ast_hash": "03fc7d62bc3c8554de5417cadf19d9de",
+    "mtime": 1784600449.3074796,
+    "ast_hash": "02426b108f650e9164cbefac21527822",
     "semantic_hash": ""
   },
   "eslint.config.js": {
@@ -1170,8 +1170,8 @@
     "semantic_hash": ""
   },
   "openspec/specs/explore-bar-theming/spec.md": {
-    "mtime": 1784518567.296523,
-    "ast_hash": "38c0bf30e3aec4ef0d634ce81193ebce",
+    "mtime": 1784600394.9965024,
+    "ast_hash": "6c17426001331219635128c89e4d7a44",
     "semantic_hash": ""
   },
   "src/pages/countries/components/shared/index.ts": {
@@ -1244,36 +1244,6 @@
     "ast_hash": "3b4e827b16fe34510d86411ae18d9247",
     "semantic_hash": ""
   },
-  "openspec/changes/unify-theming/.openspec.yaml": {
-    "mtime": 1784525175.2678154,
-    "ast_hash": "6eccdabb7795b569f5dbb3e125eca030",
-    "semantic_hash": ""
-  },
-  "openspec/changes/unify-theming/design.md": {
-    "mtime": 1784525605.6966188,
-    "ast_hash": "f96d7c2a20f1c8dfbe0991fe74f002f8",
-    "semantic_hash": ""
-  },
-  "openspec/changes/unify-theming/proposal.md": {
-    "mtime": 1784525540.9502542,
-    "ast_hash": "e504a8461f08f8b62e7ab3db27df6842",
-    "semantic_hash": ""
-  },
-  "openspec/changes/unify-theming/specs/explore-bar-theming/spec.md": {
-    "mtime": 1784525633.6477163,
-    "ast_hash": "0f6e11c1cd9c9aee7e061ebd22ff5c80",
-    "semantic_hash": ""
-  },
-  "openspec/changes/unify-theming/specs/theme-surface-tokens/spec.md": {
-    "mtime": 1784525629.2206051,
-    "ast_hash": "fb84dd665a441bee11bdbe61a73c6b4a",
-    "semantic_hash": ""
-  },
-  "openspec/changes/unify-theming/tasks.md": {
-    "mtime": 1784598569.9394262,
-    "ast_hash": "9b960a133417a954dc380fd5bbebfe7d",
-    "semantic_hash": ""
-  },
   "openspec/specs/card-keyboard-access/spec.md": {
     "mtime": 1784524326.3482518,
     "ast_hash": "18874245d01dbce15f2fbcb2e5e2e0dc",
@@ -1297,6 +1267,66 @@
   "openspec/specs/localized-errors/spec.md": {
     "mtime": 1784524350.7092588,
     "ast_hash": "f1efc8602a58098d0f890dc8e2b1aca3",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-20-unify-theming/.openspec.yaml": {
+    "mtime": 1784525175.2678154,
+    "ast_hash": "6eccdabb7795b569f5dbb3e125eca030",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-20-unify-theming/design.md": {
+    "mtime": 1784525605.6966188,
+    "ast_hash": "f96d7c2a20f1c8dfbe0991fe74f002f8",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-20-unify-theming/proposal.md": {
+    "mtime": 1784525540.9502542,
+    "ast_hash": "e504a8461f08f8b62e7ab3db27df6842",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-20-unify-theming/specs/explore-bar-theming/spec.md": {
+    "mtime": 1784525633.6477163,
+    "ast_hash": "0f6e11c1cd9c9aee7e061ebd22ff5c80",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-20-unify-theming/specs/theme-surface-tokens/spec.md": {
+    "mtime": 1784525629.2206051,
+    "ast_hash": "fb84dd665a441bee11bdbe61a73c6b4a",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-20-unify-theming/tasks.md": {
+    "mtime": 1784598922.8478065,
+    "ast_hash": "57818846b66dee1c0ef470a500d3261c",
+    "semantic_hash": ""
+  },
+  "openspec/changes/split-fighter-card/.openspec.yaml": {
+    "mtime": 1784599513.1344666,
+    "ast_hash": "2095a54390accb548fae2548dcee20bd",
+    "semantic_hash": ""
+  },
+  "openspec/changes/split-fighter-card/design.md": {
+    "mtime": 1784599625.756626,
+    "ast_hash": "ca6b958916de93e00315ba632a207ff0",
+    "semantic_hash": ""
+  },
+  "openspec/changes/split-fighter-card/proposal.md": {
+    "mtime": 1784599584.1593707,
+    "ast_hash": "6e1be8b8cb7442d389012a344b174866",
+    "semantic_hash": ""
+  },
+  "openspec/changes/split-fighter-card/specs/fighter-card-composition/spec.md": {
+    "mtime": 1784599642.9702737,
+    "ast_hash": "43cc6712980da2b2f198e2804c3bc54e",
+    "semantic_hash": ""
+  },
+  "openspec/changes/split-fighter-card/tasks.md": {
+    "mtime": 1784599658.6569836,
+    "ast_hash": "63892f844d2128442f560331aa9a0472",
+    "semantic_hash": ""
+  },
+  "openspec/specs/theme-surface-tokens/spec.md": {
+    "mtime": 1784600392.4099135,
+    "ast_hash": "2bd1f2b1292f24838d59c33e15fefa11",
     "semantic_hash": ""
   }
 }
