@@ -1,0 +1,14 @@
+{
+    "base": "dev",
+    "protected": ["dev", "master"],
+    "prefixes": { "feature": "feat/", "fix": "fix/" },
+    "checks": [
+        { "name": "typecheck", "run": "npx tsc -b --noEmit" },
+        { "name": "lint", "run": "yarn lint" },
+        { "name": "format", "run": "yarn format:check" },
+        { "name": "tests", "run": "yarn test:run" }
+    ],
+    "format": "yarn format",
+    "specsDir": "openspec",
+    "claudeCommits": false
+}
