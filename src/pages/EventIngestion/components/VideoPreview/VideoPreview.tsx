@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { Box, Typography } from "@mui/material";
-import { YT_ID_REGEX } from "@/pages/EventIngestion/eventIngestion.config";
-import { useTranslation } from "@/i18n";
-import type { VideoPreviewProps } from "./VideoPreview.types";
+import { useEffect, useState } from 'react';
+import { Box, Typography } from '@mui/material';
+import { YT_ID_REGEX } from '@/pages/EventIngestion/eventIngestion.config';
+import { useTranslation } from '@/i18n';
+import type { VideoPreviewProps } from './VideoPreview.types';
 
 const VideoPreview = ({ idYt, startTime }: VideoPreviewProps) => {
   const { t } = useTranslation();
@@ -20,14 +20,14 @@ const VideoPreview = ({ idYt, startTime }: VideoPreviewProps) => {
   return (
     <Box
       sx={{
-        width: "100%",
-        aspectRatio: "16/9",
-        bgcolor: "grey.900",
+        width: '100%',
+        aspectRatio: '16/9',
+        bgcolor: 'grey.900',
         borderRadius: 1,
-        overflow: "hidden",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
       {isValid ? (
@@ -38,13 +38,11 @@ const VideoPreview = ({ idYt, startTime }: VideoPreviewProps) => {
           title="YouTube video preview"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
-          style={{ border: "none" }}
+          style={{ border: 'none' }}
         />
       ) : (
         <Typography color="grey.500" variant="body2">
-          {debouncedId.length > 0
-            ? t("videoPreview.invalidId")
-            : t("videoPreview.promptForId")}
+          {debouncedId.length > 0 ? t('videoPreview.invalidId') : t('videoPreview.promptForId')}
         </Typography>
       )}
     </Box>

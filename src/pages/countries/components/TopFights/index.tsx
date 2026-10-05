@@ -1,1 +1,1 @@
-export { default } from "./TopFights";
+export { default } from './TopFights';

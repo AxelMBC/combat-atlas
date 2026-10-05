@@ -1,7 +1,7 @@
-import axios, { type AxiosError, type InternalAxiosRequestConfig } from "axios";
+import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:3000/api",
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000/api',
   timeout: 10000,
 });
 
@@ -24,10 +24,9 @@ api.interceptors.response.use(
     }
 
     const message =
-      (error.response?.data as { message?: string } | undefined)?.message ??
-      error.message;
+      (error.response?.data as { message?: string } | undefined)?.message ?? error.message;
     return Promise.reject(new Error(message));
-  }
+  },
 );
 
 export default api;

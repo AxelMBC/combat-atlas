@@ -1,6 +1,6 @@
-import { configureStore } from "@reduxjs/toolkit";
-import countryReducer from "./country/countrySlice";
-import eventIngestionReducer from "./eventIngestion/eventIngestionSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import countryReducer from './country/countrySlice';
+import eventIngestionReducer from './eventIngestion/eventIngestionSlice';
 
 export const store = configureStore({
   reducer: {

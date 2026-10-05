@@ -1,16 +1,16 @@
-import { Autocomplete, Box, TextField, Typography } from "@mui/material";
-import { useTranslation } from "@/i18n";
-import type { TranslationKey } from "@/i18n";
-import type { Corner, FighterSelectorProps } from "./FighterSelector.types";
+import { Autocomplete, Box, TextField, Typography } from '@mui/material';
+import { useTranslation } from '@/i18n';
+import type { TranslationKey } from '@/i18n';
+import type { Corner, FighterSelectorProps } from './FighterSelector.types';
 
 const CORNER_COLORS: Record<Corner, string> = {
-  red: "#d32f2f",
-  blue: "#1565c0",
+  red: '#d32f2f',
+  blue: '#1565c0',
 };
 
 const CORNER_LABEL_KEYS: Record<Corner, TranslationKey> = {
-  red: "eventForm.field.redCorner",
-  blue: "eventForm.field.blueCorner",
+  red: 'eventForm.field.redCorner',
+  blue: 'eventForm.field.blueCorner',
 };
 
 const FighterSelector = ({
@@ -54,7 +54,7 @@ const FighterSelector = ({
                 sx={{
                   width: 12,
                   height: 12,
-                  borderRadius: "50%",
+                  borderRadius: '50%',
                   bgcolor: CORNER_COLORS[corner],
                   mr: 1,
                   flexShrink: 0,

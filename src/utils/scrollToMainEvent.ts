@@ -1,7 +1,7 @@
 const scrollToMainEvent = () => {
-  const element = document.getElementById("target-scroll");
+  const element = document.getElementById('target-scroll');
   if (element) {
-    element.scrollIntoView({ behavior: "smooth" });
+    element.scrollIntoView({ behavior: 'smooth' });
   }
 };
 

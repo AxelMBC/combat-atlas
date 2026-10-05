@@ -29,21 +29,21 @@ const en: Record<TranslationKey, string> = {
   'worldMap.availableCountriesAria': 'Available countries',
 
   'country.mexico.name': 'Mexico',
-  'country.mexico.headerTitle': 'Mexican-Style Boxing',
   'country.mexico.topFightersTitle': 'Mexican Icons',
   'country.mexico.topEventsTitle': 'Historic Fights',
 
   'country.thailand.name': 'Thailand',
-  'country.thailand.headerTitle': 'Thai Weapons',
   'country.thailand.topFightersTitle': 'Historic Legends',
   'country.thailand.topEventsTitle': "Thailand's Wars",
 
   'country.unitedStates.name': 'United States',
-  'country.unitedStates.headerTitle': 'American Grit Wrestling',
   'country.unitedStates.topFightersTitle': 'Mat Legends',
   'country.unitedStates.topEventsTitle': 'Olympic Duels',
 
   'error.countryLoad': 'Something went wrong loading the country. Please try again.',
+  'error.countryData': "We couldn't load the country data. Check your connection and try again.",
+  'error.fightersLoad': "We couldn't load the fighters. Please try again.",
+  'error.eventSubmit': "The event couldn't be submitted. Please try again.",
   'error.formLoad': 'Failed to load the form',
   'error.noMoreVideos': 'No more videos available.',
   'error.noFighterEvent': 'No main event found for the selected fighter.',
@@ -93,7 +93,6 @@ const en: Record<TranslationKey, string> = {
   'fighter.profileCta': 'Profile',
 
   'fightCard.watchFight': 'Watch Fight',
-  'fightCard.round': 'Round',
 
   'eventForm.pageTitle': 'New Fight Event',
   'eventForm.pageDescription': 'Fill out the form to add a new event to the system.',

@@ -1,1 +1,1 @@
-export { default } from "./CountryTemplate";
+export { default } from './CountryTemplate';

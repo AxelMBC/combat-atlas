@@ -1,4 +1,4 @@
-import type { Fighter } from "@/types/fighter.types";
+import type { Fighter } from '@/types/fighter.types';
 
 export interface TopFightersProps {
   title: string;

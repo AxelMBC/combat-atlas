@@ -23,7 +23,8 @@ import { useTranslation } from '@/i18n';
 // Utils
 import { getCountryStats } from '@/pages/countries/components/CinematicHero/getCountryStats';
 import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
-import { useThemeMode } from '@/styles/theme';
+
+const LOADING_DELAY_MS = 3000;
 
 const CountryPage = ({
   config,
@@ -34,7 +35,6 @@ const CountryPage = ({
 }: CountryPageProps) => {
   const navigate = useNavigate();
   const { t, language } = useTranslation();
-  const { palette } = useThemeMode();
   const reduceMotion = useReducedMotion();
   const autoplayAllowed = !reduceMotion;
 
@@ -55,7 +55,7 @@ const CountryPage = ({
     () => getCountryStats(mainEventFights, language),
     [mainEventFights, language],
   );
-  const countryName = config.countryNameKey ? t(config.countryNameKey) : config.countryName;
+  const countryName = t(config.countryNameKey);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -63,7 +63,7 @@ const CountryPage = ({
 
   useEffect(() => {
     if (videoReady) return;
-    const fallback = window.setTimeout(() => setVideoReady(true), 300);
+    const fallback = window.setTimeout(() => setVideoReady(true), LOADING_DELAY_MS);
     return () => window.clearTimeout(fallback);
   }, [videoReady]);
 
@@ -71,7 +71,13 @@ const CountryPage = ({
     <ThemeProvider theme={theme}>
       {autoplayAllowed && !videoReady && !error && <Spinner />}
 
-      <Box sx={{ pb: 8, minHeight: '100vh', backgroundColor: palette.page }}>
+      <Box
+        sx={(muiTheme) => ({
+          pb: 8,
+          minHeight: '100vh',
+          backgroundColor: muiTheme.palette.surfaces.page,
+        })}
+      >
         <Button
           onClick={() => navigate('/')}
           variant="text"

@@ -1,9 +1,11 @@
-import type { CountryOption } from "./eventIngestion.config.types";
+import type { CountryOption } from './eventIngestion.config.types';
 
-export const COUNTRY_OPTIONS: CountryOption[] = [
-  { slug: "mexico", labelKey: "country.mexico.name" },
-  { slug: "thailand", labelKey: "country.thailand.name" },
-];
+import { countryRegistry } from '@/pages/countries/registry';
+
+export const COUNTRY_OPTIONS: CountryOption[] = countryRegistry.map(({ slug, nameKey }) => ({
+  slug,
+  labelKey: nameKey,
+}));
 
 export const YT_ID_REGEX = /^[a-zA-Z0-9_-]{11}$/;
 

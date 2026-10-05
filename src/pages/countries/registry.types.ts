@@ -1,5 +1,5 @@
-import type { ComponentType } from "react";
-import type { TranslationKey } from "@/i18n";
+import type { ComponentType } from 'react';
+import type { TranslationKey } from '@/i18n';
 
 export interface CountryEntry {
   slug: string;

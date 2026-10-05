@@ -45,3 +45,15 @@ React 19 + TypeScript + Vite SPA, deployed to Vercel (SPA rewrite in `vercel.jso
 - Components and helpers are arrow functions only (`const Foo = () => {}`), never `function` declarations.
 - TS interfaces/types live in colocated `*.types.ts` files (e.g. `Foo.types.ts` next to `Foo.tsx`), never inline.
 - Tests are colocated `*.test.ts` files using Vitest 2.1.x + Testing Library + jsdom (`src/test/setup.ts`). **Vitest is intentionally pinned to 2.x with its own `vitest.config.ts`** — bumping to 3.x or merging it into `vite.config.ts` reintroduces yarn-v1 dependency-linking and type conflicts.
+
+## graphify
+
+This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
+
+Rules:
+
+- For codebase questions, first run `graphify query "<question>"` when graphify-out/graph.json exists. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
+- If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
+- Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
+- After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).
+- Exception — grep still wins for exact-string lookups. When you already know the literal token to find (a symbol name, error string, config key), grep/ripgrep directly; do not detour through graphify first. The graph is for "how is X connected / what touches Y / trace this flow" (multi-hop reasoning), not for "where is this string."

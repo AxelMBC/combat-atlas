@@ -1,15 +1,12 @@
-import type { PayloadAction } from "@reduxjs/toolkit";
-import type { CountryState } from "./countrySlice.types";
-import type { Fighter } from "@/types/fighter.types";
-import type { RootState } from "@/store";
+import type { CountryState } from './countrySlice.types';
+import type { RootState } from '@/store';
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchCountry } from "./thunks";
+import { fetchCountry } from './thunks';
 
 const initialState: CountryState = {
   fighters: [],
-  selectedFighter: null,
   mainEvents: [],
   topEvents: [],
   loading: false,
@@ -17,17 +14,13 @@ const initialState: CountryState = {
 };
 
 export const countrySlice = createSlice({
-  name: "country",
+  name: 'country',
   initialState,
   reducers: {
-    setSelectedFighter: (state, action: PayloadAction<Fighter | null>) => {
-      state.selectedFighter = action.payload;
-    },
     resetCountryData: (state) => {
       state.fighters = [];
       state.mainEvents = [];
       state.topEvents = [];
-      state.selectedFighter = null;
       state.error = null;
       state.loading = true;
     },
@@ -46,12 +39,12 @@ export const countrySlice = createSlice({
       })
       .addCase(fetchCountry.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.payload ?? null;
       });
   },
 });
 
-export const { setSelectedFighter, resetCountryData } = countrySlice.actions;
+export const { resetCountryData } = countrySlice.actions;
 export const selectCountryState = (state: RootState) => state.country;
 
 export default countrySlice.reducer;

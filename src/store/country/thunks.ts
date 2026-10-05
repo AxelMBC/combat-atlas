@@ -1,10 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getCountryData } from '@/services/country.service';
+import type { CountryDataResponse } from '@/types/country.types';
+import type { TranslationKey } from '@/i18n';
 
 const TTL_MS = 30 * 60 * 1000;
 
 interface SessionCache {
-  data: Awaited<ReturnType<typeof getCountryData>>;
+  data: CountryDataResponse;
   fetchedAt: number;
 }
 
@@ -36,20 +38,19 @@ const writeCache = (slug: string, data: SessionCache['data']): void => {
   }
 };
 
-export const fetchCountry = createAsyncThunk(
-  'country/fetchBySlug',
-  async (slug: string, { rejectWithValue }) => {
-    const cached = readCache(slug);
-    if (cached) return cached;
+export const fetchCountry = createAsyncThunk<
+  CountryDataResponse,
+  string,
+  { rejectValue: TranslationKey }
+>('country/fetchBySlug', async (slug, { rejectWithValue }) => {
+  const cached = readCache(slug);
+  if (cached) return cached;
 
-    try {
-      const data = await getCountryData(slug);
-      console.log('data: ', data);
-      writeCache(slug, data);
-      return data;
-    } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : 'Error fetching country data';
-      return rejectWithValue(message);
-    }
-  },
-);
+  try {
+    const data = await getCountryData(slug);
+    writeCache(slug, data);
+    return data;
+  } catch {
+    return rejectWithValue('error.countryData');
+  }
+});

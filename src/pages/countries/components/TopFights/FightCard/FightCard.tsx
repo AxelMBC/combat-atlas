@@ -1,20 +1,18 @@
-import { memo, useMemo } from 'react';
+﻿import { memo, useMemo } from 'react';
 import type { CardEventProps } from './FightCard.types';
 
 import useScrollFocus from '@/hooks/useScrollFocus';
 
 // MUI
 import { Box, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 // i18n
 import { useTranslation } from '@/i18n';
 
-// Fallback dummy data
-import { resolveFallback } from './FightCard.fallbacks';
-
 import { resolveLocalizedTags } from '@/utils/resolveLocalizedField';
 import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
-import { useThemeMode } from '@/styles/theme';
+import { cardActiveSx, cardSurfaceSx } from '@/pages/countries/components/shared';
 
 const FALLBACK_THUMBNAIL = '/placeholders/no-video-placeholder.png';
 const YOUTUBE_MISSING_THUMBNAIL_WIDTH = 120;
@@ -29,14 +27,11 @@ const splitFightersFromTitle = (title: string): [string, string] | null => {
 
 const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
   const { t, language } = useTranslation();
-  const { palette } = useThemeMode();
+  const { surfaces } = useTheme().palette;
   const { ref, isFocused } = useScrollFocus<HTMLDivElement>();
 
   const activeStyles = {
-    borderColor: palette.borderHover,
-    '@media (prefers-reduced-motion: no-preference)': {
-      transform: 'translateY(-4px)',
-    },
+    ...cardActiveSx(surfaces),
     '& .fightCardImg': {
       filter: 'brightness(1)',
       '@media (prefers-reduced-motion: no-preference)': {
@@ -45,16 +40,13 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
     },
   } as const;
 
-  const fallback = useMemo(() => resolveFallback(), []);
-
   const resolvedTags = resolveLocalizedTags(video.tags, language);
 
-  const year = video.year ?? fallback?.year;
-  const dateLabel = video.dateLabel ?? fallback?.dateLabel;
-  const venue = video.venue ?? fallback?.venue;
+  const year = video.year;
 
   const discipline = video.type ?? resolvedTags[0];
-  const subtitle = [discipline, venue?.city].filter(Boolean).join(' · ');
+
+  const subtitle = [discipline, video.location].filter(Boolean).join(' · ');
 
   const fighters = useMemo(() => {
     if (video.fighterRed && video.fighterBlue) {
@@ -69,19 +61,31 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
   return (
     <Box
       ref={ref}
+      role="button"
+      tabIndex={0}
       onClick={() => onVideoSelect(video)}
+      onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          onVideoSelect(video);
+        }
+      }}
       sx={{
+        ...cardSurfaceSx(surfaces),
         cursor: 'pointer',
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
         height: '100%',
-        bgcolor: palette.surface,
-        border: `1px solid ${palette.border}`,
         borderRadius: '14px',
-        overflow: 'hidden',
         fontFamily: CLEAN_SANS,
         transition: 'transform 300ms ease, border-color 300ms ease',
+        '&:focus-visible': {
+          outline: '2px solid',
+          outlineColor: 'primary.main',
+          outlineOffset: '2px',
+          ...activeStyles,
+        },
         '@media (hover: hover)': {
           '&:hover': activeStyles,
         },
@@ -98,7 +102,7 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
         sx={{
           position: 'relative',
           overflow: 'hidden',
-          bgcolor: palette.surfaceSunken,
+          bgcolor: surfaces.surfaceSunken,
           height: 180,
         }}
       >
@@ -176,7 +180,7 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
             fontWeight: 700,
             fontSize: '1.05rem',
             lineHeight: 1.3,
-            color: palette.textPrimary,
+            color: surfaces.textPrimary,
           }}
         >
           {fighters ? (
@@ -204,7 +208,7 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
             sx={{
               fontFamily: 'inherit',
               fontSize: '0.85rem',
-              color: palette.textSecondary,
+              color: surfaces.textSecondary,
             }}
           >
             {subtitle}
@@ -217,25 +221,11 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
             pt: 1.25,
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-end',
             gap: 1,
-            borderTop: `1px solid ${palette.border}`,
+            borderTop: `1px solid ${surfaces.border}`,
           }}
         >
-          <Typography
-            component="span"
-            sx={{
-              fontFamily: 'inherit',
-              fontSize: '0.7rem',
-              fontWeight: 600,
-              letterSpacing: '0.1em',
-              textTransform: 'uppercase',
-              color: palette.textMuted,
-            }}
-          >
-            {dateLabel ?? ''}
-          </Typography>
-
           <Typography
             component="span"
             sx={{

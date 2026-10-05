@@ -3,18 +3,20 @@ import type { TopFightersProps } from './TopFighters.types';
 
 // MUI
 import { Box, Grid, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 // Components
 import FighterCard from './FighterCard';
 
 // Utils
 import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
-import { useThemeMode } from '@/styles/theme';
 
 const TopFighters = memo(
   ({ title, topFightersData, remainingByFighter, onFighterSelect }: TopFightersProps) => {
-    const { palette } = useThemeMode();
+    const { surfaces } = useTheme().palette;
     const getRemaining = (id: string) => remainingByFighter[id] ?? 0;
+
+    if (topFightersData.length === 0) return null;
 
     return (
       <Box component="section" sx={{ paddingBottom: 8, mt: { xs: 5, md: 7 } }}>
@@ -24,7 +26,7 @@ const TopFighters = memo(
             fontFamily: CLEAN_SANS,
             fontWeight: 700,
             fontSize: { xs: '1.5rem', md: '2rem' },
-            color: palette.textPrimary,
+            color: surfaces.textPrimary,
             mb: 3,
           }}
         >
