@@ -18,7 +18,7 @@ Shape only. Formatting is Prettier's job (`yarn format`) and lint rules are ESLi
 
 ## Imports
 
-- Across folders, import through the `@/` alias (`@/styles/theme`, `@/types/fighter.types`). Relative imports are only `./` within the same folder; never `../`.
+- Relative imports only go down into the importing module's own folder or subfolders (`./FightCard`, `./config/mexico.config`). Anything that would need `../` is imported through the `@/` alias (`@/styles/theme`, `@/types/fighter.types`).
 
 ## Styling
 
