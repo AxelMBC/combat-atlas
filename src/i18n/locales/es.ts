@@ -11,6 +11,8 @@ const es = {
   'spinner.tagline.exploreWorld': 'El mundo del combate, en un mapa.',
   'spinner.tagline.everyCountry': 'Cada país pelea a su manera.',
   'spinner.tagline.legends': 'Leyendas. Combates. Historia.',
+  'spinner.coldStart':
+    'Despertando el servidor… Es un proyecto personal, así que la primera carga puede tardar hasta un minuto. Después va rápido.',
 
   'nav.backToWorldMap': '← Mapa Mundial',
 

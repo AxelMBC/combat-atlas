@@ -13,6 +13,8 @@ const en: Record<TranslationKey, string> = {
   'spinner.tagline.exploreWorld': 'The world of combat, on a map.',
   'spinner.tagline.everyCountry': 'Every country fights its own way.',
   'spinner.tagline.legends': 'Legends. Fights. History.',
+  'spinner.coldStart':
+    'Waking up the server… This is a hobby project, so the first load can take up to a minute. After that it’s fast.',
 
   'nav.backToWorldMap': '← World Map',
 

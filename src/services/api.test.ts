@@ -35,11 +35,12 @@ interface AxiosErrorShape {
   config: Record<string, unknown>;
   response?: { status: number; data?: { message?: string } };
   message: string;
+  code?: string;
 }
 
 const makeError = (
   status: number | undefined,
-  opts: { message?: string; dataMessage?: string } = {},
+  opts: { message?: string; dataMessage?: string; code?: string } = {},
   config: Record<string, unknown> = {},
 ): AxiosErrorShape => ({
   config,
@@ -48,6 +49,7 @@ const makeError = (
       ? undefined
       : { status, data: opts.dataMessage ? { message: opts.dataMessage } : undefined },
   message: opts.message ?? 'request failed',
+  code: opts.code,
 });
 
 describe('api response interceptor', () => {
@@ -80,6 +82,44 @@ describe('api response interceptor', () => {
       requestMock.mockResolvedValueOnce({ status: 200 });
 
       const promise = getOnRejected()(makeError(undefined, {}, config));
+
+      await vi.advanceTimersByTimeAsync(300);
+      await promise;
+
+      expect(requestMock).toHaveBeenCalledTimes(1);
+      expect(config._retryCount).toBe(1);
+    });
+
+    it.each(['ECONNABORTED', 'ETIMEDOUT'])(
+      'does not retry a timeout (%s) and rejects with its message',
+      async (code) => {
+        const config: Record<string, unknown> = { url: '/foo' };
+
+        const promise = getOnRejected()(
+          makeError(undefined, { code, message: 'timeout of 90000ms exceeded' }, config),
+        );
+
+        await expect(promise).rejects.toThrow('timeout of 90000ms exceeded');
+        expect(requestMock).not.toHaveBeenCalled();
+        expect(config._retryCount).toBeUndefined();
+      },
+    );
+
+    it('does not retry a request sent with skipRetry', async () => {
+      const config: Record<string, unknown> = { url: '/health', skipRetry: true };
+
+      const promise = getOnRejected()(makeError(503, { message: 'booting' }, config));
+
+      await expect(promise).rejects.toThrow('booting');
+      expect(requestMock).not.toHaveBeenCalled();
+      expect(config._retryCount).toBeUndefined();
+    });
+
+    it('still retries a non-timeout error without a response', async () => {
+      const config: Record<string, unknown> = { url: '/foo' };
+      requestMock.mockResolvedValueOnce({ status: 200 });
+
+      const promise = getOnRejected()(makeError(undefined, { code: 'ERR_NETWORK' }, config));
 
       await vi.advanceTimersByTimeAsync(300);
       await promise;
