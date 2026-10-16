@@ -1,12 +1,18 @@
 import './App.scss';
+import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { Box } from '@mui/material';
 
 import LanguageToggle from '@/components/LanguageToggle';
 import ThemeModeToggle from '@/components/ThemeModeToggle';
+import { pingHealth } from '@/services/health.service';
 
 const App = () => {
+  useEffect(() => {
+    pingHealth().catch(() => {});
+  }, []);
+
   return (
     <>
       <Box

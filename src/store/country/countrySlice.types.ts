@@ -8,4 +8,5 @@ export interface CountryState {
   topEvents: MainEvent[];
   loading: boolean;
   error: TranslationKey | null;
+  requestId: string | null;
 }

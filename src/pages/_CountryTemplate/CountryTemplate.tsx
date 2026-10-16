@@ -19,7 +19,7 @@ const CountryTemplate = () => {
   const { fightersList, mainEvents, topFightsList, loading, error, retry } =
     useCountryPageData('your-country');
 
-  if (loading) return <Spinner />;
+  if (loading) return <Spinner slowHint />;
 
   if (error) return <ErrorFallback theme={theme} message={t(error)} onRetry={retry} />;
 

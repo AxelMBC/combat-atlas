@@ -1,0 +1,10 @@
+# Review: cold-start-ux
+
+Snapshot: a022f4ed5b3f48ae7d1bea98a73f13933365432c
+
+1. [defect] src/services/api.ts:4 (with src/store/country/countrySlice.ts:34-43, src/hooks/useCountryPageData.ts) — a stale country response can overwrite a newer one. The country fetch effect has no cleanup, and the `fulfilled`/`rejected` reducers ignore which slug they belong to. With a 90 s timeout, opening Mexico, going back and opening Thailand on a cold backend leaves both requests in flight; if Mexico's lands last, the Thailand page shows Mexico's data, and a late rejection can flip `loading`/`error`. This race existed before the change; the 90 s timeout turns it into the normal cold-start path · fixed
+   Fix: in the effect, keep the thunk promise and abort it on cleanup (`const p = dispatch(fetchCountry(slug)); return () => p.abort();`), passing the thunk `signal` through `getCountryData` to `api.get`. Exclude cancellations (`axios.isCancel` / `ERR_CANCELED`) from the retry predicate. Alternative: track the latest `requestId` on `pending` and ignore `fulfilled`/`rejected` actions whose `meta.requestId` doesn't match.
+2. [defect] src/components/Spinner/Spinner.tsx:55-57, :72 — screen readers never announce the cold-start message: the hint span is `aria-hidden` and only the `role="status"` region's `aria-label` changes, which live regions don't announce · fixed
+   Fix: remove `aria-hidden` from `.spinner__hint` so the inserted text is announced, and keep the region's `aria-label` as the loading label (or drop the override at :72). Have the Spinner test assert the hint text is inside the status region (`within(screen.getByRole('status')).getByText(...)`).
+3. [defect] src/services/health.service.ts:4 — the warm-up ping goes through the retrying interceptor, so a 5xx or no-response error during boot sends up to 4 `GET /health` requests per mount, against the spec's "exactly one". Low impact: the rejection is still swallowed · fixed
+   Fix: let a request opt out of retries (a typed `skipRetry` config flag the interceptor honours, used by `pingHealth`), or change the spec wording if retrying the ping is intended.

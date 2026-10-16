@@ -19,7 +19,7 @@ const Mexico = () => {
     { resolveFighterImage: getFighterImage },
   );
 
-  if (loading) return <Spinner />;
+  if (loading) return <Spinner slowHint />;
 
   if (error) return <ErrorFallback theme={theme} message={t(error)} onRetry={retry} />;
 

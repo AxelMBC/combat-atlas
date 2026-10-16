@@ -11,6 +11,7 @@ const initialState: CountryState = {
   topEvents: [],
   loading: false,
   error: null,
+  requestId: null,
 };
 
 export const countrySlice = createSlice({
@@ -27,17 +28,20 @@ export const countrySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCountry.pending, (state) => {
+      .addCase(fetchCountry.pending, (state, action) => {
         state.loading = true;
         state.error = null;
+        state.requestId = action.meta.requestId;
       })
       .addCase(fetchCountry.fulfilled, (state, action) => {
+        if (action.meta.requestId !== state.requestId) return;
         state.loading = false;
         state.fighters = action.payload.topFighters;
         state.mainEvents = action.payload.allFights;
         state.topEvents = action.payload.topEvents;
       })
       .addCase(fetchCountry.rejected, (state, action) => {
+        if (action.meta.requestId !== state.requestId) return;
         state.loading = false;
         state.error = action.payload ?? null;
       });

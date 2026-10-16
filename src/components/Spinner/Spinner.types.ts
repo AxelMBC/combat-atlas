@@ -5,4 +5,5 @@ export interface SpinnerProps {
   label?: string;
   fullscreen?: boolean;
   taglines?: boolean;
+  slowHint?: boolean;
 }

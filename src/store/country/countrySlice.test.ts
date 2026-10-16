@@ -31,6 +31,7 @@ const initialState: CountryState = {
   topEvents: [],
   loading: false,
   error: null,
+  requestId: null,
 };
 
 describe('countrySlice', () => {
@@ -42,6 +43,7 @@ describe('countrySlice', () => {
         topEvents: [makeEvent(2)],
         loading: false,
         error: 'error.countryData',
+        requestId: null,
       };
       const next = countryReducer(prev, resetCountryData());
       expect(next).toEqual({
@@ -50,27 +52,29 @@ describe('countrySlice', () => {
         topEvents: [],
         loading: true,
         error: null,
+        requestId: null,
       });
     });
   });
 
   describe('fetchCountry extraReducers', () => {
-    it('pending sets loading and clears error', () => {
+    const payload = {
+      topFighters: [makeFighter('a'), makeFighter('b')],
+      allFights: [makeEvent(1), makeEvent(2)],
+      topEvents: [makeEvent(3)],
+    };
+    const inFlight: CountryState = { ...initialState, loading: true, requestId: 'req-1' };
+
+    it('pending sets loading, clears error and records the request id', () => {
       const prev: CountryState = { ...initialState, error: 'error.countryData' };
-      const action = { type: fetchCountry.pending.type };
-      const next = countryReducer(prev, action);
+      const next = countryReducer(prev, fetchCountry.pending('req-1', 'mexico'));
       expect(next.loading).toBe(true);
       expect(next.error).toBeNull();
+      expect(next.requestId).toBe('req-1');
     });
 
     it('fulfilled populates fighters, mainEvents, topEvents', () => {
-      const payload = {
-        topFighters: [makeFighter('a'), makeFighter('b')],
-        allFights: [makeEvent(1), makeEvent(2)],
-        topEvents: [makeEvent(3)],
-      };
-      const action = { type: fetchCountry.fulfilled.type, payload };
-      const next = countryReducer({ ...initialState, loading: true }, action);
+      const next = countryReducer(inFlight, fetchCountry.fulfilled(payload, 'req-1', 'mexico'));
       expect(next.loading).toBe(false);
       expect(next.fighters).toEqual(payload.topFighters);
       expect(next.mainEvents).toEqual(payload.allFights);
@@ -78,13 +82,25 @@ describe('countrySlice', () => {
     });
 
     it('rejected stores the error key and clears loading', () => {
-      const action = {
-        type: fetchCountry.rejected.type,
-        payload: 'error.countryData',
-      };
-      const next = countryReducer({ ...initialState, loading: true }, action);
+      const next = countryReducer(
+        inFlight,
+        fetchCountry.rejected(null, 'req-1', 'mexico', 'error.countryData'),
+      );
       expect(next.loading).toBe(false);
       expect(next.error).toBe('error.countryData');
+    });
+
+    it('ignores a fulfilled response from a superseded request', () => {
+      const next = countryReducer(inFlight, fetchCountry.fulfilled(payload, 'req-0', 'mexico'));
+      expect(next).toEqual(inFlight);
+    });
+
+    it('ignores a rejection from a superseded request', () => {
+      const next = countryReducer(
+        inFlight,
+        fetchCountry.rejected(null, 'req-0', 'mexico', 'error.countryData'),
+      );
+      expect(next).toEqual(inFlight);
     });
   });
 });
