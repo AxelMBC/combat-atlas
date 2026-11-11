@@ -68,6 +68,9 @@ const es = {
   'hero.enterFullscreen': 'Pantalla completa',
   'hero.exitFullscreen': 'Salir de pantalla completa',
   'hero.play': 'Reproducir',
+  'hero.pause': 'Pausar',
+  'hero.mute': 'Silenciar',
+  'hero.unmute': 'Activar sonido',
 
   'fightInfo.nowPlaying': 'Reproduciendo ahora',
 

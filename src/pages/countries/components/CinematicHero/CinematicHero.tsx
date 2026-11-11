@@ -9,7 +9,15 @@ import { keyframes } from '@emotion/react';
 
 // Icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faCompress, faExpand, faPlay } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronDown,
+  faCompress,
+  faExpand,
+  faPause,
+  faPlay,
+  faVolumeHigh,
+  faVolumeXmark,
+} from '@fortawesome/free-solid-svg-icons';
 
 // Hooks
 import { useHeroFullscreen } from './useHeroFullscreen';
@@ -21,6 +29,8 @@ import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
 
 const ASPECT_RATIO = 16 / 9;
 const REVEAL_DELAY_MS = 4500;
+const REVEAL_FALLBACK_MS = 8000;
+const AUTOPLAY_REFUSED_CHECK_MS = 3000;
 const MAX_DISCIPLINES = 3;
 
 const styleIframe = (iframe: HTMLIFrameElement, title: string) => {
@@ -31,9 +41,27 @@ const styleIframe = (iframe: HTMLIFrameElement, title: string) => {
   iframe.style.border = '0';
   iframe.style.transform = 'translate(-50%, -50%)';
 };
+
+const stopYouTubeHoverChrome = (iframe: HTMLIFrameElement) => {
+  iframe.style.pointerEvents = 'none';
+};
+
+const isPlayingOrBuffering = (player: YTPlayer) => {
+  const states = window.YT?.PlayerState;
+  if (!states) return false;
+  const state = player.getPlayerState();
+  return state === states.PLAYING || state === states.BUFFERING;
+};
+
+const HOVER_CAPABLE_POINTER = '@media (hover: hover)';
+
 const bob = keyframes`
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(6px); }
+`;
+const pulse = keyframes`
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
 `;
 
 const chipSx = {
@@ -64,7 +92,8 @@ const CinematicHero = ({
   videoRef.current = video;
 
   const [playerReady, setPlayerReady] = useState(false);
-  const [playing, setPlaying] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const [muted, setMuted] = useState(true);
   const [playRequested, setPlayRequested] = useState(autoplayAllowed);
 
   const { isFullscreen, toggleFullscreen } = useHeroFullscreen(containerRef);
@@ -108,7 +137,8 @@ const CinematicHero = ({
     let cancelled = false;
     let revealTimer: number | undefined;
     const reveal = () => onReadyRef.current();
-    const fallback = window.setTimeout(reveal, 8000);
+    let autoplayRefusedTimer: number | undefined;
+    const fallback = window.setTimeout(reveal, REVEAL_FALLBACK_MS);
 
     loadYouTubeIframeApi().then((YT) => {
       if (cancelled || !mountRef.current || playerRef.current) return;
@@ -130,8 +160,8 @@ const CinematicHero = ({
           playsinline: 1,
           iv_load_policy: 3,
           fs: 0,
-          cc_load_policy: 0,
-          controls: 1,
+          controls: 0,
+          disablekb: 1,
           enablejsapi: 1,
           origin: window.location.origin,
           start: Number(current.startTime) || 0,
@@ -144,14 +174,25 @@ const CinematicHero = ({
             sizeIframe();
             setPlayerReady(true);
             event.target.playVideo();
+            autoplayRefusedTimer = window.setTimeout(() => {
+              if (!isPlayingOrBuffering(event.target)) setPaused(true);
+            }, AUTOPLAY_REFUSED_CHECK_MS);
           },
           onStateChange: (event) => {
             if (event.data === YT.PlayerState.PLAYING && revealTimer === undefined) {
               revealTimer = window.setTimeout(reveal, REVEAL_DELAY_MS);
             }
-            setPlaying(
-              event.data === YT.PlayerState.PLAYING || event.data === YT.PlayerState.BUFFERING,
-            );
+            if (event.data === YT.PlayerState.PLAYING) {
+              stopYouTubeHoverChrome(event.target.getIframe());
+            }
+            if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+              setPaused(true);
+            } else if (
+              event.data === YT.PlayerState.PLAYING ||
+              event.data === YT.PlayerState.BUFFERING
+            ) {
+              setPaused(false);
+            }
           },
         },
       });
@@ -161,6 +202,7 @@ const CinematicHero = ({
       cancelled = true;
       window.clearTimeout(fallback);
       if (revealTimer !== undefined) window.clearTimeout(revealTimer);
+      if (autoplayRefusedTimer !== undefined) window.clearTimeout(autoplayRefusedTimer);
       try {
         playerRef.current?.destroy();
       } catch {
@@ -170,7 +212,8 @@ const CinematicHero = ({
       iframeRef.current = null;
       loadedIdRef.current = null;
       setPlayerReady(false);
-      setPlaying(false);
+      setPaused(false);
+      setMuted(true);
     };
   }, [playRequested, hasVideo, sizeIframe]);
 
@@ -189,19 +232,30 @@ const CinematicHero = ({
     window.scrollTo({ top: height, behavior: 'smooth' });
   };
 
-  const handlePlay = () => {
+  const handleTogglePlayback = () => {
     if (!playRequested) {
       setPlayRequested(true);
       return;
     }
-    playerRef.current?.playVideo();
+    const player = playerRef.current;
+    if (!player || !playerReady) return;
+    if (isPlayingOrBuffering(player)) player.pauseVideo();
+    else player.playVideo();
+  };
+
+  const handleToggleMute = () => {
+    const player = playerRef.current;
+    if (!player) return;
+    if (muted) player.unMute();
+    else player.mute();
+    setMuted(!muted);
   };
 
   const posterUrl = video
     ? video.thumbnail || `https://i.ytimg.com/vi/${video.idYt}/hqdefault.jpg`
     : null;
   const showPoster = !playerReady;
-  const showPlayButton = hasVideo && (!playRequested || (playerReady && !playing));
+  const showsPlayAction = !playRequested || paused;
 
   const statsLine = [
     t('hero.statsFights', { count: stats.fightsCount }),
@@ -252,23 +306,52 @@ const CinematicHero = ({
         }}
       />
 
-      {showPlayButton && (
-        <IconButton
-          onClick={handlePlay}
-          aria-label={t('hero.play')}
+      <Box
+        sx={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: { xs: 150, md: 210 },
+          background:
+            'linear-gradient(to top, #000 0%, #000 50%, rgba(0,0,0,0.6) 75%, rgba(0,0,0,0) 100%)',
+          pointerEvents: 'none',
+          opacity: isFullscreen ? 0 : 1,
+          transition: 'opacity 350ms ease',
+        }}
+      />
+
+      {hasVideo && (
+        <Box
           sx={{
             position: 'absolute',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            fontSize: { xs: '1.8rem', md: '2.6rem' },
-            p: { xs: 2.5, md: 3.5 },
+            width: { xs: '40vmin', md: '33vmin' },
+            height: { xs: '40vmin', md: '33vmin' },
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
             zIndex: 2,
-            ...chipSx,
+            [HOVER_CAPABLE_POINTER]: { '&:hover > button': { opacity: 1 } },
           }}
         >
-          <FontAwesomeIcon icon={faPlay} />
-        </IconButton>
+          <IconButton
+            onClick={handleTogglePlayback}
+            aria-label={showsPlayAction ? t('hero.play') : t('hero.pause')}
+            sx={{
+              fontSize: { xs: '1.8rem', md: '2.6rem' },
+              p: { xs: 2.5, md: 3.5 },
+              opacity: showsPlayAction ? 1 : 0,
+              transition: 'opacity 350ms ease',
+              ...chipSx,
+              '&.Mui-focusVisible': { ...chipSx['&.Mui-focusVisible'], opacity: 1 },
+            }}
+          >
+            <FontAwesomeIcon icon={showsPlayAction ? faPlay : faPause} fixedWidth />
+          </IconButton>
+        </Box>
       )}
 
       <Box
@@ -349,27 +432,55 @@ const CinematicHero = ({
           transition: 'opacity 350ms ease',
         }}
       >
-        <Typography sx={{ fontFamily: 'inherit', fontSize: '0.95rem' }}>
+        <Typography
+          sx={{
+            fontFamily: 'inherit',
+            fontSize: { xs: '1rem', md: '1.15rem' },
+            fontWeight: 600,
+            letterSpacing: '0.08em',
+            animation: `${pulse} 2.4s ease-in-out infinite`,
+          }}
+        >
           {t('mainEvent.scrollHint')}
         </Typography>
-        <Box sx={{ fontSize: '1rem', animation: `${bob} 1.6s ease-in-out infinite` }}>
+        <Box
+          sx={{
+            fontSize: { xs: '1.3rem', md: '1.6rem' },
+            animation: `${bob} 1.6s ease-in-out infinite`,
+          }}
+        >
           <FontAwesomeIcon icon={faChevronDown} />
         </Box>
       </Box>
 
-      <IconButton
-        onClick={toggleFullscreen}
-        aria-label={isFullscreen ? t('hero.exitFullscreen') : t('hero.enterFullscreen')}
+      <Box
         sx={{
           position: 'absolute',
           top: { xs: 64, sm: 72 },
           right: { xs: 12, sm: 24 },
           zIndex: 2,
-          ...chipSx,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 1,
         }}
       >
-        <FontAwesomeIcon icon={isFullscreen ? faCompress : faExpand} />
-      </IconButton>
+        <IconButton
+          onClick={toggleFullscreen}
+          aria-label={isFullscreen ? t('hero.exitFullscreen') : t('hero.enterFullscreen')}
+          sx={chipSx}
+        >
+          <FontAwesomeIcon icon={isFullscreen ? faCompress : faExpand} fixedWidth />
+        </IconButton>
+        {playerReady && (
+          <IconButton
+            onClick={handleToggleMute}
+            aria-label={muted ? t('hero.unmute') : t('hero.mute')}
+            sx={chipSx}
+          >
+            <FontAwesomeIcon icon={muted ? faVolumeXmark : faVolumeHigh} fixedWidth />
+          </IconButton>
+        )}
+      </Box>
     </Box>
   );
 };

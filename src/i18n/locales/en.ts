@@ -70,6 +70,9 @@ const en: Record<TranslationKey, string> = {
   'hero.enterFullscreen': 'Fullscreen',
   'hero.exitFullscreen': 'Exit fullscreen',
   'hero.play': 'Play',
+  'hero.pause': 'Pause',
+  'hero.mute': 'Mute',
+  'hero.unmute': 'Unmute',
 
   'fightInfo.nowPlaying': 'Now playing',
 
