@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import type { Fighter } from '@/types/fighter.types';
 
-import { beforeAll, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { createElement } from 'react';
 
@@ -33,19 +33,6 @@ const renderSection = (topFightersData: Fighter[]) => {
 };
 
 describe('TopFighters', () => {
-  beforeAll(() => {
-    window.matchMedia = vi.fn().mockImplementation((query: string) => ({
-      matches: false,
-      media: query,
-      onchange: null,
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      dispatchEvent: vi.fn(),
-    }));
-  });
-
   it('renders nothing at all when there are no fighters', () => {
     renderSection([]);
     expect(screen.queryByText('Historic Legends')).not.toBeInTheDocument();

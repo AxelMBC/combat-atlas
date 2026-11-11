@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 import useScrollFocus from '@/hooks/useScrollFocus';
-import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
+import { BODY_FONT } from '@/styles/fonts/newspaperFonts';
 import { cardActiveSx, cardSurfaceSx } from '@/pages/countries/components/shared';
 
 import type { FighterCardShellProps } from './FighterCardShell.types';
@@ -46,7 +46,7 @@ const FighterCardShell = ({ disabled, onActivate, layoutSx, children }: FighterC
         cursor: disabled ? 'not-allowed' : 'pointer',
         opacity: disabled ? 0.55 : 1,
         height: '100%',
-        fontFamily: CLEAN_SANS,
+        fontFamily: BODY_FONT,
         transition: 'opacity 0.3s ease, transform 300ms ease, border-color 300ms ease',
         '&:focus-visible': disabled
           ? undefined

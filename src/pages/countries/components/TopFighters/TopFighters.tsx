@@ -9,7 +9,7 @@ import { useTheme } from '@mui/material/styles';
 import FighterCard from './FighterCard';
 
 // Utils
-import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
+import { sectionHeadingSx } from '@/pages/countries/components/shared';
 
 const TopFighters = memo(
   ({ title, topFightersData, remainingByFighter, onFighterSelect }: TopFightersProps) => {
@@ -20,16 +20,7 @@ const TopFighters = memo(
 
     return (
       <Box component="section" sx={{ paddingBottom: 8, mt: { xs: 5, md: 7 } }}>
-        <Typography
-          variant="h2"
-          sx={{
-            fontFamily: CLEAN_SANS,
-            fontWeight: 700,
-            fontSize: { xs: '1.5rem', md: '2rem' },
-            color: surfaces.textPrimary,
-            mb: 3,
-          }}
-        >
+        <Typography variant="h2" sx={sectionHeadingSx(surfaces)}>
           {title}
         </Typography>
 

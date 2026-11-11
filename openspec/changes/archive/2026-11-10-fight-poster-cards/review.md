@@ -1,0 +1,15 @@
+# Review: fight-poster-cards
+
+Snapshot: ff47f9f9085f20cdc1188c4af771088eac915132
+
+1. [defect] src/pages/countries/components/TopFights/FightCard/FightCard.tsx:31-43 — `fighterNameSx` combines `overflow: 'hidden'` (needed by the 2-line clamp) with `lineHeight: 1.05`; with Anton's metrics (2048 upm, ascent 2409) the acute accent on uppercase vowels (1813–2254 units) sits mostly above the first line box and gets clipped, so CHÁVEZ, MÁRQUEZ, LÓPEZ, ÁLVAREZ lose their accents · fixed
+   Fix: give the clamp box headroom inside its clip area — add `pt: '0.16em'` to `fighterNameSx` (with a matching negative `mt` if spacing must stay), or raise `lineHeight` to at least 1.36.
+2. [defect] src/pages/Thailand/Thailand.tsx:16-17 — the new resolver returns `getTopFightImage(fight.thumbnail)`, which falls back to `'/placeholder.webp'` (src/pages/Thailand/resources/fights/index.ts:17-18), a file that doesn't exist; an unbundled thumbnail key yields a 404 → `onError` placeholder instead of the YouTube thumbnail the spec ("No curated image → YouTube thumbnail") and CONTRIBUTING.md (`undefined` keeps it) require · fixed
+   Re-check: the fallback is gone and `getTopFightImage(fight)` (src/pages/Thailand/resources/fights/index.ts:19-20) returns `undefined` on a miss, but src/hooks/useCountryPageData.ts:36 then returns the fight unchanged, so the raw backend key stays in `thumbnail` and FightCard.tsx:77-78 (`video.thumbnail || youtubeThumbnail(...)`) still uses it as the image `src` → 404/index.html → placeholder. The change's own country-page-data scenario "Resolver has no image for a fight → the hook returns that fight unchanged" conflicts with the fight-poster-cards scenario "No curated image" for countries whose backend `thumbnail` is a key.
+   Fix: when a resolver is supplied, the hook always writes its result (`{ ...fight, thumbnail: resolveTopFightThumbnail(fight) }`) so `undefined` clears the leftover key; amend that country-page-data scenario, design.md decision 4, and the test at src/hooks/useCountryPageData.test.ts:117-128 together.
+3. [duplicate] src/pages/countries/components/TopFights/FightCard/FightCard.test.ts:33-44 — third copy of the `window.matchMedia` stub (also TopFights.test.ts:35-46, TopFighters.test.ts:36-47) and a copy of the LanguageProvider + ThemeModeProvider wrapper from TopFights.test.ts:21-32 · fixed
+   Fix: move the stub into `src/test/setup.ts` and delete the three copies; optionally add a shared `renderWithProviders` helper there.
+4. [duplicate] src/pages/countries/components/TopFights/TopFights.tsx:24-33 — section-heading `sx` is identical to TopFighters.tsx:25-35 (8 properties), which this diff had to edit in lockstep · fixed
+   Fix: export `sectionHeadingSx(surfaces)` from `shared/sharedStyles.ts` and spread it in both headings.
+5. [duplicate] src/styles/fonts/newspaperFonts.ts:1 — `HEADLINE_FONT` is still hardcoded in src/components/LanguageToggle/LanguageToggle.tsx:37 and src/components/SiteCredit/SiteCredit.tsx:14 · fixed
+   Fix: import `HEADLINE_FONT` in both components.

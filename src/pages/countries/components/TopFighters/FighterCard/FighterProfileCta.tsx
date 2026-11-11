@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 import { useTranslation } from '@/i18n';
-import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
+import { HEADLINE_FONT } from '@/styles/fonts/newspaperFonts';
 
 import type { FighterProfileCtaProps } from './FighterProfileCta.types';
 
@@ -16,8 +16,8 @@ const FighterProfileCta = ({ disabled }: FighterProfileCtaProps) => {
         display: 'flex',
         alignItems: 'center',
         gap: 0.75,
-        fontFamily: CLEAN_SANS,
-        fontWeight: 600,
+        fontFamily: HEADLINE_FONT,
+        fontWeight: 400,
         fontSize: '0.85rem',
         color: disabled ? surfaces.textMuted : 'primary.light',
       }}

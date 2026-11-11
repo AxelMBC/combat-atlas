@@ -1,3 +1,5 @@
+import type { MainEvent } from '@/types/fightEvent.types';
+
 import liamVsMuangthaiImg from './liamharrison_vs_muangthai_pk.saenchai.jpg';
 import pongsiriVsPairojnoiImg from './pongsiri_rambo_por_ruamrudee_vs_pairojnoi_sor_siamchai.jpg';
 import ramonVsCobanImg from './ramon_dekkers_vs_coban_lookchaomaesaitong_II.jpg';
@@ -14,5 +16,5 @@ const topFightsImages: Record<string, string> = {
   pornsanae_sitmonchai_vs_pakorn_sakyothin_i: pornsanaeSitmonchaiVsPakornSakyothinIImg,
 };
 
-export const getTopFightImage = (filename: string): string =>
-  topFightsImages[filename] ?? '/placeholder.webp';
+export const getTopFightImage = (fight: MainEvent): string | undefined =>
+  fight.thumbnail ? topFightsImages[fight.thumbnail] : undefined;

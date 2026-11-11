@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 import { useTranslation } from '@/i18n';
-import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
+import { HEADLINE_FONT } from '@/styles/fonts/newspaperFonts';
 
 import FighterCardShell from './FighterCardShell';
 import FighterPortrait from './FighterPortrait';
@@ -43,8 +43,8 @@ const FighterCardCompact = ({ boxer, rank, remaining, onSelect }: FighterCardPro
       >
         <Typography
           sx={{
-            fontFamily: CLEAN_SANS,
-            fontWeight: 700,
+            fontFamily: HEADLINE_FONT,
+            fontWeight: 400,
             fontSize: '1.35rem',
             lineHeight: 1.2,
             color: surfaces.textPrimary,
@@ -54,7 +54,6 @@ const FighterCardCompact = ({ boxer, rank, remaining, onSelect }: FighterCardPro
         </Typography>
         <Typography
           sx={{
-            fontFamily: CLEAN_SANS,
             fontSize: '0.85rem',
             color: surfaces.textSecondary,
           }}

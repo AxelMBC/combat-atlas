@@ -31,11 +31,7 @@ export const useCountryPageData = (
   const topFightsList = useMemo(
     () =>
       resolveTopFightThumbnail
-        ? topEvents.map((fight) =>
-            fight.thumbnail
-              ? { ...fight, thumbnail: resolveTopFightThumbnail(fight.thumbnail) }
-              : fight,
-          )
+        ? topEvents.map((fight) => ({ ...fight, thumbnail: resolveTopFightThumbnail(fight) }))
         : topEvents,
     [topEvents, resolveTopFightThumbnail],
   );

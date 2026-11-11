@@ -1,11 +1,12 @@
-import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
+import { HEADLINE_FONT } from '@/styles/fonts/newspaperFonts';
 import type { SurfacePalette } from '@/styles/theme';
 
 export const pillSx = {
   px: 1.5,
   py: 0.5,
   borderRadius: '999px',
-  fontWeight: 600,
+  fontFamily: HEADLINE_FONT,
+  fontWeight: 400,
   fontSize: '0.7rem',
   letterSpacing: '0.08em',
   textTransform: 'uppercase',
@@ -14,15 +15,14 @@ export const pillSx = {
 export const overlayPillSx = {
   ...pillSx,
   backdropFilter: 'blur(8px)',
-  fontFamily: CLEAN_SANS,
   lineHeight: 1.4,
   whiteSpace: 'nowrap',
 } as const;
 
 export const statLabelSx = (surfaces: SurfacePalette) =>
   ({
-    fontFamily: CLEAN_SANS,
-    fontWeight: 600,
+    fontFamily: HEADLINE_FONT,
+    fontWeight: 400,
     fontSize: '0.65rem',
     letterSpacing: '0.12em',
     textTransform: 'uppercase',
@@ -31,10 +31,22 @@ export const statLabelSx = (surfaces: SurfacePalette) =>
 
 export const statValueSx = (surfaces: SurfacePalette) =>
   ({
-    fontFamily: CLEAN_SANS,
-    fontWeight: 600,
+    fontFamily: HEADLINE_FONT,
+    fontWeight: 400,
     lineHeight: 1.2,
     color: surfaces.textPrimary,
+  }) as const;
+
+export const sectionHeadingSx = (surfaces: SurfacePalette) =>
+  ({
+    fontFamily: HEADLINE_FONT,
+    fontWeight: 400,
+    fontSize: { xs: '2.25rem', md: '3.5rem' },
+    lineHeight: 1,
+    textTransform: 'uppercase',
+    letterSpacing: '0.01em',
+    color: surfaces.textPrimary,
+    mb: 3,
   }) as const;
 
 export const cardSurfaceSx = (surfaces: SurfacePalette) =>

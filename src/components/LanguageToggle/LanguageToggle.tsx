@@ -3,6 +3,7 @@ import { alpha, useTheme } from '@mui/material/styles';
 
 import { useTranslation } from '@/i18n';
 import type { Language } from '@/i18n';
+import { HEADLINE_FONT } from '@/styles/fonts/newspaperFonts';
 
 const LanguageToggle = () => {
   const { language, setLanguage, t } = useTranslation();
@@ -34,7 +35,7 @@ const LanguageToggle = () => {
         },
         '& .MuiToggleButton-root': {
           color: alpha(surfaces.page, 0.55),
-          fontFamily: '"Anton", sans-serif',
+          fontFamily: HEADLINE_FONT,
           fontSize: '0.95rem',
           letterSpacing: 2,
           border: 'none',

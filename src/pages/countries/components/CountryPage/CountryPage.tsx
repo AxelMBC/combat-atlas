@@ -22,7 +22,7 @@ import { useTranslation } from '@/i18n';
 
 // Utils
 import { getCountryStats } from '@/pages/countries/components/CinematicHero/getCountryStats';
-import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
+import { HEADLINE_FONT } from '@/styles/fonts/newspaperFonts';
 
 const LOADING_DELAY_MS = 3000;
 
@@ -92,8 +92,8 @@ const CountryPage = ({
             color: 'common.white',
             bgcolor: 'rgba(0, 0, 0, 0.45)',
             backdropFilter: 'blur(8px)',
-            fontFamily: CLEAN_SANS,
-            fontWeight: 600,
+            fontFamily: HEADLINE_FONT,
+            fontWeight: 400,
             fontSize: { xs: '0.85rem', sm: '0.95rem' },
             textTransform: 'none',
             lineHeight: 1,

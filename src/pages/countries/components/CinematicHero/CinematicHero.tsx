@@ -25,7 +25,7 @@ import { useTranslation } from '@/i18n';
 
 // Utils
 import { loadYouTubeIframeApi } from '@/utils/youtubeIframeApi';
-import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
+import { BODY_FONT, HEADLINE_FONT } from '@/styles/fonts/newspaperFonts';
 
 const ASPECT_RATIO = 16 / 9;
 const REVEAL_DELAY_MS = 4500;
@@ -275,7 +275,7 @@ const CinematicHero = ({
         height: '100svh',
         overflow: 'hidden',
         bgcolor: '#000',
-        fontFamily: CLEAN_SANS,
+        fontFamily: BODY_FONT,
         '&:fullscreen': { height: '100%' },
       }}
     >
@@ -371,9 +371,8 @@ const CinematicHero = ({
       >
         <Typography
           sx={{
-            fontFamily: 'inherit',
+            fontFamily: HEADLINE_FONT,
             fontSize: { xs: '0.8rem', md: '0.9rem' },
-            fontWeight: 500,
             letterSpacing: '0.35em',
             textTransform: 'uppercase',
             opacity: 0.75,
@@ -384,10 +383,10 @@ const CinematicHero = ({
         <Typography
           component="h1"
           sx={{
-            fontFamily: 'inherit',
-            fontWeight: 700,
+            fontFamily: HEADLINE_FONT,
             fontSize: { xs: '2.8rem', md: '4.5rem' },
             lineHeight: 1.05,
+            textTransform: 'uppercase',
           }}
         >
           {countryName}
@@ -434,9 +433,8 @@ const CinematicHero = ({
       >
         <Typography
           sx={{
-            fontFamily: 'inherit',
+            fontFamily: HEADLINE_FONT,
             fontSize: { xs: '1rem', md: '1.15rem' },
-            fontWeight: 600,
             letterSpacing: '0.08em',
             animation: `${pulse} 2.4s ease-in-out infinite`,
           }}

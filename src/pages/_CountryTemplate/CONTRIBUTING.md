@@ -47,8 +47,17 @@ const { fightersList, mainEvents, topFightsList, loading, error, retry } = useCo
 );
 ```
 
-If your top fights use locally bundled thumbnails, add a `resolveTopFightThumbnail` resolver too
-(see `src/pages/Thailand/resources/fights/index.ts`).
+If your top fights use locally bundled images, add a `resolveTopFightThumbnail` resolver too. It
+receives the whole fight and returns the image, or `undefined` to keep the YouTube thumbnail:
+
+```tsx
+const getTopFightPoster = (fight: MainEvent): string | undefined => topFightPosters[fight.idYt];
+```
+
+Declare it at module level, not inside the component. Store the images already cropped to 4:5
+(1000×1250 WebP); the fight card shows them cover-cropped at that ratio. See
+`src/pages/Mexico/resources/fights/index.ts` (keyed by `idYt`) and `src/pages/Thailand/Thailand.tsx`
+(keyed by the backend `thumbnail`).
 
 ### 3. Data
 

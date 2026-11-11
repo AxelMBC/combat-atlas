@@ -87,7 +87,6 @@ const FighterPortrait = ({
           bgcolor: surfaces.pillScrim,
           color: 'common.white',
           fontSize: isFeature ? '0.95rem' : '0.8rem',
-          fontWeight: 700,
           letterSpacing: '0.12em',
         }}
       >
@@ -108,7 +107,6 @@ const FighterPortrait = ({
             bgcolor: 'rgba(0, 0, 0, 0.65)',
             color: 'common.white',
             fontSize: isFeature ? '1rem' : '0.85rem',
-            fontWeight: 700,
             letterSpacing: '0.15em',
           }}
         >

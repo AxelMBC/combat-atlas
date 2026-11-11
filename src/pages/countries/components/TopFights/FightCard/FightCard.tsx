@@ -11,11 +11,14 @@ import { useTheme } from '@mui/material/styles';
 import { useTranslation } from '@/i18n';
 
 import { resolveLocalizedTags } from '@/utils/resolveLocalizedField';
-import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
+import { BODY_FONT, HEADLINE_FONT } from '@/styles/fonts/newspaperFonts';
 import { cardActiveSx, cardSurfaceSx } from '@/pages/countries/components/shared';
 
 const FALLBACK_THUMBNAIL = '/placeholders/no-video-placeholder.png';
 const YOUTUBE_MISSING_THUMBNAIL_WIDTH = 120;
+const POSTER_SCRIM =
+  'linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0.1) 45%, rgba(0,0,0,0.9) 100%)';
+const SUBTITLE_COLOR = 'rgba(255, 255, 255, 0.72)';
 
 const youtubeThumbnail = (idYt: string) => `https://i.ytimg.com/vi/${idYt}/hq720.jpg`;
 
@@ -24,6 +27,22 @@ const splitFightersFromTitle = (title: string): [string, string] | null => {
   if (parts.length !== 2) return null;
   return [parts[0].trim(), parts[1].trim()];
 };
+
+const fighterNameSx = {
+  display: '-webkit-box',
+  WebkitBoxOrient: 'vertical',
+  WebkitLineClamp: 2,
+  overflow: 'hidden',
+  overflowWrap: 'anywhere',
+  textTransform: 'uppercase',
+  fontFamily: HEADLINE_FONT,
+  fontWeight: 400,
+  fontSize: { xs: '1.35rem', sm: '1.2rem', md: '1.35rem' },
+  lineHeight: 1.05,
+  letterSpacing: '0.01em',
+  pt: '0.16em',
+  mt: '-0.16em',
+} as const;
 
 const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
   const { t, language } = useTranslation();
@@ -72,13 +91,14 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
       }}
       sx={{
         ...cardSurfaceSx(surfaces),
+        bgcolor: surfaces.surfaceSunken,
         cursor: 'pointer',
-        display: 'flex',
-        flexDirection: 'column',
+        position: 'relative',
         width: '100%',
-        height: '100%',
+        aspectRatio: '4 / 5',
         borderRadius: '14px',
-        fontFamily: CLEAN_SANS,
+        fontFamily: BODY_FONT,
+        color: 'common.white',
         transition: 'transform 300ms ease, border-color 300ms ease',
         '&:focus-visible': {
           outline: '2px solid',
@@ -99,107 +119,111 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
       }}
     >
       <Box
-        sx={{
-          position: 'relative',
-          overflow: 'hidden',
-          bgcolor: surfaces.surfaceSunken,
-          height: 180,
+        component="img"
+        src={thumbnailSrc}
+        alt={video.title}
+        onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+          if (!e.currentTarget.src.endsWith(FALLBACK_THUMBNAIL)) {
+            e.currentTarget.src = FALLBACK_THUMBNAIL;
+          }
         }}
-      >
-        <Box
-          component="img"
-          src={thumbnailSrc}
-          alt={video.title}
-          onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-            if (!e.currentTarget.src.endsWith(FALLBACK_THUMBNAIL)) {
-              e.currentTarget.src = FALLBACK_THUMBNAIL;
-            }
-          }}
-          onLoad={(e: React.SyntheticEvent<HTMLImageElement>) => {
-            const img = e.currentTarget;
-            if (
-              img.src.includes('i.ytimg.com') &&
-              img.naturalWidth <= YOUTUBE_MISSING_THUMBNAIL_WIDTH
-            ) {
-              img.src = FALLBACK_THUMBNAIL;
-            }
-          }}
-          sx={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            transition: 'all 300ms ease',
-            filter: 'brightness(0.75)',
-          }}
-          className="fightCardImg"
-        />
-
-        <Box
-          sx={{
-            position: 'absolute',
-            inset: 0,
-            background:
-              'linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.55) 100%)',
-            pointerEvents: 'none',
-          }}
-        />
-
-        {year && (
-          <Typography
-            sx={{
-              position: 'absolute',
-              top: 10,
-              left: 14,
-              color: 'common.white',
-              fontFamily: 'inherit',
-              fontWeight: 700,
-              fontSize: '1.1rem',
-              lineHeight: 1,
-              textShadow: '0 1px 6px rgba(0, 0, 0, 0.6)',
-            }}
-          >
-            {year}
-          </Typography>
-        )}
-      </Box>
+        onLoad={(e: React.SyntheticEvent<HTMLImageElement>) => {
+          const img = e.currentTarget;
+          if (
+            img.src.includes('i.ytimg.com') &&
+            img.naturalWidth <= YOUTUBE_MISSING_THUMBNAIL_WIDTH
+          ) {
+            img.src = FALLBACK_THUMBNAIL;
+          }
+        }}
+        sx={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          transition: 'all 300ms ease',
+          filter: 'brightness(0.75)',
+        }}
+        className="fightCardImg"
+      />
 
       <Box
         sx={{
+          position: 'absolute',
+          inset: 0,
+          background: POSTER_SCRIM,
+          pointerEvents: 'none',
+        }}
+      />
+
+      {year && (
+        <Typography
+          sx={{
+            position: 'absolute',
+            top: 12,
+            left: 16,
+            fontFamily: HEADLINE_FONT,
+            fontSize: '1.1rem',
+            lineHeight: 1,
+            textShadow: '0 1px 6px rgba(0, 0, 0, 0.6)',
+          }}
+        >
+          {year}
+        </Typography>
+      )}
+
+      <Box
+        sx={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          bottom: 0,
           px: 2,
-          py: 1.75,
+          pb: 1.75,
           display: 'flex',
           flexDirection: 'column',
-          flexGrow: 1,
           gap: 0.75,
+          textShadow: '0 1px 8px rgba(0, 0, 0, 0.5)',
         }}
       >
         <Typography
           variant="h3"
           sx={{
             fontFamily: 'inherit',
-            fontWeight: 700,
-            fontSize: '1.05rem',
-            lineHeight: 1.3,
-            color: surfaces.textPrimary,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            gap: 0.25,
+            fontSize: 'inherit',
+            fontWeight: 'inherit',
+            lineHeight: 'inherit',
           }}
         >
           {fighters ? (
             <>
-              {fighters[0]}{' '}
+              <Box component="span" sx={fighterNameSx}>
+                {fighters[0]}
+              </Box>{' '}
               <Box
                 component="span"
                 sx={{
                   color: 'primary.light',
                   fontStyle: 'italic',
-                  px: 0.25,
+                  fontSize: '0.85rem',
+                  lineHeight: 1,
                 }}
               >
                 {t('mainEvent.vs')}
               </Box>{' '}
-              {fighters[1]}
+              <Box component="span" sx={fighterNameSx}>
+                {fighters[1]}
+              </Box>
             </>
           ) : (
-            video.title
+            <Box component="span" sx={fighterNameSx}>
+              {video.title}
+            </Box>
           )}
         </Typography>
 
@@ -208,40 +232,28 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
             sx={{
               fontFamily: 'inherit',
               fontSize: '0.85rem',
-              color: surfaces.textSecondary,
+              color: SUBTITLE_COLOR,
             }}
           >
             {subtitle}
           </Typography>
         )}
 
-        <Box
+        <Typography
+          component="span"
           sx={{
-            mt: 'auto',
-            pt: 1.25,
+            alignSelf: 'flex-end',
+            fontFamily: HEADLINE_FONT,
+            fontSize: '0.8rem',
+            color: 'primary.light',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'flex-end',
-            gap: 1,
-            borderTop: `1px solid ${surfaces.border}`,
+            gap: 0.75,
           }}
         >
-          <Typography
-            component="span"
-            sx={{
-              fontFamily: 'inherit',
-              fontSize: '0.8rem',
-              fontWeight: 600,
-              color: 'primary.light',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 0.75,
-            }}
-          >
-            {t('fightCard.watchFight')}
-            <Box component="span">→</Box>
-          </Typography>
-        </Box>
+          {t('fightCard.watchFight')}
+          <Box component="span">→</Box>
+        </Typography>
       </Box>
     </Box>
   );

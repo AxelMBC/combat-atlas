@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import type { MainEvent } from '@/types/fightEvent.types';
 
-import { beforeAll, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { createElement } from 'react';
 
@@ -32,19 +32,6 @@ const renderSection = (videos: MainEvent[]) => {
 };
 
 describe('TopFights', () => {
-  beforeAll(() => {
-    window.matchMedia = vi.fn().mockImplementation((query: string) => ({
-      matches: false,
-      media: query,
-      onchange: null,
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      dispatchEvent: vi.fn(),
-    }));
-  });
-
   it('renders nothing at all when there are no videos', () => {
     renderSection([]);
     expect(screen.queryByText("Thailand's Wars")).not.toBeInTheDocument();

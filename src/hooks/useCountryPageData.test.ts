@@ -87,7 +87,8 @@ describe('useCountryPageData', () => {
 
     const { result } = renderCountryHook('thailand', {
       resolveFighterImage: (filename) => `/img/${filename}.webp`,
-      resolveTopFightThumbnail: (filename) => `/thumbs/${filename}.jpg`,
+      resolveTopFightThumbnail: (fight) =>
+        fight.thumbnail ? `/thumbs/${fight.thumbnail}.jpg` : undefined,
     });
 
     await waitFor(() => expect(result.current.loading).toBe(false));
@@ -98,6 +99,35 @@ describe('useCountryPageData', () => {
     ]);
     expect(result.current.topFightsList[0].thumbnail).toBe('/thumbs/thumb-key.jpg');
     expect(result.current.topFightsList[1].thumbnail).toBeUndefined();
+  });
+
+  it('resolves a top fight without a thumbnail by its idYt', async () => {
+    mockedGetCountryData.mockResolvedValueOnce(makePayload());
+    const posters: Record<string, string> = { 'yt-4': '/posters/four.webp' };
+
+    const { result } = renderCountryHook('mexico', {
+      resolveTopFightThumbnail: (fight) => posters[fight.idYt],
+    });
+
+    await waitFor(() => expect(result.current.loading).toBe(false));
+
+    expect(result.current.topFightsList[1].thumbnail).toBe('/posters/four.webp');
+  });
+
+  it('clears the thumbnail of a top fight the resolver has no image for', async () => {
+    const payload = makePayload();
+    mockedGetCountryData.mockResolvedValueOnce(payload);
+
+    const { result } = renderCountryHook('thailand', {
+      resolveTopFightThumbnail: () => undefined,
+    });
+
+    await waitFor(() => expect(result.current.loading).toBe(false));
+
+    expect(result.current.topFightsList).toEqual([
+      { ...payload.topEvents[0], thumbnail: undefined },
+      payload.topEvents[1],
+    ]);
   });
 
   it('stores the error key on failure and refetches via retry', async () => {

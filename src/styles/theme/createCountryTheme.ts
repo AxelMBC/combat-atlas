@@ -4,19 +4,17 @@ import type { CountryPageConfig } from '@/pages/countries/components/CountryPage
 import './muiPalette.types';
 import { getSurfacePalette } from './createAppTheme';
 import type { ThemeMode } from './themeMode.types';
-
-const TITLE_FONT = 'Anton, sans-serif';
-const BODY_FONT = '"Merriweather", serif';
+import { BODY_FONT, HEADLINE_FONT } from '@/styles/fonts/newspaperFonts';
 
 export const createCountryTheme = (config: CountryPageConfig, mode: ThemeMode): Theme =>
   createTheme({
     typography: {
       fontFamily: BODY_FONT,
-      h1: { fontFamily: TITLE_FONT },
-      h2: { fontFamily: TITLE_FONT },
-      h3: { fontFamily: TITLE_FONT },
+      h1: { fontFamily: HEADLINE_FONT },
+      h2: { fontFamily: HEADLINE_FONT },
+      h3: { fontFamily: HEADLINE_FONT },
       body1: { fontFamily: BODY_FONT },
-      button: { fontFamily: TITLE_FONT },
+      button: { fontFamily: HEADLINE_FONT },
     },
     palette: {
       mode,

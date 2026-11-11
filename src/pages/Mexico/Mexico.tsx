@@ -4,6 +4,7 @@ import { useCountryPageData } from '@/hooks/useCountryPageData';
 import { useTranslation } from '@/i18n';
 
 import { getFighterImage } from './resources/fighters';
+import { getTopFightPoster } from './resources/fights';
 import { mexicoConfig } from './config/mexico.config';
 import { useCountryTheme } from '@/styles/theme';
 
@@ -16,7 +17,7 @@ const Mexico = () => {
   const theme = useCountryTheme(mexicoConfig);
   const { fightersList, mainEvents, topFightsList, loading, error, retry } = useCountryPageData(
     'mexico',
-    { resolveFighterImage: getFighterImage },
+    { resolveFighterImage: getFighterImage, resolveTopFightThumbnail: getTopFightPoster },
   );
 
   if (loading) return <Spinner slowHint />;

@@ -4,7 +4,7 @@ import type { TranslationKey } from '@/i18n';
 
 export interface UseCountryPageDataOptions {
   resolveFighterImage?: (filename: string) => string;
-  resolveTopFightThumbnail?: (filename: string) => string;
+  resolveTopFightThumbnail?: (fight: MainEvent) => string | undefined;
 }
 
 export interface UseCountryPageDataResult {

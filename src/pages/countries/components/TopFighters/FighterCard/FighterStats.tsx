@@ -84,7 +84,6 @@ const FighterStats = ({ boxer, size }: FighterStatsProps) => {
             component="span"
             sx={{
               ...statValueSx(surfaces),
-              fontWeight: 700,
               fontSize: { xs: '1.15rem', md: '1.35rem' },
             }}
           >

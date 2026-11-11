@@ -16,7 +16,7 @@ import { useTranslation } from '@/i18n';
 
 // Utils
 import { resolveLocalizedString, resolveLocalizedTags } from '@/utils/resolveLocalizedField';
-import { CLEAN_SANS } from '@/styles/fonts/cleanSans';
+import { BODY_FONT, HEADLINE_FONT } from '@/styles/fonts/newspaperFonts';
 import {
   cardSurfaceSx,
   pillSx,
@@ -71,12 +71,11 @@ const FightInfoSection = memo(
     ];
 
     return (
-      <Box component="section" sx={{ mt: { xs: 4, md: 6 }, fontFamily: CLEAN_SANS }}>
+      <Box component="section" sx={{ mt: { xs: 4, md: 6 }, fontFamily: BODY_FONT }}>
         <Typography
           sx={{
-            fontFamily: 'inherit',
+            fontFamily: HEADLINE_FONT,
             fontSize: '0.75rem',
-            fontWeight: 600,
             letterSpacing: '0.2em',
             textTransform: 'uppercase',
             color: surfaces.textMuted,
@@ -154,8 +153,8 @@ const FightInfoSection = memo(
               <Typography
                 variant="h2"
                 sx={{
-                  fontFamily: 'inherit',
-                  fontWeight: 700,
+                  fontFamily: HEADLINE_FONT,
+                  fontWeight: 400,
                   fontSize: { xs: '1.5rem', sm: '1.9rem', md: '2.3rem' },
                   lineHeight: 1.1,
                   color: surfaces.textPrimary,
@@ -164,7 +163,10 @@ const FightInfoSection = memo(
                 {fighters ? (
                   <>
                     {fighters[0]}{' '}
-                    <Box component="span" sx={{ color: 'primary.light', fontStyle: 'italic' }}>
+                    <Box
+                      component="span"
+                      sx={{ color: 'primary.light', fontFamily: BODY_FONT, fontStyle: 'italic' }}
+                    >
                       {t('mainEvent.vs')}
                     </Box>{' '}
                     {fighters[1]}
@@ -240,8 +242,8 @@ const FightInfoSection = memo(
                   borderRadius: '999px',
                   bgcolor: 'primary.main',
                   color: 'common.white',
-                  fontFamily: CLEAN_SANS,
-                  fontWeight: 700,
+                  fontFamily: HEADLINE_FONT,
+                  fontWeight: 400,
                   fontSize: '1rem',
                   textTransform: 'none',
                   display: 'flex',
@@ -273,8 +275,8 @@ const FightInfoSection = memo(
                   border: `1.5px solid ${YOUTUBE_RED}`,
                   bgcolor: 'transparent',
                   color: YOUTUBE_RED,
-                  fontFamily: CLEAN_SANS,
-                  fontWeight: 600,
+                  fontFamily: HEADLINE_FONT,
+                  fontWeight: 400,
                   fontSize: '0.9rem',
                   textTransform: 'none',
                   display: 'flex',
