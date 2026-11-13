@@ -61,6 +61,12 @@ describe('FightCard', () => {
     expect(screen.getByText('Boxing · Las Vegas')).toBeInTheDocument();
   });
 
+  it('uses the venue city in the subtitle when the fight has no location', () => {
+    renderCard(makeEvent({ type: 'Boxing', venue: { city: 'Tijuana', country: 'MX' } }));
+
+    expect(screen.getByText('Boxing · Tijuana')).toBeInTheDocument();
+  });
+
   it('renders no year or subtitle element when the data is absent', () => {
     renderCard(makeEvent({ fighterRed: 'A', fighterBlue: 'B' }));
 

@@ -32,6 +32,14 @@ describe('getCountryStats', () => {
     expect(stats.cities).toEqual(['CDMX', 'Guadalajara']);
   });
 
+  it('uses the same city as the title card when location and venue city differ', () => {
+    const fights = [
+      baseFight({ location: 'Las Vegas', venue: { city: 'Paradise', country: 'USA' } }),
+    ];
+
+    expect(getCountryStats(fights, 'es').cities).toEqual(['Las Vegas']);
+  });
+
   it('falls back to location when venue is missing', () => {
     const fights = [baseFight({ location: 'Monterrey' })];
 

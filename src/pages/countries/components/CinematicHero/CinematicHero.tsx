@@ -19,6 +19,8 @@ import {
   faVolumeXmark,
 } from '@fortawesome/free-solid-svg-icons';
 
+import FightTitleCard from './FightTitleCard';
+
 // Hooks
 import { useHeroFullscreen } from './useHeroFullscreen';
 import { useTranslation } from '@/i18n';
@@ -28,9 +30,9 @@ import { loadYouTubeIframeApi } from '@/utils/youtubeIframeApi';
 import { BODY_FONT, HEADLINE_FONT } from '@/styles/fonts/newspaperFonts';
 
 const ASPECT_RATIO = 16 / 9;
-const REVEAL_DELAY_MS = 4500;
 const REVEAL_FALLBACK_MS = 8000;
 const AUTOPLAY_REFUSED_CHECK_MS = 3000;
+const YOUTUBE_START_CHROME_HIDE_MS = 5000;
 const MAX_DISCIPLINES = 3;
 
 const styleIframe = (iframe: HTMLIFrameElement, title: string) => {
@@ -77,6 +79,7 @@ const CinematicHero = ({
   countryName,
   stats,
   autoplayAllowed,
+  isLoaderCovering,
   onReady,
 }: CinematicHeroProps) => {
   const { t } = useTranslation();
@@ -90,11 +93,27 @@ const CinematicHero = ({
   onReadyRef.current = onReady;
   const videoRef = useRef(video);
   videoRef.current = video;
+  const startChromeTimerRef = useRef<number | undefined>(undefined);
 
   const [playerReady, setPlayerReady] = useState(false);
   const [paused, setPaused] = useState(false);
   const [muted, setMuted] = useState(true);
   const [playRequested, setPlayRequested] = useState(autoplayAllowed);
+  const [isStartChromeShowing, setIsStartChromeShowing] = useState(true);
+
+  const clearStartChromeTimer = useCallback(() => {
+    if (startChromeTimerRef.current === undefined) return;
+    window.clearTimeout(startChromeTimerRef.current);
+    startChromeTimerRef.current = undefined;
+  }, []);
+
+  const hideStartChromeAfterDelay = useCallback(() => {
+    if (startChromeTimerRef.current !== undefined) return;
+    startChromeTimerRef.current = window.setTimeout(() => {
+      startChromeTimerRef.current = undefined;
+      setIsStartChromeShowing(false);
+    }, YOUTUBE_START_CHROME_HIDE_MS);
+  }, []);
 
   const { isFullscreen, toggleFullscreen } = useHeroFullscreen(containerRef);
 
@@ -135,10 +154,13 @@ const CinematicHero = ({
     if (!playRequested || !hasVideo) return;
 
     let cancelled = false;
-    let revealTimer: number | undefined;
     const reveal = () => onReadyRef.current();
     let autoplayRefusedTimer: number | undefined;
-    const fallback = window.setTimeout(reveal, REVEAL_FALLBACK_MS);
+    let isPlayerReady = false;
+    const fallback = window.setTimeout(() => {
+      reveal();
+      if (!isPlayerReady) setIsStartChromeShowing(false);
+    }, REVEAL_FALLBACK_MS);
 
     loadYouTubeIframeApi().then((YT) => {
       if (cancelled || !mountRef.current || playerRef.current) return;
@@ -172,18 +194,19 @@ const CinematicHero = ({
             iframeRef.current = event.target.getIframe();
             styleIframe(iframeRef.current, videoRef.current?.title ?? '');
             sizeIframe();
+            isPlayerReady = true;
+            setIsStartChromeShowing(true);
             setPlayerReady(true);
+            reveal();
             event.target.playVideo();
             autoplayRefusedTimer = window.setTimeout(() => {
               if (!isPlayingOrBuffering(event.target)) setPaused(true);
             }, AUTOPLAY_REFUSED_CHECK_MS);
           },
           onStateChange: (event) => {
-            if (event.data === YT.PlayerState.PLAYING && revealTimer === undefined) {
-              revealTimer = window.setTimeout(reveal, REVEAL_DELAY_MS);
-            }
             if (event.data === YT.PlayerState.PLAYING) {
               stopYouTubeHoverChrome(event.target.getIframe());
+              hideStartChromeAfterDelay();
             }
             if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
               setPaused(true);
@@ -194,6 +217,11 @@ const CinematicHero = ({
               setPaused(false);
             }
           },
+          onError: () => {
+            clearStartChromeTimer();
+            setIsStartChromeShowing(false);
+            setPaused(true);
+          },
         },
       });
     });
@@ -201,8 +229,8 @@ const CinematicHero = ({
     return () => {
       cancelled = true;
       window.clearTimeout(fallback);
-      if (revealTimer !== undefined) window.clearTimeout(revealTimer);
       if (autoplayRefusedTimer !== undefined) window.clearTimeout(autoplayRefusedTimer);
+      clearStartChromeTimer();
       try {
         playerRef.current?.destroy();
       } catch {
@@ -214,8 +242,9 @@ const CinematicHero = ({
       setPlayerReady(false);
       setPaused(false);
       setMuted(true);
+      setIsStartChromeShowing(true);
     };
-  }, [playRequested, hasVideo, sizeIframe]);
+  }, [playRequested, hasVideo, sizeIframe, hideStartChromeAfterDelay, clearStartChromeTimer]);
 
   useEffect(() => {
     const player = playerRef.current;
@@ -224,8 +253,10 @@ const CinematicHero = ({
 
     loadedIdRef.current = video.idYt;
     if (iframeRef.current) iframeRef.current.title = video.title;
+    clearStartChromeTimer();
+    setIsStartChromeShowing(true);
     player.loadVideoById({ videoId: video.idYt, startSeconds: Number(video.startTime) || 0 });
-  }, [playerReady, video]);
+  }, [playerReady, video, clearStartChromeTimer]);
 
   const handleHintClick = () => {
     const height = containerRef.current?.offsetHeight ?? window.innerHeight;
@@ -251,11 +282,9 @@ const CinematicHero = ({
     setMuted(!muted);
   };
 
-  const posterUrl = video
-    ? video.thumbnail || `https://i.ytimg.com/vi/${video.idYt}/hqdefault.jpg`
-    : null;
-  const showPoster = !playerReady;
   const showsPlayAction = !playRequested || paused;
+  const titleCardEntranceKey = isLoaderCovering ? 'behind-loader' : 'in-view';
+  const isScrollHintHidden = isFullscreen || isStartChromeShowing;
 
   const statsLine = [
     t('hero.statsFights', { count: stats.fightsCount }),
@@ -281,21 +310,6 @@ const CinematicHero = ({
     >
       <Box ref={mountRef} sx={{ position: 'absolute', inset: 0 }} />
 
-      {showPoster && posterUrl && (
-        <Box
-          component="img"
-          src={posterUrl}
-          alt=""
-          sx={{
-            position: 'absolute',
-            inset: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-          }}
-        />
-      )}
-
       <Box
         sx={{
           position: 'absolute',
@@ -320,6 +334,20 @@ const CinematicHero = ({
           transition: 'opacity 350ms ease',
         }}
       />
+
+      {video && (
+        <Box
+          sx={{
+            position: 'absolute',
+            inset: 0,
+            pointerEvents: 'none',
+            opacity: isStartChromeShowing ? 1 : 0,
+            transition: isStartChromeShowing ? 'none' : 'opacity 350ms ease',
+          }}
+        >
+          <FightTitleCard key={titleCardEntranceKey} video={video} />
+        </Box>
+      )}
 
       {hasVideo && (
         <Box
@@ -365,8 +393,8 @@ const CinematicHero = ({
           gap: 1,
           color: 'common.white',
           pointerEvents: 'none',
-          opacity: isFullscreen ? 0 : 1,
-          transition: 'opacity 350ms ease',
+          opacity: isFullscreen || isStartChromeShowing ? 0 : 1,
+          transition: isStartChromeShowing ? 'none' : 'opacity 350ms ease',
         }}
       >
         <Typography
@@ -404,8 +432,8 @@ const CinematicHero = ({
 
       <Box
         role="button"
-        tabIndex={isFullscreen ? -1 : 0}
-        aria-hidden={isFullscreen}
+        tabIndex={isScrollHintHidden ? -1 : 0}
+        aria-hidden={isScrollHintHidden}
         aria-label={t('mainEvent.scrollHint')}
         onClick={handleHintClick}
         onKeyDown={(event) => {
@@ -426,9 +454,9 @@ const CinematicHero = ({
           color: 'common.white',
           cursor: 'pointer',
           textShadow: '0 2px 8px rgba(0, 0, 0, 0.6)',
-          opacity: isFullscreen ? 0 : 0.9,
-          pointerEvents: isFullscreen ? 'none' : 'auto',
-          transition: 'opacity 350ms ease',
+          opacity: isScrollHintHidden ? 0 : 0.9,
+          pointerEvents: isScrollHintHidden ? 'none' : 'auto',
+          transition: isStartChromeShowing ? 'none' : 'opacity 350ms ease',
         }}
       >
         <Typography

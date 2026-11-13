@@ -11,6 +11,7 @@ export interface CinematicHeroProps {
   countryName: string;
   stats: CountryStats;
   autoplayAllowed: boolean;
+  isLoaderCovering: boolean;
   onReady: () => void;
 }
 

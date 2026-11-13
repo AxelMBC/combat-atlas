@@ -51,6 +51,8 @@ const CountryPage = ({
 
   const [videoReady, setVideoReady] = useState(!autoplayAllowed);
 
+  const isLoaderCovering = autoplayAllowed && !videoReady && !error;
+
   const stats = useMemo(
     () => getCountryStats(mainEventFights, language),
     [mainEventFights, language],
@@ -69,7 +71,7 @@ const CountryPage = ({
 
   return (
     <ThemeProvider theme={theme}>
-      {autoplayAllowed && !videoReady && !error && <Spinner />}
+      {isLoaderCovering && <Spinner />}
 
       <Box
         sx={(muiTheme) => ({
@@ -109,6 +111,7 @@ const CountryPage = ({
           countryName={countryName}
           stats={stats}
           autoplayAllowed={autoplayAllowed}
+          isLoaderCovering={isLoaderCovering}
           onReady={() => setVideoReady(true)}
         />
 

@@ -1,4 +1,4 @@
-﻿import { memo, useMemo } from 'react';
+﻿import { memo } from 'react';
 import type { CardEventProps } from './FightCard.types';
 
 import useScrollFocus from '@/hooks/useScrollFocus';
@@ -10,7 +10,7 @@ import { useTheme } from '@mui/material/styles';
 // i18n
 import { useTranslation } from '@/i18n';
 
-import { resolveLocalizedTags } from '@/utils/resolveLocalizedField';
+import { getFightBilling, getFightCity, getFightDiscipline } from '@/utils/fightBilling';
 import { BODY_FONT, HEADLINE_FONT } from '@/styles/fonts/newspaperFonts';
 import { cardActiveSx, cardSurfaceSx } from '@/pages/countries/components/shared';
 
@@ -21,12 +21,6 @@ const POSTER_SCRIM =
 const SUBTITLE_COLOR = 'rgba(255, 255, 255, 0.72)';
 
 const youtubeThumbnail = (idYt: string) => `https://i.ytimg.com/vi/${idYt}/hq720.jpg`;
-
-const splitFightersFromTitle = (title: string): [string, string] | null => {
-  const parts = title.split(/\s+vs\.?\s+/i);
-  if (parts.length !== 2) return null;
-  return [parts[0].trim(), parts[1].trim()];
-};
 
 const fighterNameSx = {
   display: '-webkit-box',
@@ -59,20 +53,13 @@ const FightCard = memo(({ video, onVideoSelect }: CardEventProps) => {
     },
   } as const;
 
-  const resolvedTags = resolveLocalizedTags(video.tags, language);
-
   const year = video.year;
 
-  const discipline = video.type ?? resolvedTags[0];
+  const discipline = getFightDiscipline(video, language);
 
-  const subtitle = [discipline, video.location].filter(Boolean).join(' · ');
+  const subtitle = [discipline, getFightCity(video)].filter(Boolean).join(' · ');
 
-  const fighters = useMemo(() => {
-    if (video.fighterRed && video.fighterBlue) {
-      return [video.fighterRed, video.fighterBlue] as const;
-    }
-    return splitFightersFromTitle(video.title);
-  }, [video.fighterRed, video.fighterBlue, video.title]);
+  const fighters = getFightBilling(video);
 
   const thumbnailSrc =
     video.thumbnail || (video.idYt ? youtubeThumbnail(video.idYt) : FALLBACK_THUMBNAIL);

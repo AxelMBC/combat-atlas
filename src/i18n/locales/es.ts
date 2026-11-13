@@ -83,6 +83,10 @@ const es = {
   'mainEvent.vs': 'VS',
   'mainEvent.watchOnYoutube': 'Ver original en YouTube',
   'mainEvent.watchOnYoutubeAria': 'Ver «{title}» en YouTube (se abre en una pestaña nueva)',
+  'titleCard.presents': 'Combat Atlas presenta',
+  'titleCard.date': 'Fecha',
+  'titleCard.rounds': 'Asaltos',
+  'titleCard.titleFight': 'Título {organization}',
 
   'fighter.noFights': 'Sin peleas',
   'fighter.exhausted': 'Agotado',

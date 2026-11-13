@@ -85,6 +85,10 @@ const en: Record<TranslationKey, string> = {
   'mainEvent.vs': 'VS',
   'mainEvent.watchOnYoutube': 'Watch original on YouTube',
   'mainEvent.watchOnYoutubeAria': 'Watch "{title}" on YouTube (opens in a new tab)',
+  'titleCard.presents': 'Combat Atlas presents',
+  'titleCard.date': 'Date',
+  'titleCard.rounds': 'Rounds',
+  'titleCard.titleFight': '{organization} title',
 
   'fighter.noFights': 'No fights',
   'fighter.exhausted': 'Sold out',

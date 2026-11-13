@@ -6,6 +6,7 @@ export interface FightDecision {
 }
 
 export interface FightVenue {
+  name?: string;
   city: string;
   country: string;
 }
@@ -35,6 +36,8 @@ export interface MainEvent {
   thumbnail?: string;
   type?: string;
   year?: string;
+  date?: string;
+  scheduledRounds?: number;
   dateLabel?: string;
   location?: string;
   venue?: FightVenue;

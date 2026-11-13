@@ -1,6 +1,6 @@
 ﻿import type { FightInfoSectionProps } from './FightInfoSection.types';
 
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 
 // MUI
@@ -16,6 +16,7 @@ import { useTranslation } from '@/i18n';
 
 // Utils
 import { resolveLocalizedString, resolveLocalizedTags } from '@/utils/resolveLocalizedField';
+import { getFightBilling, getFightCity, getFightDivision } from '@/utils/fightBilling';
 import { BODY_FONT, HEADLINE_FONT } from '@/styles/fonts/newspaperFonts';
 import {
   cardSurfaceSx,
@@ -39,12 +40,6 @@ const YouTubeGlyph = () => (
   </Box>
 );
 
-const splitFightersFromTitle = (title: string): [string, string] | null => {
-  const parts = title.split(/\s+vs\.?\s+/i);
-  if (parts.length !== 2) return null;
-  return [parts[0].trim(), parts[1].trim()];
-};
-
 const FightInfoSection = memo(
   ({ loading, error, video, onAnotherFight, anotherFightDisabled }: FightInfoSectionProps) => {
     const { t, language } = useTranslation();
@@ -54,19 +49,13 @@ const FightInfoSection = memo(
     const description = video
       ? resolveLocalizedString(video.description, language, t('common.notAvailable'))
       : '';
-    const divisionLabel = video?.divisionId?.text?.[language] ?? '—';
+    const divisionLabel = (video && getFightDivision(video, language)) ?? '—';
 
-    const fighters = useMemo(() => {
-      if (!video) return null;
-      if (video.fighterRed && video.fighterBlue) {
-        return [video.fighterRed, video.fighterBlue] as const;
-      }
-      return splitFightersFromTitle(video.title);
-    }, [video]);
+    const fighters = video ? getFightBilling(video) : null;
 
     const stats = [
       { label: t('mainEvent.division'), value: divisionLabel },
-      { label: t('mainEvent.venue'), value: video?.location ?? video?.venue?.city ?? '—' },
+      { label: t('mainEvent.venue'), value: (video && getFightCity(video)) ?? '—' },
       { label: t('mainEvent.year'), value: video?.year ?? '—' },
     ];
 
