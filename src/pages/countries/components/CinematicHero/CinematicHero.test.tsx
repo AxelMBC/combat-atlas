@@ -277,3 +277,118 @@ describe('CinematicHero title card entrance', () => {
     expect(renderedInView).toBeInTheDocument();
   });
 });
+
+describe('CinematicHero reveal indicator', () => {
+  const preparing = es['titleCard.preparing'];
+  const startsIn = es['titleCard.startsIn'];
+  const indicator = (label: string) => screen.getByText(label).parentElement?.parentElement;
+
+  const emitState = (state: number) => {
+    youtube.harness.state = state;
+    emit('onStateChange', state);
+  };
+
+  beforeEach(() => {
+    vi.useFakeTimers();
+    window.localStorage.setItem('preferredLanguage', 'es');
+    window.YT = youtube.namespace;
+    youtube.harness.state = youtube.PlayerState.UNSTARTED;
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+    window.localStorage.clear();
+    delete window.YT;
+    vi.clearAllMocks();
+  });
+
+  it('shows the preparing label once the player is ready', async () => {
+    await renderHero(makeEvent());
+
+    expect(indicator(preparing)).toHaveStyle({ opacity: '1' });
+    expect(screen.queryByText(startsIn)).not.toBeInTheDocument();
+  });
+
+  it('starts the countdown at the first PLAYING', async () => {
+    await renderHero(makeEvent());
+
+    emitState(youtube.PlayerState.PLAYING);
+
+    expect(screen.getByText(startsIn)).toBeInTheDocument();
+    expect(screen.getByText('5')).toBeInTheDocument();
+  });
+
+  it('keeps counting through a buffering stutter', async () => {
+    await renderHero(makeEvent());
+    emitState(youtube.PlayerState.PLAYING);
+    act(() => vi.advanceTimersByTime(2000));
+
+    emitState(youtube.PlayerState.BUFFERING);
+    emitState(youtube.PlayerState.PLAYING);
+
+    expect(screen.getByText('3')).toBeInTheDocument();
+    act(() => vi.advanceTimersByTime(1000));
+    expect(screen.getByText('2')).toBeInTheDocument();
+  });
+
+  it('brings back the preparing label with a fight switch and counts again for the new video', async () => {
+    const { rerender } = await renderHero(makeEvent());
+    emitState(youtube.PlayerState.PLAYING);
+    act(() => vi.advanceTimersByTime(2000));
+
+    rerender(
+      <LanguageProvider>
+        <CinematicHero video={SECOND_FIGHT} {...heroProps} />
+      </LanguageProvider>,
+    );
+
+    expect(screen.getByText(preparing)).toBeInTheDocument();
+    expect(screen.queryByText(startsIn)).not.toBeInTheDocument();
+
+    emitState(youtube.PlayerState.PLAYING);
+    expect(screen.getByText('5')).toBeInTheDocument();
+  });
+
+  it('hides while paused and returns with the time actually left on resume', async () => {
+    await renderHero(makeEvent());
+    emitState(youtube.PlayerState.PLAYING);
+    act(() => vi.advanceTimersByTime(1000));
+
+    emitState(youtube.PlayerState.PAUSED);
+
+    expect(indicator(startsIn)).toHaveStyle({ opacity: '0' });
+    expect(screen.getByRole('button', { name: es['hero.play'] })).toBeInTheDocument();
+
+    act(() => vi.advanceTimersByTime(1000));
+    emitState(youtube.PlayerState.PLAYING);
+
+    expect(indicator(startsIn)).toHaveStyle({ opacity: '1' });
+    expect(screen.getByText('3')).toBeInTheDocument();
+  });
+
+  it('stays hidden until play is pressed when autoplay is not allowed', async () => {
+    render(
+      <LanguageProvider>
+        <CinematicHero video={makeEvent()} {...heroProps} autoplayAllowed={false} />
+      </LanguageProvider>,
+    );
+
+    expect(indicator(preparing)).toHaveStyle({ opacity: '0' });
+
+    fireEvent.click(screen.getByRole('button', { name: es['hero.play'] }));
+    await act(async () => {});
+    act(() => youtube.harness.events?.onReady?.({ target: youtube.player, data: 0 }));
+
+    expect(indicator(preparing)).toHaveStyle({ opacity: '1' });
+  });
+
+  it('keeps the preparing label while the card fades on a video error', async () => {
+    await renderHero(makeEvent());
+
+    emit('onError', YOUTUBE_EMBED_NOT_ALLOWED);
+
+    expect(titleCardLayer('Chávez')).toHaveStyle({ opacity: '0' });
+    expect(screen.getByText(preparing)).toBeInTheDocument();
+    expect(screen.queryByText(startsIn)).not.toBeInTheDocument();
+  });
+});

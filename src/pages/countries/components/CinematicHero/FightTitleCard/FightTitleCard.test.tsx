@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type { MainEvent } from '@/types/fightEvent.types';
 
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
@@ -35,15 +36,18 @@ const SwitchToEnglish = () => {
   return <button onClick={() => setLanguage('en')}>en</button>;
 };
 
-const renderCard = (video: MainEvent) =>
+const renderCard = (video: MainEvent, footer?: ReactNode) =>
   render(
     <LanguageProvider>
-      <FightTitleCard video={video} />
+      <FightTitleCard video={video} footer={footer} />
       <SwitchToEnglish />
     </LanguageProvider>,
   );
 
 const factValue = (label: string) => screen.getByText(label).nextElementSibling;
+
+const factsColumn = () =>
+  screen.getByText(es['titleCard.date']).parentElement?.parentElement?.parentElement;
 
 describe('FightTitleCard', () => {
   beforeEach(() => {
@@ -152,6 +156,20 @@ describe('FightTitleCard', () => {
     expect(factValue(en['titleCard.rounds'])).toHaveTextContent('15');
     expect(screen.getByText('WBC title')).toBeInTheDocument();
     expect(screen.getByText(en['mainEvent.vs'])).toBeInTheDocument();
+  });
+
+  it('renders the footer below the facts strip', () => {
+    renderCard(FULL_FIGHT, <span>footer node</span>);
+
+    const column = factsColumn();
+    expect(column?.children).toHaveLength(2);
+    expect(column?.lastElementChild).toContainElement(screen.getByText('footer node'));
+  });
+
+  it('renders nothing below the facts strip without a footer', () => {
+    renderCard(FULL_FIGHT);
+
+    expect(factsColumn()?.children).toHaveLength(1);
   });
 
   it('is hidden from assistive technology', () => {

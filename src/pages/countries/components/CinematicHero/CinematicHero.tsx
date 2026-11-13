@@ -20,6 +20,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import FightTitleCard from './FightTitleCard';
+import RevealIndicator from './RevealIndicator';
 
 // Hooks
 import { useHeroFullscreen } from './useHeroFullscreen';
@@ -100,6 +101,12 @@ const CinematicHero = ({
   const [muted, setMuted] = useState(true);
   const [playRequested, setPlayRequested] = useState(autoplayAllowed);
   const [isStartChromeShowing, setIsStartChromeShowing] = useState(true);
+  const [hasCountdownStarted, setHasCountdownStarted] = useState(false);
+
+  const coverPlaybackStart = useCallback(() => {
+    setIsStartChromeShowing(true);
+    setHasCountdownStarted(false);
+  }, []);
 
   const clearStartChromeTimer = useCallback(() => {
     if (startChromeTimerRef.current === undefined) return;
@@ -109,6 +116,7 @@ const CinematicHero = ({
 
   const hideStartChromeAfterDelay = useCallback(() => {
     if (startChromeTimerRef.current !== undefined) return;
+    setHasCountdownStarted(true);
     startChromeTimerRef.current = window.setTimeout(() => {
       startChromeTimerRef.current = undefined;
       setIsStartChromeShowing(false);
@@ -195,7 +203,7 @@ const CinematicHero = ({
             styleIframe(iframeRef.current, videoRef.current?.title ?? '');
             sizeIframe();
             isPlayerReady = true;
-            setIsStartChromeShowing(true);
+            coverPlaybackStart();
             setPlayerReady(true);
             reveal();
             event.target.playVideo();
@@ -242,9 +250,16 @@ const CinematicHero = ({
       setPlayerReady(false);
       setPaused(false);
       setMuted(true);
-      setIsStartChromeShowing(true);
+      coverPlaybackStart();
     };
-  }, [playRequested, hasVideo, sizeIframe, hideStartChromeAfterDelay, clearStartChromeTimer]);
+  }, [
+    playRequested,
+    hasVideo,
+    sizeIframe,
+    hideStartChromeAfterDelay,
+    clearStartChromeTimer,
+    coverPlaybackStart,
+  ]);
 
   useEffect(() => {
     const player = playerRef.current;
@@ -254,9 +269,9 @@ const CinematicHero = ({
     loadedIdRef.current = video.idYt;
     if (iframeRef.current) iframeRef.current.title = video.title;
     clearStartChromeTimer();
-    setIsStartChromeShowing(true);
+    coverPlaybackStart();
     player.loadVideoById({ videoId: video.idYt, startSeconds: Number(video.startTime) || 0 });
-  }, [playerReady, video, clearStartChromeTimer]);
+  }, [playerReady, video, clearStartChromeTimer, coverPlaybackStart]);
 
   const handleHintClick = () => {
     const height = containerRef.current?.offsetHeight ?? window.innerHeight;
@@ -345,7 +360,17 @@ const CinematicHero = ({
             transition: isStartChromeShowing ? 'none' : 'opacity 350ms ease',
           }}
         >
-          <FightTitleCard key={titleCardEntranceKey} video={video} />
+          <FightTitleCard
+            key={titleCardEntranceKey}
+            video={video}
+            footer={
+              <RevealIndicator
+                isCountingDown={hasCountdownStarted}
+                countdownMs={YOUTUBE_START_CHROME_HIDE_MS}
+                isHidden={showsPlayAction}
+              />
+            }
+          />
         </Box>
       )}
 

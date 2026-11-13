@@ -87,6 +87,8 @@ const es = {
   'titleCard.date': 'Fecha',
   'titleCard.rounds': 'Asaltos',
   'titleCard.titleFight': 'Título {organization}',
+  'titleCard.preparing': 'Preparando la pelea',
+  'titleCard.startsIn': 'La pelea empieza en',
 
   'fighter.noFights': 'Sin peleas',
   'fighter.exhausted': 'Agotado',

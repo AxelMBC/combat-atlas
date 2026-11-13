@@ -22,6 +22,7 @@ const WATERMARK_TRANSITION = { duration: 1.4, ease: 'easeOut' } as const;
 const NAMES_DELAY_S = 0.15;
 const VS_DELAY_S = 0.4;
 const FACTS_DELAY_S = 0.55;
+const FOOTER_DELAY_S = 0.8;
 
 const ribbonTextSx = { display: 'inline-block', transform: RIBBON_TEXT_UNSKEW } as const;
 
@@ -37,7 +38,7 @@ const ribbonSx = {
   textTransform: 'uppercase',
 } as const;
 
-const FightTitleCard = ({ video }: FightTitleCardProps) => {
+const FightTitleCard = ({ video, footer }: FightTitleCardProps) => {
   const { t, language } = useTranslation();
   const shouldReduceMotion = useReducedMotion();
   const { palette } = useTheme();
@@ -200,8 +201,16 @@ const FightTitleCard = ({ video }: FightTitleCardProps) => {
             )}
           </Box>
 
-          <Box sx={{ alignSelf: 'start', pt: { xs: 3, md: 4 } }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', pt: { xs: 3, md: 4 } }}>
             <FightFacts video={video} delay={FACTS_DELAY_S} />
+            {footer && (
+              <MotionBox
+                {...titleCardEntrance(shouldReduceMotion, { y: 12 }, FOOTER_DELAY_S)}
+                sx={{ mt: 'auto', pt: { xs: 2.5, md: 3 }, pb: { xs: 2.5, md: 3.5 } }}
+              >
+                {footer}
+              </MotionBox>
+            )}
           </Box>
         </Box>
       </Box>

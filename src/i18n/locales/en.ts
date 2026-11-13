@@ -89,6 +89,8 @@ const en: Record<TranslationKey, string> = {
   'titleCard.date': 'Date',
   'titleCard.rounds': 'Rounds',
   'titleCard.titleFight': '{organization} title',
+  'titleCard.preparing': 'Getting the fight ready',
+  'titleCard.startsIn': 'Fight starts in',
 
   'fighter.noFights': 'No fights',
   'fighter.exhausted': 'Sold out',
