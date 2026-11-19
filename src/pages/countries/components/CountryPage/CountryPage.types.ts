@@ -18,7 +18,7 @@ export interface ColorPalette {
 export interface CountryPageConfig {
   countryNameKey: TranslationKey;
   topFightersTitleKey: TranslationKey;
-  topEventsTitleKey: TranslationKey;
+  topEventsTitleKey?: TranslationKey;
   colorPalette: ColorPalette;
   maxWidth: string;
 }

@@ -3,7 +3,6 @@ import type { CountryPageConfig } from '@/pages/countries/components/CountryPage
 export const thailandConfig: CountryPageConfig = {
   countryNameKey: 'country.thailand.name',
   topFightersTitleKey: 'country.thailand.topFightersTitle',
-  topEventsTitleKey: 'country.thailand.topEventsTitle',
   colorPalette: {
     primary: '#0047AB',
     primaryDark: '#002855',

@@ -139,11 +139,13 @@ const CountryPage = ({
             onFighterSelect={fetchVideoByFighter}
           />
 
-          <TopFights
-            title={t(config.topEventsTitleKey)}
-            videos={topEventsList}
-            onVideoSelect={onVideoSelect}
-          />
+          {config.topEventsTitleKey && (
+            <TopFights
+              title={t(config.topEventsTitleKey)}
+              videos={topEventsList}
+              onVideoSelect={onVideoSelect}
+            />
+          )}
 
           <Box sx={{ textAlign: 'center', mt: 4 }}>
             <SiteCredit tone="onDark" />

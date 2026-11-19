@@ -29,7 +29,8 @@ pages/YourCountry/
 Fill in `CountryPageConfig`:
 
 - `countryNameKey` — Translation key for the country name; add it to **both** `src/i18n/locales/{es,en}.ts`
-- `topFightersTitleKey`, `topEventsTitleKey` — Translation keys for the section headings (both locales)
+- `topFightersTitleKey`, `topEventsTitleKey` — Translation keys for the section headings (both locales).
+  `topEventsTitleKey` is optional: leave it out and the page shows no top-fights section
 - `colorPalette` — Primary, secondary, text, and accent colors
 - `maxWidth` — Page max width (default: `"1120px"`)
 
