@@ -10,13 +10,13 @@ const en: Record<TranslationKey, string> = {
 
   'spinner.tagline.allArts': 'Every martial art, one place.',
   'spinner.tagline.tapFighter': 'Tap a fighter. Watch their fights.',
-  'spinner.tagline.exploreWorld': 'The world of combat, on a map.',
+  'spinner.tagline.exploreWorld': 'The world of combat, country by country.',
   'spinner.tagline.everyCountry': 'Every country fights its own way.',
   'spinner.tagline.legends': 'Legends. Fights. History.',
   'spinner.coldStart':
     'Waking up the server… This is a hobby project, so the first load can take up to a minute. After that it’s fast.',
 
-  'nav.backToWorldMap': '← World Map',
+  'nav.backToLanding': '← All countries',
 
   'credit.by': 'by',
 
@@ -27,18 +27,28 @@ const en: Record<TranslationKey, string> = {
   'theme.toggle.light': 'Switch to light theme',
   'theme.toggle.dark': 'Switch to dark theme',
 
-  'worldMap.explorePrompt': 'Explore a country:',
-  'worldMap.availableCountriesAria': 'Available countries',
+  'landing.eyebrow': 'Combat Atlas',
+  'landing.tagline': 'Pick your corner.',
+  'landing.enter': 'Enter',
+  'landing.spin': 'Spin the globe',
+  'landing.countriesAria': 'Available countries',
+  'landing.hemisphere.north': 'N',
+  'landing.hemisphere.south': 'S',
+  'landing.hemisphere.east': 'E',
+  'landing.hemisphere.west': 'W',
 
   'country.mexico.name': 'Mexico',
+  'country.mexico.discipline': 'Boxing',
   'country.mexico.topFightersTitle': 'Mexican Icons',
   'country.mexico.topEventsTitle': 'Historic Fights',
 
   'country.thailand.name': 'Thailand',
+  'country.thailand.discipline': 'Muay Thai',
   'country.thailand.topFightersTitle': 'Historic Legends',
   'country.thailand.topEventsTitle': "Thailand's Wars",
 
   'country.unitedStates.name': 'United States',
+  'country.unitedStates.discipline': 'Wrestling',
   'country.unitedStates.topFightersTitle': 'Mat Legends',
   'country.unitedStates.topEventsTitle': 'Olympic Duels',
 
@@ -59,10 +69,10 @@ const en: Record<TranslationKey, string> = {
   'errorFallback.defaultMessage':
     "We couldn't load the information. Check your connection and try again.",
 
-  'mapFallback.title': "We couldn't load the map",
-  'mapFallback.message':
+  'landingFallback.title': "We couldn't load the home page",
+  'landingFallback.message':
     'In the meantime, you can explore the countries available in Combat Atlas.',
-  'mapFallback.aria': 'Unable to load the map',
+  'landingFallback.aria': 'Unable to load the home page',
 
   'hero.eyebrow': 'COMBAT ATLAS',
   'hero.statsFights': '{count} fights',

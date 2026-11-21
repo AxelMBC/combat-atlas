@@ -157,8 +157,22 @@ If anything has drifted from this template, follow the current shape rather than
 Edit `src/pages/countries/registry.ts` and append a new entry to `countryRegistry`, preserving the existing formatting:
 
 ```ts
-{ slug: "<slug>", loader: () => import("@/pages/<Pascal>") },
+{
+  slug: '<slug>',
+  nameKey: 'country.<camel>.name',
+  disciplineKey: 'country.<camel>.discipline',
+  isoCode: '<ISO 3166-1 alpha-2>',
+  center: { lat: <lat>, lng: <lng> },
+  accentColor: '<accent hex>',
+  portrait: { src: <portraitImport>, fighterName: '<Fighter Name>' },
+  loader: () => import('@/pages/<Pascal>'),
+},
 ```
+
+- `disciplineKey` needs an entry in **both** `src/i18n/locales/es.ts` and `en.ts` (e.g. `Boxeo` / `Boxing`), next to the country's `name` key.
+- `isoCode` is the ISO 3166-1 alpha-2 code; the landing globe lights up that country's land in `accentColor` with no data regeneration.
+- `center` is the point the globe turns to (roughly the country's centroid, one decimal).
+- `portrait` is optional: import a fighter photo from the country's `resources/` folder at the top of `registry.ts`, or leave the field out.
 
 Do **not** modify `CountryRouter.tsx` or the main router — the registry is the only touchpoint (CLAUDE.md confirms this).
 

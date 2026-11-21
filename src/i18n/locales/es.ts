@@ -8,13 +8,13 @@ const es = {
 
   'spinner.tagline.allArts': 'Todas las artes marciales, un solo lugar.',
   'spinner.tagline.tapFighter': 'Toca un peleador. Mira sus combates.',
-  'spinner.tagline.exploreWorld': 'El mundo del combate, en un mapa.',
+  'spinner.tagline.exploreWorld': 'El mundo del combate, país por país.',
   'spinner.tagline.everyCountry': 'Cada país pelea a su manera.',
   'spinner.tagline.legends': 'Leyendas. Combates. Historia.',
   'spinner.coldStart':
     'Despertando el servidor… Es un proyecto personal, así que la primera carga puede tardar hasta un minuto. Después va rápido.',
 
-  'nav.backToWorldMap': '← Mapa Mundial',
+  'nav.backToLanding': '← Todos los países',
 
   'credit.by': 'por',
 
@@ -25,18 +25,28 @@ const es = {
   'theme.toggle.light': 'Cambiar a tema claro',
   'theme.toggle.dark': 'Cambiar a tema oscuro',
 
-  'worldMap.explorePrompt': 'Explora un país:',
-  'worldMap.availableCountriesAria': 'Países disponibles',
+  'landing.eyebrow': 'Combat Atlas',
+  'landing.tagline': 'Elige tu esquina.',
+  'landing.enter': 'Entrar',
+  'landing.spin': 'Gira el mundo',
+  'landing.countriesAria': 'Países disponibles',
+  'landing.hemisphere.north': 'N',
+  'landing.hemisphere.south': 'S',
+  'landing.hemisphere.east': 'E',
+  'landing.hemisphere.west': 'O',
 
   'country.mexico.name': 'México',
+  'country.mexico.discipline': 'Boxeo',
   'country.mexico.topFightersTitle': 'Ídolos de México',
   'country.mexico.topEventsTitle': 'Peleas Históricas',
 
   'country.thailand.name': 'Tailandia',
+  'country.thailand.discipline': 'Muay Thai',
   'country.thailand.topFightersTitle': 'Leyendas Historicas',
   'country.thailand.topEventsTitle': 'Las guerras de Thailandia',
 
   'country.unitedStates.name': 'Estados Unidos',
+  'country.unitedStates.discipline': 'Lucha',
   'country.unitedStates.topFightersTitle': 'Leyendas del Tapete',
   'country.unitedStates.topEventsTitle': 'Duelos Olímpicos',
 
@@ -58,9 +68,10 @@ const es = {
   'errorFallback.defaultMessage':
     'No pudimos cargar la información. Revisa tu conexión e inténtalo de nuevo.',
 
-  'mapFallback.title': 'No pudimos cargar el mapa',
-  'mapFallback.message': 'Mientras tanto, puedes explorar los países disponibles en Combat Atlas.',
-  'mapFallback.aria': 'No se pudo cargar el mapa',
+  'landingFallback.title': 'No pudimos cargar la página de inicio',
+  'landingFallback.message':
+    'Mientras tanto, puedes explorar los países disponibles en Combat Atlas.',
+  'landingFallback.aria': 'No se pudo cargar la página de inicio',
 
   'hero.eyebrow': 'COMBAT ATLAS',
   'hero.statsFights': '{count} peleas',

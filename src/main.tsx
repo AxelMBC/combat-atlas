@@ -14,14 +14,14 @@ import { ThemeModeProvider } from '@/styles/theme';
 import App from './App.tsx';
 
 // Pages
-import WorldMap from './pages/WorldMap';
+import Landing from './pages/Landing';
 import CountryRouter from './pages/countries/CountryRouter';
 import EventIngestionPage from './pages/EventIngestion/EventIngestionPage';
 
 // Components
 import ErrorBoundary from './components/ErrorBoundary';
 import NotFound from './components/NotFound';
-import MapFallback from '@/components/MapFallback';
+import LandingFallback from '@/components/LandingFallback';
 
 const router = createBrowserRouter([
   {
@@ -37,8 +37,8 @@ const router = createBrowserRouter([
       {
         index: true,
         element: (
-          <ErrorBoundary fallback={<MapFallback />}>
-            <WorldMap />
+          <ErrorBoundary fallback={<LandingFallback />}>
+            <Landing />
           </ErrorBoundary>
         ),
       },

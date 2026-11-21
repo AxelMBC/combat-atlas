@@ -75,11 +75,18 @@ Do **not** touch the router. Append an entry to `src/pages/countries/registry.ts
 {
   slug: 'your-country',
   nameKey: 'country.yourCountry.name',
-  mapLayerId: 'Your Country',   // must match a fill layer id in the MapTiler style
+  disciplineKey: 'country.yourCountry.discipline', // add it to es.ts and en.ts
+  isoCode: 'YC',                                  // ISO 3166-1 alpha-2
+  center: { lat: 0.0, lng: 0.0 },                 // where the globe turns to
   accentColor: '#123456',
+  portrait: { src: yourFighterPortrait, fighterName: 'Your Fighter' }, // optional
   loader: () => import('@/pages/YourCountry'),
 },
 ```
 
-The world map, the map fallback list, and the admin event form all derive from this registry —
-one entry lights up all three.
+Import the portrait file at the top of `registry.ts` from the country's `resources/` folder; leave
+`portrait` out if there is none.
+
+The landing's fight-card bill and halftone globe, the landing fallback list, and the admin event
+form all derive from this registry — one entry lights up all of them. The globe already knows
+every country's land, so a valid `isoCode` lights it up with no data regeneration.

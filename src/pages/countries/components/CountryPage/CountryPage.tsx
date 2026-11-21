@@ -103,7 +103,7 @@ const CountryPage = ({
             '&.Mui-focusVisible': { outline: '2px solid', outlineColor: 'common.white' },
           }}
         >
-          {t('nav.backToWorldMap')}
+          {t('nav.backToLanding')}
         </Button>
 
         <CinematicHero

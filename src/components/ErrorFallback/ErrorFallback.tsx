@@ -77,7 +77,7 @@ const ErrorFallback = ({ theme, title, message, onRetry }: ErrorFallbackProps) =
             onClick={() => navigate('/')}
             sx={{ fontFamily: 'inherit', px: 4, py: 1.2, borderRadius: 0 }}
           >
-            {t('nav.backToWorldMap')}
+            {t('nav.backToLanding')}
           </Button>
         </Box>
       </Box>

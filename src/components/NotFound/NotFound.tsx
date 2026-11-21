@@ -20,7 +20,7 @@ const NotFound = ({ messageKey }: NotFoundProps) => {
       </p>
 
       <button className="not-found__button" onClick={() => navigate('/')}>
-        {t('nav.backToWorldMap')}
+        {t('nav.backToLanding')}
       </button>
     </div>
   );

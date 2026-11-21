@@ -8,11 +8,11 @@ Expose the active `SurfacePalette` through a single MUI theme on every route so 
 
 ### Requirement: Surface palette is exposed through the MUI theme on every route
 
-The active `SurfacePalette` SHALL be available as `theme.palette.surfaces` (with matching `palette.mode`) from a MUI theme on every route — the world map, country pages, the admin ingestion form, and loading/error fallbacks. Components MUST read surface colors from the theme (or CSS custom properties derived from it) rather than from `useThemeMode()` or hardcoded surface hex values. `useThemeMode()` SHALL expose only `mode` and `toggleMode`.
+The active `SurfacePalette` SHALL be available as `theme.palette.surfaces` (with matching `palette.mode`) from a MUI theme on every route — the landing page, country pages, the admin ingestion form, and loading/error fallbacks. Components MUST read surface colors from the theme (or CSS custom properties derived from it) rather than from `useThemeMode()` or hardcoded surface hex values. `useThemeMode()` SHALL expose only `mode` and `toggleMode`.
 
 #### Scenario: Surfaces resolve outside country pages
 
-- **WHEN** a component on the world map or `/admin/fights/new` reads `theme.palette.surfaces`
+- **WHEN** a component on the landing page or `/admin/fights/new` reads `theme.palette.surfaces`
 - **THEN** it receives the palette matching the active mode, without a country-page `ThemeProvider` in its tree
 
 #### Scenario: Country theme carries surfaces and mode
