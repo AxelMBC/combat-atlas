@@ -10,8 +10,7 @@ import { useTranslation } from '@/i18n';
 import { HEADLINE_FONT } from '@/styles/fonts/newspaperFonts';
 
 const OUTLINE_OPACITY = 0.38;
-const CONTROL_SKEW = 'skewX(-12deg)';
-const CONTROL_LABEL_UNSKEW = 'skewX(12deg)';
+const HOVER_FILL_OPACITY = 0.06;
 
 const SpinControl = ({ accentColor, isDisabled, onSpin }: SpinControlProps) => {
   const { t } = useTranslation();
@@ -24,31 +23,25 @@ const SpinControl = ({ accentColor, isDisabled, onSpin }: SpinControlProps) => {
       disabled={isDisabled}
       sx={{
         alignSelf: 'flex-start',
-        minHeight: 44,
-        px: 2.5,
-        transform: CONTROL_SKEW,
+        minHeight: 52,
+        px: 3,
         border: '1px solid',
         borderColor: alpha(surfaces.textPrimary, OUTLINE_OPACITY),
         color: surfaces.textPrimary,
         fontFamily: HEADLINE_FONT,
-        fontSize: { xs: '0.85rem', md: '0.95rem' },
-        letterSpacing: '0.22em',
+        fontSize: '1.25rem',
+        letterSpacing: '0.1em',
         textTransform: 'uppercase',
         transition: 'color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease',
-        '&:hover': { borderColor: accentColor, color: accentColor },
+        '&:hover': {
+          borderColor: surfaces.textPrimary,
+          bgcolor: alpha(surfaces.textPrimary, HOVER_FILL_OPACITY),
+        },
         '&.Mui-focusVisible': { outline: `2px solid ${accentColor}`, outlineOffset: 3 },
         '&.Mui-disabled': { color: surfaces.textMuted, borderColor: surfaces.border },
       }}
     >
-      <Box
-        component="span"
-        sx={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: 1.25,
-          transform: CONTROL_LABEL_UNSKEW,
-        }}
-      >
+      <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 1.5 }}>
         <FontAwesomeIcon icon={faEarthAmericas} aria-hidden />
         {t('landing.spin')}
       </Box>

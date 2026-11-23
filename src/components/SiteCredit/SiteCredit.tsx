@@ -1,7 +1,7 @@
 import { Link, Typography } from '@mui/material';
 
 import { useTranslation } from '@/i18n';
-import { HEADLINE_FONT } from '@/styles/fonts/newspaperFonts';
+import { BODY_FONT } from '@/styles/fonts/newspaperFonts';
 import type { SiteCreditProps } from './SiteCredit.types';
 
 const SiteCredit = ({ tone }: SiteCreditProps) => {
@@ -12,10 +12,8 @@ const SiteCredit = ({ tone }: SiteCreditProps) => {
     <Typography
       component="p"
       sx={{
-        fontFamily: HEADLINE_FONT,
-        fontSize: '0.65rem',
-        letterSpacing: '0.08em',
-        textTransform: 'uppercase',
+        fontFamily: BODY_FONT,
+        fontSize: '0.8rem',
         whiteSpace: 'nowrap',
         color: onDark ? 'rgba(255, 255, 255, 0.45)' : 'info.main',
         opacity: onDark ? 1 : 0.75,

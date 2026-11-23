@@ -2,12 +2,13 @@ import type { StagePortraitProps } from './StagePortrait.types';
 
 import { useState } from 'react';
 
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { alpha, useTheme } from '@mui/material/styles';
 
-import { HEADLINE_FONT } from '@/styles/fonts/newspaperFonts';
+import { BODY_FONT } from '@/styles/fonts/newspaperFonts';
 
 const PORTRAIT_CROSSFADE = 'opacity 0.4s ease';
+const CAPTION_TRANSITION = 'color 0.2s ease';
 const PORTRAIT_FILTER = 'grayscale(1) contrast(1.25)';
 const PORTRAIT_OPACITY = { dark: 0.6, light: 0.6 } as const;
 const PORTRAIT_BLEND = { dark: 'multiply', light: 'screen' } as const;
@@ -20,7 +21,7 @@ const PORTRAIT_MASK = {
 const withSlug = (slugs: ReadonlySet<string>, slug: string): ReadonlySet<string> =>
   new Set(slugs).add(slug);
 
-const StagePortrait = ({ entries, selectedSlug }: StagePortraitProps) => {
+const StagePortrait = ({ entries, selectedSlug, coordinates }: StagePortraitProps) => {
   const { surfaces, mode } = useTheme().palette;
   const [seenSlugs, setSeenSlugs] = useState<ReadonlySet<string>>(() => new Set([selectedSlug]));
   const [loadedSlugs, setLoadedSlugs] = useState<ReadonlySet<string>>(() => new Set());
@@ -90,24 +91,25 @@ const StagePortrait = ({ entries, selectedSlug }: StagePortraitProps) => {
         })}
       </Box>
 
-      {selectedPortrait && isSelectedPortraitShown && (
-        <Typography
-          sx={{
-            position: 'absolute',
-            insetInline: 0,
-            bottom: { xs: 4, md: '5vh' },
-            textAlign: 'center',
-            fontFamily: HEADLINE_FONT,
-            fontSize: { xs: '0.7rem', md: '0.8rem' },
-            letterSpacing: '0.3em',
-            textTransform: 'uppercase',
-            color: surfaces.textMuted,
-            transition: 'color 0.2s ease',
-          }}
-        >
-          {selectedPortrait.fighterName}
-        </Typography>
-      )}
+      <Box
+        sx={{
+          position: 'absolute',
+          insetInline: 0,
+          bottom: { xs: 4, md: '5vh' },
+          textAlign: 'center',
+          fontFamily: BODY_FONT,
+          lineHeight: 1.5,
+          color: surfaces.textSecondary,
+          transition: CAPTION_TRANSITION,
+        }}
+      >
+        {selectedPortrait && isSelectedPortraitShown && (
+          <Box sx={{ fontSize: '0.95rem' }}>{selectedPortrait.fighterName}</Box>
+        )}
+        <Box sx={{ fontSize: '0.85rem', fontStyle: 'italic', whiteSpace: 'nowrap' }}>
+          {coordinates}
+        </Box>
+      </Box>
     </>
   );
 };

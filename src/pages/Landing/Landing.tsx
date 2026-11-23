@@ -197,11 +197,7 @@ const Landing = () => {
         </Typography>
       </Box>
 
-      <LandingStage
-        entries={countryRegistry}
-        selectedEntry={selectedEntry}
-        reduceMotion={reduceMotion}
-      >
+      <LandingStage entries={countryRegistry} selectedEntry={selectedEntry}>
         <Box
           {...pointerZoneHandlers}
           sx={{ position: 'relative', width: GLOBE_SIZE, height: GLOBE_SIZE }}

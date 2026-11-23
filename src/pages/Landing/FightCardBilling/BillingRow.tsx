@@ -7,21 +7,20 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 import { Box } from '@mui/material';
-import { alpha, useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 
 import { useTranslation } from '@/i18n';
-import { HEADLINE_FONT } from '@/styles/fonts/newspaperFonts';
+import { BODY_FONT, HEADLINE_FONT } from '@/styles/fonts/newspaperFonts';
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
 const ENTRANCE_DURATION_S = 0.7;
 const ENTRANCE_BASE_DELAY_S = 0.1;
 const ENTRANCE_STAGGER_S = 0.08;
 const ENTRANCE_SLIDE_PX = -32;
-const OUTLINE_OPACITY = 0.38;
 const NAME_SIZE = 'clamp(2.3rem, min(5.6vw, 9vh), 6.2rem)';
-const NAME_OFFSET_OUTLINE = 'translate(0.05em, 0.05em)';
-const RIBBON_SKEW = 'skewX(-12deg)';
-const RIBBON_TEXT_UNSKEW = 'skewX(12deg)';
+const BOUT_NUMBER_SIZE = '1.25rem';
+const ANTON_CAP_TOP_EM = 0.065;
+const SEPARATOR_OPACITY = 0.5;
 const SELECTION_TRANSITION =
   'color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease';
 const HOVER_CAPABLE = '@media (hover: hover)';
@@ -60,8 +59,7 @@ const BillingRow = ({
   onActivate,
 }: BillingRowProps) => {
   const { t } = useTranslation();
-  const { palette } = useTheme();
-  const { surfaces } = palette;
+  const { surfaces } = useTheme().palette;
   const { slug, nameKey, disciplineKey, accentColor } = entry;
   const name = t(nameKey);
   const discipline = t(disciplineKey);
@@ -69,7 +67,6 @@ const BillingRow = ({
   const accessibleName = fightCountLabel
     ? `${name} — ${discipline}, ${fightCountLabel}`
     : `${name} — ${discipline}`;
-  const outline = alpha(surfaces.textPrimary, OUTLINE_OPACITY);
 
   const handlePointerEnter = (event: PointerEvent<HTMLAnchorElement>) => {
     if (event.pointerType === 'mouse') onIntent(entry);
@@ -105,13 +102,13 @@ const BillingRow = ({
         <Box
           aria-hidden
           sx={{
-            alignSelf: 'end',
+            alignSelf: 'start',
+            pt: `calc((${NAME_SIZE} - ${BOUT_NUMBER_SIZE}) * ${ANTON_CAP_TOP_EM})`,
             fontFamily: HEADLINE_FONT,
-            fontSize: { xs: '1.5rem', md: 'clamp(1.6rem, min(2.6vw, 4.5vh), 3rem)' },
+            fontSize: BOUT_NUMBER_SIZE,
             lineHeight: 1,
-            color: isSelected ? accentColor : outline,
-            WebkitTextFillColor: 'transparent',
-            WebkitTextStroke: '1px currentColor',
+            letterSpacing: '0.05em',
+            color: isSelected ? accentColor : surfaces.textMuted,
             transition: SELECTION_TRANSITION,
           }}
         >
@@ -121,67 +118,50 @@ const BillingRow = ({
         <Box aria-hidden sx={{ minWidth: 0 }}>
           <Box
             sx={{
-              display: 'inline-flex',
-              transform: RIBBON_SKEW,
-              px: 1.25,
-              py: 0.25,
-              mb: 0.5,
-              fontFamily: HEADLINE_FONT,
-              fontSize: { xs: '0.62rem', md: '0.72rem' },
-              lineHeight: 1.4,
-              letterSpacing: '0.25em',
-              textTransform: 'uppercase',
-              border: '1px solid',
-              borderColor: isSelected ? accentColor : outline,
-              bgcolor: isSelected ? accentColor : 'transparent',
-              color: isSelected ? palette.getContrastText(accentColor) : surfaces.textMuted,
-              transition: SELECTION_TRANSITION,
-            }}
-          >
-            <Box
-              component="span"
-              sx={{ display: 'inline-block', transform: RIBBON_TEXT_UNSKEW, whiteSpace: 'nowrap' }}
-            >
-              ★ {discipline}
-              {fightCountLabel && (
-                <motion.span
-                  initial={reduceMotion ? false : { opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: COUNT_FADE_DURATION_S }}
-                >
-                  {` · ${fightCountLabel}`}
-                </motion.span>
-              )}{' '}
-              ★
-            </Box>
-          </Box>
-          <Box
-            data-label={name}
-            sx={{
-              position: 'relative',
               fontFamily: HEADLINE_FONT,
               fontSize: NAME_SIZE,
-              lineHeight: 0.95,
+              lineHeight: 1,
               textTransform: 'uppercase',
               textWrap: 'balance',
-              color: isSelected ? surfaces.textPrimary : outline,
-              WebkitTextFillColor: isSelected ? surfaces.textPrimary : 'transparent',
-              WebkitTextStroke: '1px currentColor',
+              color: isSelected ? surfaces.textPrimary : surfaces.textMuted,
               transition: SELECTION_TRANSITION,
-              '&::after': {
-                content: 'attr(data-label)',
-                position: 'absolute',
-                inset: 0,
-                transform: NAME_OFFSET_OUTLINE,
-                WebkitTextFillColor: 'transparent',
-                WebkitTextStroke: `1px ${accentColor}`,
-                opacity: isSelected ? 1 : 0,
-                transition: SELECTION_TRANSITION,
-                pointerEvents: 'none',
-              },
             }}
           >
             {name}
+          </Box>
+          <Box
+            sx={{
+              mt: 0.5,
+              fontFamily: BODY_FONT,
+              fontSize: '0.95rem',
+              lineHeight: 1.4,
+              whiteSpace: 'nowrap',
+              color: surfaces.textSecondary,
+              transition: SELECTION_TRANSITION,
+            }}
+          >
+            {discipline}
+            {fightCountLabel && (
+              <motion.span
+                initial={reduceMotion ? false : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: COUNT_FADE_DURATION_S }}
+              >
+                <Box component="span" sx={{ opacity: SEPARATOR_OPACITY }}>
+                  {' · '}
+                </Box>
+                <Box
+                  component="span"
+                  sx={{
+                    fontWeight: 700,
+                    color: isSelected ? surfaces.textPrimary : surfaces.textSecondary,
+                    transition: SELECTION_TRANSITION,
+                  }}
+                >
+                  {fightCountLabel}
+                </Box>
+              </motion.span>
+            )}
           </Box>
         </Box>
 
@@ -189,32 +169,30 @@ const BillingRow = ({
           aria-hidden
           sx={{
             alignSelf: { md: 'end' },
-            pb: { md: 1.25 },
             display: 'flex',
             alignItems: 'center',
             gap: 1,
-            fontFamily: HEADLINE_FONT,
-            fontSize: { xs: '1.1rem', md: '0.8rem' },
-            letterSpacing: '0.2em',
-            textTransform: 'uppercase',
+            fontFamily: BODY_FONT,
+            fontSize: '1rem',
+            lineHeight: 1.4,
             whiteSpace: 'nowrap',
             transition: SELECTION_TRANSITION,
             [HOVER_CAPABLE]: {
-              color: accentColor,
+              color: surfaces.textPrimary,
               opacity: isSelected ? 1 : 0,
               transform: isSelected ? 'none' : 'translateX(-8px)',
             },
             [TOUCH_ONLY]: {
               flexDirection: 'column',
               gap: 0.25,
-              color: isSelected ? accentColor : surfaces.textMuted,
+              color: isSelected ? surfaces.textPrimary : surfaces.textMuted,
             },
           }}
         >
           <Box
             component="span"
             sx={{
-              [TOUCH_ONLY]: { visibility: isSelected ? 'visible' : 'hidden', fontSize: '0.6rem' },
+              [TOUCH_ONLY]: { visibility: isSelected ? 'visible' : 'hidden', fontSize: '0.8rem' },
             }}
           >
             {t('landing.enter')}

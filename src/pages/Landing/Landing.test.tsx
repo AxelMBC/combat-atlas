@@ -51,6 +51,12 @@ const getCountryLink = (name: RegExp) =>
 const renderedPortraitSources = () =>
   Array.from(document.querySelectorAll('img'), (image) => image.getAttribute('src'));
 
+const getMexicoPortrait = () => {
+  const portrait = document.querySelector(`img[src="${mexico.portrait?.src}"]`);
+  if (!portrait) throw new Error('Mexico portrait is not mounted');
+  return portrait;
+};
+
 const fightIds = (prefix: string, count: number) =>
   Array.from({ length: count }, (_, index) => `${prefix}-${index}`);
 
@@ -134,6 +140,24 @@ describe('Landing', () => {
     await user.hover(getCountryLink(/Tailandia/));
 
     expect(renderedPortraitSources()).toEqual([mexico.portrait?.src, thailand.portrait?.src]);
+  });
+
+  it('captions the loaded portrait with the fighter name and the coordinates', () => {
+    renderLanding();
+
+    fireEvent.load(getMexicoPortrait());
+
+    expect(screen.getByText('Canelo Álvarez')).toBeInTheDocument();
+    expect(screen.getByText('23.6° N · 102.5° O')).toBeInTheDocument();
+  });
+
+  it('keeps the coordinates without a fighter name when the portrait fails to load', () => {
+    renderLanding();
+
+    fireEvent.error(getMexicoPortrait());
+
+    expect(screen.queryByText('Canelo Álvarez')).not.toBeInTheDocument();
+    expect(screen.getByText('23.6° N · 102.5° O')).toBeInTheDocument();
   });
 
   it('selects a country on the first tap and enters it on a tap while selected', () => {
@@ -276,7 +300,7 @@ describe('Landing', () => {
     expect([`/${thailand.slug}`, `/${unitedStates.slug}`]).toContain(location);
   });
   describe('fight counts', () => {
-    it('shows no count until the summary arrives, then the total in the ribbon and the name', async () => {
+    it('shows no count until the summary arrives, then the total in the discipline line and the name', async () => {
       let resolveSummaries: (summaries: CountrySummary[]) => void = () => {};
       vi.mocked(loadCountrySummaries).mockReturnValue(
         new Promise((resolve) => {
@@ -290,7 +314,8 @@ describe('Landing', () => {
         'Tailandia — Muay Thai',
         'Estados Unidos — Lucha',
       ]);
-      expect(getCountryLink(/Tailandia/)).toHaveTextContent('★ Muay Thai ★');
+      expect(getCountryLink(/Tailandia/)).toHaveTextContent('Muay Thai');
+      expect(getCountryLink(/Tailandia/)).not.toHaveTextContent('peleas');
 
       await act(async () => resolveSummaries(SUMMARIES));
 
@@ -299,7 +324,10 @@ describe('Landing', () => {
         'Tailandia — Muay Thai, 20 peleas',
         'Estados Unidos — Lucha, 12 peleas',
       ]);
-      expect(getCountryLink(/Tailandia/)).toHaveTextContent('★ Muay Thai · 20 peleas ★');
+      expect(getCountryLink(/Tailandia/)).toHaveTextContent('Muay Thai · 20 peleas');
+      within(screen.getByRole('navigation', { name: 'Países disponibles' }))
+        .getAllByRole('link')
+        .forEach((link) => expect(link).not.toHaveTextContent('★'));
     });
 
     it('counts what is left to watch, all watched and a single fight', async () => {
