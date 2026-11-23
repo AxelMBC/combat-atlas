@@ -1,5 +1,6 @@
 import type { MouseEvent } from 'react';
 import type { CountryEntry } from '@/pages/countries/registry.types';
+import type { CountryFightCount } from '@/pages/Landing/useCountryFightCounts.types';
 
 export type CountryIntentHandler = (entry: CountryEntry) => void;
 
@@ -13,6 +14,7 @@ export type CountryActivateHandler = (
 export interface FightCardBillingProps {
   entries: readonly CountryEntry[];
   selectedSlug: string;
+  fightCounts: ReadonlyMap<string, CountryFightCount>;
   reduceMotion: boolean;
   onIntent: CountryIntentHandler;
   onPress: CountryPressHandler;

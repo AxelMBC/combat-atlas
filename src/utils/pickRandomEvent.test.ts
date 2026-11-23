@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import pickRandomEvent from './pickRandomEvent';
 
 const makeEvent = (id: number): MainEvent => ({
-  id,
+  _id: `fight-${id}`,
   idYt: `yt-${id}`,
   title: `Event ${id}`,
   description: '',

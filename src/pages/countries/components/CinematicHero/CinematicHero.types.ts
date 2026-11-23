@@ -13,6 +13,7 @@ export interface CinematicHeroProps {
   autoplayAllowed: boolean;
   isLoaderCovering: boolean;
   onReady: () => void;
+  onPlaybackStart: (video: MainEvent) => void;
 }
 
 export interface UseHeroFullscreenResult {

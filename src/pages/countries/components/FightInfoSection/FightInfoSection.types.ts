@@ -5,5 +5,9 @@ export interface FightInfoSectionProps {
   error: string | null;
   video: MainEvent | null;
   onAnotherFight: () => void;
+  onStartOver: () => void;
+  unwatchedCount: number;
+  poolSize: number;
+  isExhausted: boolean;
   anotherFightDisabled: boolean;
 }

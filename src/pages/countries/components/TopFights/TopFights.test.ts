@@ -10,7 +10,7 @@ import { ThemeModeProvider } from '@/styles/theme';
 import TopFights from './index';
 
 const makeEvent = (id: number, idYt: string): MainEvent => ({
-  id,
+  _id: `fight-${id}`,
   idYt,
   title: `Event ${id}`,
   description: '',

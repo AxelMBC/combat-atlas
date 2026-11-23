@@ -30,7 +30,7 @@ const makeFighter = (id: string, image: string): Fighter => ({
 });
 
 const makeEvent = (id: number, thumbnail?: string): MainEvent => ({
-  id,
+  _id: `fight-${id}`,
   idYt: `yt-${id}`,
   title: `Event ${id}`,
   description: '',

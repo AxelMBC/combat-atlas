@@ -1,22 +1,26 @@
-import type { CountryDataResponse } from '@/types/country.types';
+import type { CountryDataResponse, CountrySummary } from '@/types/country.types';
 import type { SessionCache } from './countryDataCache.types';
 
-import { getCountryData } from '@/services/country.service';
+import { getCountryData, getCountrySummaries } from '@/services/country.service';
 
 const TTL_MS = 30 * 60 * 1000;
+const COUNTRY_SUMMARIES_KEY = 'country_summaries';
 
 const inFlightRequests = new Map<string, Promise<CountryDataResponse>>();
+let inFlightSummaries: Promise<CountrySummary[]> | null = null;
 
-const readCache = (slug: string): SessionCache['data'] | null => {
+const countryCacheKey = (slug: string) => `country_${slug}`;
+
+const readCache = <T>(key: string): T | null => {
   try {
-    const raw = sessionStorage.getItem(`country_${slug}`);
+    const raw = sessionStorage.getItem(key);
     if (!raw) return null;
 
-    const cached: SessionCache = JSON.parse(raw);
+    const cached: SessionCache<T> = JSON.parse(raw);
     const isExpired = Date.now() - cached.fetchedAt > TTL_MS;
 
     if (isExpired) {
-      sessionStorage.removeItem(`country_${slug}`);
+      sessionStorage.removeItem(key);
       return null;
     }
 
@@ -26,10 +30,10 @@ const readCache = (slug: string): SessionCache['data'] | null => {
   }
 };
 
-const writeCache = (slug: string, data: SessionCache['data']): boolean => {
+const writeCache = <T>(key: string, data: T): boolean => {
   try {
-    const payload: SessionCache = { data, fetchedAt: Date.now() };
-    sessionStorage.setItem(`country_${slug}`, JSON.stringify(payload));
+    const payload: SessionCache<T> = { data, fetchedAt: Date.now() };
+    sessionStorage.setItem(key, JSON.stringify(payload));
     return true;
   } catch {
     return false;
@@ -37,7 +41,7 @@ const writeCache = (slug: string, data: SessionCache['data']): boolean => {
 };
 
 export const loadCountryData = (slug: string): Promise<CountryDataResponse> => {
-  const cached = readCache(slug);
+  const cached = readCache<CountryDataResponse>(countryCacheKey(slug));
   if (cached) return Promise.resolve(cached);
 
   const inFlight = inFlightRequests.get(slug);
@@ -45,7 +49,7 @@ export const loadCountryData = (slug: string): Promise<CountryDataResponse> => {
 
   const request = getCountryData(slug)
     .then((data) => {
-      writeCache(slug, data);
+      writeCache(countryCacheKey(slug), data);
       return data;
     })
     .finally(() => {
@@ -58,4 +62,23 @@ export const loadCountryData = (slug: string): Promise<CountryDataResponse> => {
 
 export const prefetchCountryData = (slug: string): void => {
   loadCountryData(slug).catch(() => {});
+};
+
+export const loadCountrySummaries = (): Promise<CountrySummary[]> => {
+  const cached = readCache<CountrySummary[]>(COUNTRY_SUMMARIES_KEY);
+  if (cached) return Promise.resolve(cached);
+
+  if (inFlightSummaries) return inFlightSummaries;
+
+  const request = getCountrySummaries()
+    .then((summaries) => {
+      writeCache(COUNTRY_SUMMARIES_KEY, summaries);
+      return summaries;
+    })
+    .finally(() => {
+      inFlightSummaries = null;
+    });
+
+  inFlightSummaries = request;
+  return request;
 };

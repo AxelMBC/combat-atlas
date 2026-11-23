@@ -22,7 +22,7 @@ export type LocalizedString = string | { es: string; en: string } | null;
 export type LocalizedTags = string[] | { es: string[]; en: string[] };
 
 export interface MainEvent {
-  id: number;
+  _id: string;
   idYt: string;
   title: string;
   description: LocalizedString;

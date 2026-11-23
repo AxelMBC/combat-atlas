@@ -1,4 +1,6 @@
 import type { PointerEvent } from 'react';
+import type { TranslateFn } from '@/i18n';
+import type { CountryFightCount } from '@/pages/Landing/useCountryFightCounts.types';
 import type { BillingRowProps } from './BillingRow.types';
 
 import { Link } from 'react-router-dom';
@@ -24,6 +26,15 @@ const SELECTION_TRANSITION =
   'color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease';
 const HOVER_CAPABLE = '@media (hover: hover)';
 const TOUCH_ONLY = '@media (hover: none)';
+const COUNT_FADE_DURATION_S = 0.4;
+
+const formatFightCount = (count: CountryFightCount | undefined, t: TranslateFn): string | null => {
+  if (!count) return null;
+  if (count.unwatched === 0) return t('landing.allWatched');
+  if (count.unwatched < count.total) return t('landing.toWatch', { count: count.unwatched });
+  if (count.total === 1) return t('landing.fightCountOne');
+  return t('landing.fightCount', { count: count.total });
+};
 
 const rowEntrance = (reduceMotion: boolean, position: number) =>
   reduceMotion
@@ -42,6 +53,7 @@ const BillingRow = ({
   entry,
   position,
   isSelected,
+  fightCount,
   reduceMotion,
   onIntent,
   onPress,
@@ -53,6 +65,10 @@ const BillingRow = ({
   const { slug, nameKey, disciplineKey, accentColor } = entry;
   const name = t(nameKey);
   const discipline = t(disciplineKey);
+  const fightCountLabel = formatFightCount(fightCount, t);
+  const accessibleName = fightCountLabel
+    ? `${name} — ${discipline}, ${fightCountLabel}`
+    : `${name} — ${discipline}`;
   const outline = alpha(surfaces.textPrimary, OUTLINE_OPACITY);
 
   const handlePointerEnter = (event: PointerEvent<HTMLAnchorElement>) => {
@@ -64,7 +80,7 @@ const BillingRow = ({
       <Box
         component={Link}
         to={`/${slug}`}
-        aria-label={`${name} — ${discipline}`}
+        aria-label={accessibleName}
         onPointerEnter={handlePointerEnter}
         onPointerDown={(event) => onPress(entry, event.pointerType)}
         onFocus={() => onIntent(entry)}
@@ -122,8 +138,21 @@ const BillingRow = ({
               transition: SELECTION_TRANSITION,
             }}
           >
-            <Box component="span" sx={{ display: 'inline-block', transform: RIBBON_TEXT_UNSKEW }}>
-              ★ {discipline} ★
+            <Box
+              component="span"
+              sx={{ display: 'inline-block', transform: RIBBON_TEXT_UNSKEW, whiteSpace: 'nowrap' }}
+            >
+              ★ {discipline}
+              {fightCountLabel && (
+                <motion.span
+                  initial={reduceMotion ? false : { opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: COUNT_FADE_DURATION_S }}
+                >
+                  {` · ${fightCountLabel}`}
+                </motion.span>
+              )}{' '}
+              ★
             </Box>
           </Box>
           <Box

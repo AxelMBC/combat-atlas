@@ -6,3 +6,8 @@ export interface CountryDataResponse {
   allFights: MainEvent[];
   topEvents: MainEvent[];
 }
+
+export interface CountrySummary {
+  slug: string;
+  fightIds: string[];
+}

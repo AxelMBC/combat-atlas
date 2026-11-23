@@ -1,6 +1,4 @@
-import type { CountryDataResponse } from '@/types/country.types';
-
-export interface SessionCache {
-  data: CountryDataResponse;
+export interface SessionCache<T> {
+  data: T;
   fetchedAt: number;
 }

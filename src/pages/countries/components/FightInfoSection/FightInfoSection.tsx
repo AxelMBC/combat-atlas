@@ -9,7 +9,11 @@ import { useTheme } from '@mui/material/styles';
 
 // Icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faForward, faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
+import {
+  faForward,
+  faArrowUpRightFromSquare,
+  faRotateLeft,
+} from '@fortawesome/free-solid-svg-icons';
 
 // i18n
 import { useTranslation } from '@/i18n';
@@ -24,6 +28,8 @@ import {
   statLabelSx,
   statValueSx,
 } from '@/pages/countries/components/shared';
+
+import NowPlayingHeader from './NowPlayingHeader';
 
 const MotionButton = motion.create(Button);
 
@@ -41,7 +47,17 @@ const YouTubeGlyph = () => (
 );
 
 const FightInfoSection = memo(
-  ({ loading, error, video, onAnotherFight, anotherFightDisabled }: FightInfoSectionProps) => {
+  ({
+    loading,
+    error,
+    video,
+    onAnotherFight,
+    onStartOver,
+    unwatchedCount,
+    poolSize,
+    isExhausted,
+    anotherFightDisabled,
+  }: FightInfoSectionProps) => {
     const { t, language } = useTranslation();
     const { surfaces } = useTheme().palette;
 
@@ -61,18 +77,7 @@ const FightInfoSection = memo(
 
     return (
       <Box component="section" sx={{ mt: { xs: 4, md: 6 }, fontFamily: BODY_FONT }}>
-        <Typography
-          sx={{
-            fontFamily: HEADLINE_FONT,
-            fontSize: '0.75rem',
-            letterSpacing: '0.2em',
-            textTransform: 'uppercase',
-            color: surfaces.textMuted,
-            mb: 1.5,
-          }}
-        >
-          {t('fightInfo.nowPlaying')}
-        </Typography>
+        <NowPlayingHeader unwatchedCount={unwatchedCount} poolSize={poolSize} />
 
         {loading && (
           <Typography
@@ -220,7 +225,7 @@ const FightInfoSection = memo(
 
               <MotionButton
                 id="fetch-another-fight"
-                onClick={onAnotherFight}
+                onClick={isExhausted ? onStartOver : onAnotherFight}
                 disabled={anotherFightDisabled}
                 whileHover={anotherFightDisabled ? undefined : { scale: 1.02 }}
                 whileTap={anotherFightDisabled ? undefined : { scale: 0.98 }}
@@ -247,8 +252,8 @@ const FightInfoSection = memo(
                   },
                 }}
               >
-                {t('mainEvent.anotherFight')}
-                <FontAwesomeIcon icon={faForward} />
+                {isExhausted ? t('mainEvent.startOver') : t('mainEvent.anotherFight')}
+                <FontAwesomeIcon icon={isExhausted ? faRotateLeft : faForward} />
               </MotionButton>
 
               <Button

@@ -26,6 +26,7 @@ import SpinControl from './SpinControl';
 import WalkoutWipe from './WalkoutWipe';
 import { isPlainPrimaryClick } from './isPlainPrimaryClick';
 import { pickRandomCountry } from './pickRandomCountry';
+import { useCountryFightCounts } from './useCountryFightCounts';
 import { useCountryTour } from './useCountryTour';
 import { useWalkout } from './useWalkout';
 
@@ -61,6 +62,7 @@ const Landing = () => {
   const [spinRequest, setSpinRequest] = useState<GlobeSpinRequest | null>(null);
   const { walkoutEntry, startWalkout } = useWalkout();
   const touchPressRef = useRef<RowTouchPress | null>(null);
+  const fightCounts = useCountryFightCounts();
 
   const selectedEntry = findEntryBySlug(selectedSlug) ?? countryRegistry[0];
   const isFrozen = spinRequest !== null || walkoutEntry !== null;
@@ -237,6 +239,7 @@ const Landing = () => {
           <FightCardBilling
             entries={countryRegistry}
             selectedSlug={selectedSlug}
+            fightCounts={fightCounts}
             reduceMotion={reduceMotion}
             onIntent={handleIntent}
             onPress={handlePress}

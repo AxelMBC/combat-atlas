@@ -11,7 +11,7 @@ import {
 } from './fightBilling';
 
 const makeEvent = (overrides: Partial<MainEvent> = {}): MainEvent => ({
-  id: 1,
+  _id: 'fight-1',
   idYt: 'abc123def45',
   title: 'Event 1',
   description: '',

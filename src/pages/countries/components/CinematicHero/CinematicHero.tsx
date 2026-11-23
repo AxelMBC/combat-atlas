@@ -82,6 +82,7 @@ const CinematicHero = ({
   autoplayAllowed,
   isLoaderCovering,
   onReady,
+  onPlaybackStart,
 }: CinematicHeroProps) => {
   const { t } = useTranslation();
 
@@ -92,6 +93,8 @@ const CinematicHero = ({
   const loadedIdRef = useRef<string | null>(null);
   const onReadyRef = useRef(onReady);
   onReadyRef.current = onReady;
+  const onPlaybackStartRef = useRef(onPlaybackStart);
+  onPlaybackStartRef.current = onPlaybackStart;
   const videoRef = useRef(video);
   videoRef.current = video;
   const startChromeTimerRef = useRef<number | undefined>(undefined);
@@ -215,6 +218,8 @@ const CinematicHero = ({
             if (event.data === YT.PlayerState.PLAYING) {
               stopYouTubeHoverChrome(event.target.getIframe());
               hideStartChromeAfterDelay();
+              const playingVideo = videoRef.current;
+              if (playingVideo) onPlaybackStartRef.current(playingVideo);
             }
             if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
               setPaused(true);

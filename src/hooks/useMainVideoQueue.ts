@@ -1,73 +1,82 @@
-import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import type { MainEvent } from '@/types/fightEvent.types';
 import type { Fighter } from '@/types/fighter.types';
-import shuffleArray from '@/utils/shuffleArray';
+import type { TranslationKey } from '@/i18n';
+import type { UseMainVideoQueueResult } from './useMainVideoQueue.types';
+
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import pickRandomEvent from '@/utils/pickRandomEvent';
 import scrollToMainEvent from '@/utils/scrollToMainEvent';
 import { useTranslation } from '@/i18n';
-import type { TranslationKey } from '@/i18n';
+import { countUnwatched, forgetFights } from '@/store/watchHistory/watchHistory';
 
-export const useMainVideoQueue = (initialEvents: MainEvent[]) => {
+const involvesFighter = (fighterId: string) => (event: MainEvent) =>
+  event.fighterBlueId === fighterId || event.fighterRedId === fighterId;
+
+const pickPreferringUnshown = (
+  candidates: MainEvent[],
+  shownIds: ReadonlySet<string>,
+): MainEvent | null => {
+  if (candidates.length === 0) return null;
+  const unshown = candidates.filter((event) => !shownIds.has(event._id));
+  return pickRandomEvent(unshown.length > 0 ? unshown : candidates).randomEvent;
+};
+
+export const useMainVideoQueue = (
+  initialEvents: MainEvent[],
+  watched: ReadonlySet<string>,
+): UseMainVideoQueueResult => {
   const { t } = useTranslation();
   const [mainVideo, setMainEvent] = useState<MainEvent | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [errorKey, setErrorKey] = useState<TranslationKey | null>(null);
-  const [mainEventQueue, setMainEventQueue] = useState<MainEvent[]>([]);
+  const [shownIds, setShownIds] = useState<ReadonlySet<string>>(() => new Set());
   const prevEventsRef = useRef<string>('');
   const initializedRef = useRef<boolean>(false);
+  const watchedRef = useRef(watched);
+  watchedRef.current = watched;
 
-  const pickAndConsume = useCallback((queue: MainEvent[], scroll = true) => {
-    setLoading(true);
+  const poolIds = useMemo(() => initialEvents.map((event) => event._id), [initialEvents]);
 
-    if (queue.length === 0) {
-      setErrorKey('error.noMoreVideos');
-      setMainEvent(null);
-      setLoading(false);
-      return;
-    }
+  const heroId = mainVideo?._id;
+  const candidates = useMemo(
+    () => initialEvents.filter((event) => !watched.has(event._id) && event._id !== heroId),
+    [initialEvents, watched, heroId],
+  );
 
-    const { randomEvent, randomIndex } = pickRandomEvent(queue);
-    const next = [...queue];
-    next.splice(randomIndex, 1);
-    setMainEventQueue(next);
-
-    setMainEvent(randomEvent);
+  const showInHero = useCallback((event: MainEvent, scroll: boolean) => {
+    setMainEvent(event);
+    setShownIds((previous) => new Set(previous).add(event._id));
     if (scroll) scrollToMainEvent();
     setErrorKey(null);
     setLoading(false);
   }, []);
 
   const fetchNextVideo = useCallback((): void => {
-    pickAndConsume(mainEventQueue);
-  }, [mainEventQueue, pickAndConsume]);
+    const next = pickPreferringUnshown(candidates, shownIds);
+    if (next) showInHero(next, true);
+  }, [candidates, shownIds, showInHero]);
 
   const fetchVideoByFighter = useCallback(
     (fighter: Fighter) => {
-      const fighterEvents = mainEventQueue
-        .map((event, index) => ({ event, index }))
-        .filter(
-          ({ event }) => event.fighterBlueId === fighter._id || event.fighterRedId === fighter._id,
-        );
-
-      if (fighterEvents.length > 0) {
-        const randomIndexInFighterEvents = Math.floor(Math.random() * fighterEvents.length);
-        const { event: randomEvent, index: originalIndex } =
-          fighterEvents[randomIndexInFighterEvents];
-
-        const next = [...mainEventQueue];
-        next.splice(originalIndex, 1);
-        setMainEventQueue(next);
-
-        setMainEvent(randomEvent);
-        scrollToMainEvent();
-        setErrorKey(null);
-      } else {
-        setErrorKey('error.noFighterEvent');
-        setMainEvent(null);
+      const next = pickPreferringUnshown(candidates.filter(involvesFighter(fighter._id)), shownIds);
+      if (next) {
+        showInHero(next, true);
+        return;
       }
+      setErrorKey('error.noFighterEvent');
+      setMainEvent(null);
     },
-    [mainEventQueue],
+    [candidates, shownIds, showInHero],
   );
+
+  const startOver = useCallback((): void => {
+    forgetFights(poolIds);
+    const others = initialEvents.filter((event) => event._id !== heroId);
+    if (others.length === 0) return;
+    const next = pickRandomEvent(others).randomEvent;
+    setShownIds(new Set());
+    showInHero(next, true);
+  }, [poolIds, initialEvents, heroId, showInHero]);
 
   const onVideoSelect = useCallback((video: MainEvent) => {
     setMainEvent(video);
@@ -75,14 +84,9 @@ export const useMainVideoQueue = (initialEvents: MainEvent[]) => {
     scrollToMainEvent();
   }, []);
 
-  const remainingCount = useMemo(
-    () => mainEventQueue.length + (mainVideo ? 1 : 0),
-    [mainEventQueue, mainVideo],
-  );
-
   const remainingByFighter = useMemo(() => {
     const counts: Record<string, number> = {};
-    for (const event of mainEventQueue) {
+    for (const event of candidates) {
       if (event.fighterBlueId) {
         counts[event.fighterBlueId] = (counts[event.fighterBlueId] ?? 0) + 1;
       }
@@ -91,23 +95,25 @@ export const useMainVideoQueue = (initialEvents: MainEvent[]) => {
       }
     }
     return counts;
-  }, [mainEventQueue]);
+  }, [candidates]);
+
+  const unwatchedCount = useMemo(() => countUnwatched(poolIds, watched), [poolIds, watched]);
 
   useEffect(() => {
     if (initialEvents.length === 0) return;
 
-    const serialized = JSON.stringify(initialEvents.map((e) => e.id).sort());
+    const serialized = JSON.stringify(initialEvents.map((e) => e._id).sort());
 
     if (serialized === prevEventsRef.current) return;
 
     prevEventsRef.current = serialized;
-    // Skip auto-scroll on the very first pick so the page opens at the top
-    // (fullscreen MainVideoStage); only re-picks should scroll to the card.
     const isFirstPick = !initializedRef.current;
     initializedRef.current = true;
-    const shuffled = shuffleArray([...initialEvents]);
-    pickAndConsume(shuffled, !isFirstPick);
-  }, [initialEvents, pickAndConsume]);
+    const unwatched = initialEvents.filter((event) => !watchedRef.current.has(event._id));
+    const first = pickRandomEvent(unwatched.length > 0 ? unwatched : initialEvents).randomEvent;
+    setShownIds(new Set());
+    showInHero(first, !isFirstPick);
+  }, [initialEvents, showInHero]);
 
   const error = errorKey ? t(errorKey) : null;
 
@@ -119,6 +125,8 @@ export const useMainVideoQueue = (initialEvents: MainEvent[]) => {
     fetchVideoByFighter,
     onVideoSelect,
     remainingByFighter,
-    remainingCount,
+    unwatchedCount,
+    isExhausted: candidates.length === 0,
+    startOver,
   };
 };

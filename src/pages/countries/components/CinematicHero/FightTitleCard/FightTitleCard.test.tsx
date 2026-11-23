@@ -10,7 +10,7 @@ import es from '@/i18n/locales/es';
 import FightTitleCard from './FightTitleCard';
 
 const makeEvent = (overrides: Partial<MainEvent> = {}): MainEvent => ({
-  id: 1,
+  _id: 'fight-1',
   idYt: 'abc123def45',
   title: 'Event 1',
   description: '',

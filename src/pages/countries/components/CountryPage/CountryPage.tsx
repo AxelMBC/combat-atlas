@@ -1,4 +1,5 @@
 import type { CountryPageProps } from './CountryPage.types';
+import type { MainEvent } from '@/types/fightEvent.types';
 
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -19,6 +20,8 @@ import SiteCredit from '@/components/SiteCredit';
 // Hooks
 import { useMainVideoQueue } from '@/hooks/useMainVideoQueue';
 import { useTranslation } from '@/i18n';
+import { useWatchHistory } from '@/store/watchHistory/useWatchHistory';
+import { markWatched } from '@/store/watchHistory/watchHistory';
 
 // Utils
 import { getCountryStats } from '@/pages/countries/components/CinematicHero/getCountryStats';
@@ -37,6 +40,7 @@ const CountryPage = ({
   const { t, language } = useTranslation();
   const reduceMotion = useReducedMotion();
   const autoplayAllowed = !reduceMotion;
+  const watched = useWatchHistory();
 
   const {
     mainVideo,
@@ -46,8 +50,14 @@ const CountryPage = ({
     fetchVideoByFighter,
     onVideoSelect,
     remainingByFighter,
-    remainingCount,
-  } = useMainVideoQueue(mainEventFights);
+    unwatchedCount,
+    isExhausted,
+    startOver,
+  } = useMainVideoQueue(mainEventFights, watched);
+
+  const recordPoolFight = (video: MainEvent) => {
+    if (mainEventFights.some((fight) => fight._id === video._id)) markWatched(video._id);
+  };
 
   const [videoReady, setVideoReady] = useState(!autoplayAllowed);
 
@@ -113,6 +123,7 @@ const CountryPage = ({
           autoplayAllowed={autoplayAllowed}
           isLoaderCovering={isLoaderCovering}
           onReady={() => setVideoReady(true)}
+          onPlaybackStart={recordPoolFight}
         />
 
         <Container
@@ -130,7 +141,11 @@ const CountryPage = ({
             error={error}
             video={mainVideo}
             onAnotherFight={fetchNextVideo}
-            anotherFightDisabled={remainingCount <= 1}
+            onStartOver={startOver}
+            unwatchedCount={unwatchedCount}
+            poolSize={mainEventFights.length}
+            isExhausted={isExhausted}
+            anotherFightDisabled={mainEventFights.length <= 1}
           />
           <TopFighters
             title={t(config.topFightersTitleKey)}

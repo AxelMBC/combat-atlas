@@ -43,7 +43,7 @@ vi.mock('@/utils/youtubeIframeApi', () => ({
 const YOUTUBE_EMBED_NOT_ALLOWED = 150;
 
 const makeEvent = (overrides: Partial<MainEvent> = {}): MainEvent => ({
-  id: 1,
+  _id: 'fight-1',
   idYt: 'firstVideo1',
   title: 'Chávez vs Taylor',
   description: '',
@@ -52,7 +52,11 @@ const makeEvent = (overrides: Partial<MainEvent> = {}): MainEvent => ({
   ...overrides,
 });
 
-const SECOND_FIGHT = makeEvent({ id: 2, idYt: 'secondVideo', title: 'Barrera vs Morales' });
+const SECOND_FIGHT = makeEvent({
+  _id: 'fight-2',
+  idYt: 'secondVideo',
+  title: 'Barrera vs Morales',
+});
 
 const heroProps = {
   countryName: 'México',
@@ -60,6 +64,7 @@ const heroProps = {
   autoplayAllowed: true,
   isLoaderCovering: false,
   onReady: () => {},
+  onPlaybackStart: vi.fn(),
 };
 
 const REVEAL_FALLBACK_MS = 8000;
@@ -390,5 +395,41 @@ describe('CinematicHero reveal indicator', () => {
     expect(titleCardLayer('Chávez')).toHaveStyle({ opacity: '0' });
     expect(screen.getByText(preparing)).toBeInTheDocument();
     expect(screen.queryByText(startsIn)).not.toBeInTheDocument();
+  });
+});
+
+describe('CinematicHero playback start', () => {
+  beforeEach(() => {
+    window.localStorage.setItem('preferredLanguage', 'es');
+    window.YT = youtube.namespace;
+    youtube.harness.state = youtube.PlayerState.UNSTARTED;
+  });
+
+  afterEach(() => {
+    window.localStorage.clear();
+    delete window.YT;
+    vi.clearAllMocks();
+  });
+
+  it('reports every PLAYING with the fight in the hero and nothing before it', async () => {
+    const firstFight = makeEvent();
+    const { rerender } = await renderHero(firstFight);
+
+    emit('onStateChange', youtube.PlayerState.BUFFERING);
+    expect(heroProps.onPlaybackStart).not.toHaveBeenCalled();
+
+    emit('onStateChange', youtube.PlayerState.PLAYING);
+    emit('onStateChange', youtube.PlayerState.PLAYING);
+    expect(heroProps.onPlaybackStart).toHaveBeenCalledTimes(2);
+    expect(heroProps.onPlaybackStart).toHaveBeenLastCalledWith(firstFight);
+
+    rerender(
+      <LanguageProvider>
+        <CinematicHero video={SECOND_FIGHT} {...heroProps} />
+      </LanguageProvider>,
+    );
+    emit('onStateChange', youtube.PlayerState.PLAYING);
+
+    expect(heroProps.onPlaybackStart).toHaveBeenLastCalledWith(SECOND_FIGHT);
   });
 });

@@ -5,7 +5,7 @@ import type { MainEvent } from '@/types/fightEvent.types';
 import { getCountryStats } from './getCountryStats';
 
 const baseFight = (overrides: Partial<MainEvent>): MainEvent => ({
-  id: 1,
+  _id: 'fight-1',
   idYt: 'abcdefghijk',
   title: 'Fighter A vs Fighter B',
   description: 'desc',
@@ -21,9 +21,9 @@ describe('getCountryStats', () => {
 
   it('counts fights and deduplicates cities from venue', () => {
     const fights = [
-      baseFight({ id: 1, venue: { city: 'CDMX', country: 'MX' } }),
-      baseFight({ id: 2, venue: { city: 'CDMX', country: 'MX' } }),
-      baseFight({ id: 3, venue: { city: 'Guadalajara', country: 'MX' } }),
+      baseFight({ _id: 'fight-1', venue: { city: 'CDMX', country: 'MX' } }),
+      baseFight({ _id: 'fight-2', venue: { city: 'CDMX', country: 'MX' } }),
+      baseFight({ _id: 'fight-3', venue: { city: 'Guadalajara', country: 'MX' } }),
     ];
 
     const stats = getCountryStats(fights, 'es');
@@ -48,10 +48,10 @@ describe('getCountryStats', () => {
 
   it('collects disciplines from type with localized tag fallback', () => {
     const fights = [
-      baseFight({ id: 1, type: 'Box' }),
-      baseFight({ id: 2, tags: { es: ['Muay Thai'], en: ['Muay Thai'] } }),
-      baseFight({ id: 3, tags: ['MMA'] }),
-      baseFight({ id: 4, type: 'Box' }),
+      baseFight({ _id: 'fight-1', type: 'Box' }),
+      baseFight({ _id: 'fight-2', tags: { es: ['Muay Thai'], en: ['Muay Thai'] } }),
+      baseFight({ _id: 'fight-3', tags: ['MMA'] }),
+      baseFight({ _id: 'fight-4', type: 'Box' }),
     ];
 
     expect(getCountryStats(fights, 'es').disciplines).toEqual(['Box', 'Muay Thai', 'MMA']);
@@ -65,7 +65,7 @@ describe('getCountryStats', () => {
   });
 
   it('omits cities and disciplines when data is missing', () => {
-    const fights = [baseFight({}), baseFight({ id: 2 })];
+    const fights = [baseFight({}), baseFight({ _id: 'fight-2' })];
 
     const stats = getCountryStats(fights, 'es');
 

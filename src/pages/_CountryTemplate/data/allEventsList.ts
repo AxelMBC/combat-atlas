@@ -3,7 +3,7 @@ import type { MainEvent } from '@/types/fightEvent.types';
 
 export const mainEventFights: MainEvent[] = [
   {
-    id: 0,
+    _id: 'sample_fight_0',
     title: 'Fighter A vs Fighter B',
     description: 'Description of the fight.',
     idYt: 'youtube_video_id',

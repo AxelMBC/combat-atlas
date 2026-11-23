@@ -8,6 +8,7 @@ import BillingRow from './BillingRow';
 const FightCardBilling = ({
   entries,
   selectedSlug,
+  fightCounts,
   reduceMotion,
   onIntent,
   onPress,
@@ -34,6 +35,7 @@ const FightCardBilling = ({
             entry={entry}
             position={index + 1}
             isSelected={entry.slug === selectedSlug}
+            fightCount={fightCounts.get(entry.slug)}
             reduceMotion={reduceMotion}
             onIntent={onIntent}
             onPress={onPress}
