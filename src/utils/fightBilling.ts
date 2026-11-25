@@ -3,8 +3,13 @@ import type { MainEvent } from '@/types/fightEvent.types';
 
 import { resolveLocalizedTags } from './resolveLocalizedField';
 
+const TRAILING_BOUT_NUMBER_PATTERN = /\s+[IVX]+$/;
+
 export const splitFightersFromTitle = (title: string): [string, string] | null => {
-  const parts = title.split(/\s+vs\.?\s+/i);
+  const parts = title
+    .trim()
+    .replace(TRAILING_BOUT_NUMBER_PATTERN, '')
+    .split(/\s+vs\.?\s+/i);
   if (parts.length !== 2) return null;
   return [parts[0].trim(), parts[1].trim()];
 };

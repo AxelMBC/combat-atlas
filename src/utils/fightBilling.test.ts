@@ -56,6 +56,28 @@ describe('splitFightersFromTitle', () => {
   it('returns null when the title has more than one "vs"', () => {
     expect(splitFightersFromTitle('A vs B vs C')).toBeNull();
   });
+
+  it('leaves the bout number at the end of the title out of the second fighter', () => {
+    expect(splitFightersFromTitle('Anthony Joshua vs Andy Ruiz I')).toEqual([
+      'Anthony Joshua',
+      'Andy Ruiz',
+    ]);
+    expect(splitFightersFromTitle('Canelo Álvarez vs. Gennadiy Golovkin III')).toEqual([
+      'Canelo Álvarez',
+      'Gennadiy Golovkin',
+    ]);
+    expect(splitFightersFromTitle('Manny Pacquiao vs Juan Manuel Marquez IV')).toEqual([
+      'Manny Pacquiao',
+      'Juan Manuel Marquez',
+    ]);
+  });
+
+  it('keeps a generational suffix with the second fighter', () => {
+    expect(splitFightersFromTitle('Canelo Alvarez vs Julio Cesar Chavez Jr')).toEqual([
+      'Canelo Alvarez',
+      'Julio Cesar Chavez Jr',
+    ]);
+  });
 });
 
 describe('getFightCity', () => {

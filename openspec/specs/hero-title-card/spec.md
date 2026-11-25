@@ -69,7 +69,7 @@ The title card SHALL show, from the current fight's data only:
 
 - a presenter line ("Combat Atlas presenta" / "Combat Atlas presents");
 - a ribbon with the fight type (or the first localized tag) and, when the fight has an `organization`, a localized title tag ("Título WBC" / "WBC title");
-- a face-off of the two fighters around the localized `VS`, each fighter split into given names, surname and a quoted nickname taken from the name;
+- a face-off of the two fighters around the localized `VS`, each fighter split into given names, surname and a quoted nickname taken from the name; a bout number written as an uppercase Roman numeral at the end of an `A vs B` title (`I`, `II`, `III`…) belongs to the fight, not to the second fighter, and is left out of the billing;
 - when the fighters cannot be derived, the fight title billed as a single name with no `VS`;
 - the fight's year as an outlined watermark behind everything;
 - a facts strip with four labelled slots: date, venue, localized division and scheduled rounds.
@@ -85,6 +85,11 @@ Free-standing elements (ribbon, title tag, nickname, given names, watermark) SHA
 
 - **WHEN** a fighter's name contains a quoted nickname, such as `Danny 'Little Red' Lopez`
 - **THEN** the card bills `Danny` as the given name, `Lopez` as the surname and “Little Red” as the nickname
+
+#### Scenario: Bout number at the end of the title
+
+- **WHEN** the fighters come from a title that ends in a bout number, such as `Anthony Joshua vs Andy Ruiz I` or `Canelo Álvarez vs. Gennadiy Golovkin III`
+- **THEN** the second fighter is billed as `Andy` / `Ruiz` (or `Gennadiy` / `Golovkin`), with no numeral as or after the surname
 
 #### Scenario: Title that is not a matchup
 
