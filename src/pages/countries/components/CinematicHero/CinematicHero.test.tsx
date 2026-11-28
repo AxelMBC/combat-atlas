@@ -398,6 +398,82 @@ describe('CinematicHero reveal indicator', () => {
   });
 });
 
+describe('CinematicHero centre zone under the title card', () => {
+  const centreZone = (label: string) => screen.getByRole('button', { name: label }).parentElement;
+
+  const emitState = (state: number) => {
+    youtube.harness.state = state;
+    emit('onStateChange', state);
+  };
+
+  beforeEach(() => {
+    vi.useFakeTimers();
+    window.localStorage.setItem('preferredLanguage', 'es');
+    window.YT = youtube.namespace;
+    youtube.harness.state = youtube.PlayerState.UNSTARTED;
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+    window.localStorage.clear();
+    delete window.YT;
+    vi.clearAllMocks();
+  });
+
+  it('ignores the pointer while the card covers the boot and the countdown', async () => {
+    await renderHero(makeEvent());
+
+    expect(centreZone(es['hero.pause'])).toHaveStyle({ pointerEvents: 'none' });
+
+    emitState(youtube.PlayerState.PLAYING);
+    act(() => vi.advanceTimersByTime(4000));
+
+    expect(centreZone(es['hero.pause'])).toHaveStyle({ pointerEvents: 'none' });
+  });
+
+  it('takes the pointer again once the card lifts', async () => {
+    await renderHero(makeEvent());
+    emitState(youtube.PlayerState.PLAYING);
+
+    act(() => vi.advanceTimersByTime(5000));
+
+    expect(centreZone(es['hero.pause'])).toHaveStyle({ pointerEvents: 'auto' });
+  });
+
+  it('ignores the pointer again when a fight switch brings the card back', async () => {
+    const { rerender } = await renderHero(makeEvent());
+    emitState(youtube.PlayerState.PLAYING);
+    act(() => vi.advanceTimersByTime(5000));
+
+    rerender(
+      <LanguageProvider>
+        <CinematicHero video={SECOND_FIGHT} {...heroProps} />
+      </LanguageProvider>,
+    );
+
+    expect(centreZone(es['hero.pause'])).toHaveStyle({ pointerEvents: 'none' });
+  });
+
+  it('keeps the play toggle clickable over the card when autoplay is not allowed', () => {
+    render(
+      <LanguageProvider>
+        <CinematicHero video={makeEvent()} {...heroProps} autoplayAllowed={false} />
+      </LanguageProvider>,
+    );
+
+    expect(centreZone(es['hero.play'])).toHaveStyle({ pointerEvents: 'auto' });
+  });
+
+  it('keeps the play toggle clickable over the card when playback pauses', async () => {
+    await renderHero(makeEvent());
+    emitState(youtube.PlayerState.PLAYING);
+
+    emitState(youtube.PlayerState.PAUSED);
+
+    expect(centreZone(es['hero.play'])).toHaveStyle({ pointerEvents: 'auto' });
+  });
+});
+
 describe('CinematicHero playback start', () => {
   beforeEach(() => {
     window.localStorage.setItem('preferredLanguage', 'es');

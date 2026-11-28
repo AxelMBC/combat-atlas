@@ -303,6 +303,7 @@ const CinematicHero = ({
   };
 
   const showsPlayAction = !playRequested || paused;
+  const isPointerBlockedByTitleCard = isStartChromeShowing && !showsPlayAction;
   const titleCardEntranceKey = isLoaderCovering ? 'behind-loader' : 'in-view';
   const isScrollHintHidden = isFullscreen || isStartChromeShowing;
 
@@ -392,6 +393,7 @@ const CinematicHero = ({
             alignItems: 'center',
             justifyContent: 'center',
             zIndex: 2,
+            pointerEvents: isPointerBlockedByTitleCard ? 'none' : 'auto',
             [HOVER_CAPABLE_POINTER]: { '&:hover > button': { opacity: 1 } },
           }}
         >
